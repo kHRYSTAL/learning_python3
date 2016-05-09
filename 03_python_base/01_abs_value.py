@@ -6,7 +6,7 @@
 a = input('please input a number')
 try:
     a = int(a)
-except Exception:
+except ValueError:
     print("input is not a number")
     exit()
 
