@@ -23,19 +23,23 @@ L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
 def getNameLower(t):
     return t[0].lower()
 
-f = lambda x:x[0].lower()
-
-print(f(('A',75)))
-
 def getScore(t):
     return t[1]
+
+
+
+f = lambda x:x[0].lower()
 
 # print(sorted(L,key= lambda x:x[0].lower))
 # TypeError: unorderable types: builtin_function_or_method() < builtin_function_or_method()
 
 print(sorted(L,key = f))
-print(sorted(L,key = getNameLower))
 
+
+
+
+print(sorted(L,key = getNameLower))
+print(f(('A',75)))
 
 print(sorted(L,key=lambda x:x[1],reverse=True))
 
