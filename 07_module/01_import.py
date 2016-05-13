@@ -46,3 +46,9 @@ def greeting(name):
         return _private_1(name)
     else:
         return _private_2(name)
+
+'''
+import os
+result = os.popen('python hello.py Michael').readlines()
+print(result)
+'''
