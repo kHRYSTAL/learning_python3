@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 
+'向函数加入装饰器注解装饰函数'
+
 def now():
     print('2016-05-13')
 

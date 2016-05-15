@@ -9,7 +9,6 @@
 @contact: khrystal0918@gmail.com
 @site: https://github.com/kHRYSTAL
 @software: PyCharm
-@file: 03_extends_polymorphism.py
 @time: 16/5/15 上午12:16
 """
 
