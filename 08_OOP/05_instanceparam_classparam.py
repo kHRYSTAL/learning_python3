@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-
 """
 @version: ??
 @usage: 实例属性和类属性
