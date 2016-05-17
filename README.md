@@ -1,4 +1,9 @@
 #Python3 学习笔记
+'''
+注意 这个项目只是学习笔记 不是实际的项目
+在实际项目中 报名,文件名不能以数字开头!!
+'''
+
 [第一个python程序](https://github.com/kHRYSTAL/StartLearningPython/blob/master/01_calc.py)
 
 [输入和输出](https://github.com/kHRYSTAL/StartLearningPython/blob/master/02_input.py)

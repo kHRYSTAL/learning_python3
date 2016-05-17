@@ -10,13 +10,10 @@
 @contact: khrystal0918@gmail.com
 @site: https://github.com/kHRYSTAL
 @software: PyCharm
-@file: a.py
-@time: 16/5/16 下午11:34
+@file: __init__.py.py
+@time: 16/5/17 下午3:00
 """
-from test import hello
-from test.hello import Hello
-import sys
-from sys import setprofile
+
 
 def func():
     pass
