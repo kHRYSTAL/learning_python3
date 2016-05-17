@@ -58,6 +58,7 @@ print(d)
 
 '''
 JSON表示的对象就是标准的JavaScript语言的对象，JSON和Python内置的数据类型对应如下：
+#pickle是序列化成bytes json是序列化成str
 
 JSON类型	Python类型
 {}	        dict
