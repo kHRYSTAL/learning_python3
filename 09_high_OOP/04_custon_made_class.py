@@ -172,7 +172,7 @@ class Student(object):
             return 99
         if item == 'age':
             return lambda : 25
-        raise AttributeError('\'Student\' object has no attribute \'%s\'' % attr)
+        raise AttributeError('\'Student\' object has no attribute \'%s\'' % item)
 '''
 注意，只有在没有找到属性的情况下，才调用__getattr__，已有的属性，比如name，不会在__getattr__中查找。
 
