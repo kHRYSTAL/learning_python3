@@ -55,7 +55,16 @@ No matching distribution found for mysql-connector-python
 
 
 '''
+'''
+There is an outstanding bug with the way it is packaged on PIP. here are the details: http://bugs.mysql.com/bug.php?id=76063
 
+You can use following commands to install mysql-connector as mentioned on same link :
+
+wget https://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.3.zip
+unzip mysql-connector-python-2.0.3.zip
+cd mysql-connector-python-2.0.3
+python setup.py install
+'''
 
 
 
