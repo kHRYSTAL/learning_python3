@@ -14,7 +14,10 @@
 
 ![chrome-dev-tools](http://www.liaoxuefeng.com/files/attachments/001399878215246e5c00e9142244698a91c5d558c5901a1000)
 
-```Elements```显示网页的结构，```Network```显示浏览器和服务器的通信。我们点Network，确保第一个小红灯亮着，Chrome就会记录所有浏览器和服务器之间的通信：
+```Elements```
+显示网页的结构，
+```Network```
+显示浏览器和服务器的通信。我们点Network，确保第一个小红灯亮着，Chrome就会记录所有浏览器和服务器之间的通信：
 
 ![chrome-devtools-network](http://www.liaoxuefeng.com/files/attachments/001399878404470cf9e8257a27a4807b856b7dfa23f93a0000)
 
