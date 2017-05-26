@@ -14,7 +14,9 @@
 @time: 16/5/17 下午7:30
 """
 import unittest
+
 from test02.mydict import Dict
+
 
 class TestDict(unittest.TestCase):
     def test_init(self):

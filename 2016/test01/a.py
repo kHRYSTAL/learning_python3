@@ -13,10 +13,7 @@
 @file: a.py
 @time: 16/5/16 下午11:34
 """
-from test01 import hello
-from test01.hello import Hello
-import sys
-from sys import setprofile
+
 
 def func():
     pass

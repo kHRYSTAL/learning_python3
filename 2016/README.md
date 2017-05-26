@@ -5,7 +5,8 @@
 [第一个python程序](https://github.com/kHRYSTAL/StartLearningPython/blob/master/01_calc.py)
 
 [输入和输出](https://github.com/kHRYSTAL/StartLearningPython/blob/master/02_input.py)
-###基础
+
+### 基础
 [绝对值](https://github.com/kHRYSTAL/StartLearningPython/blob/master/03_python_base/01_abs_value.py)
 
 [数据类型](https://github.com/kHRYSTAL/StartLearningPython/blob/master/03_python_base/02_data_type.py)
@@ -20,7 +21,7 @@
 
 [字典和集合](https://github.com/kHRYSTAL/StartLearningPython/blob/master/03_python_base/07_dict_set.py)
 
-##函数
+## 函数
 [使用函数](https://github.com/kHRYSTAL/StartLearningPython/blob/master/04_funtcion/01_use_function.py)
 
 [定义函数](https://github.com/kHRYSTAL/StartLearningPython/blob/master/04_funtcion/02_define_function.py)
@@ -29,7 +30,7 @@
 
 [递归函数](https://github.com/kHRYSTAL/StartLearningPython/blob/master/04_funtcion/04_recurse_function.py)
 
-##高级功能
+## 高级功能
 [切片](https://github.com/kHRYSTAL/StartLearningPython/blob/master/05_senior_features/02_chip.py)
 
 [可迭代对象](https://github.com/kHRYSTAL/StartLearningPython/blob/master/05_senior_features/03_iteration.py)
@@ -41,7 +42,7 @@
 [迭代器](https://github.com/kHRYSTAL/StartLearningPython/blob/master/05_senior_features/06_iterator.py)
 
 
-##函数式编程
+## 函数式编程
 
 [map/reduce](https://github.com/kHRYSTAL/StartLearningPython/blob/master/06_functional_programming/01_map_reduce.py)
 
