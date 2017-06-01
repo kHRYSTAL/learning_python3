@@ -19,8 +19,8 @@ import sys
 # print(os.path.abspath(__file__))  # 通过相对路径自动获取绝对路径
 #
 # print(os.path.dirname(os.path.abspath(__file__)))  # 获取当前文件的文件夹的绝对路径
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # print(os.path.dirname(CURRENT_DIR)) # 项目文件夹绝对路径
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(CURRENT_DIR)
 
 # 添加项目至环境变量
