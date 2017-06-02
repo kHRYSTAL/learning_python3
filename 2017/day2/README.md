@@ -18,3 +18,9 @@
 
 * 导入包
 
+标注库:
+1. time与datetime
+    时间戳 格式化时间字符串 struct_time(以元组表示的时间)
+    时间戳 time.time() 1970到现在的秒数
+    time.struct_time()
+
