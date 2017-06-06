@@ -1,0 +1,30 @@
+docker tag  60.205.111.19:5000/alpine_jdk7:1.0
+docker tag  60.205.111.19:5000/java_resume:2.0
+docker tag  60.205.111.19:5000/centos:7
+docker tag  60.205.111.19:5000/golang_mystica:latest
+docker tag  60.205.111.19:5000/java_resume:latest
+docker tag  60.205.111.19:5000/php_resume:latest
+docker tag  60.205.111.19:5000/rabbitmq_admin:latest
+docker tag  60.205.111.19:5000/nginx_php:latest
+docker tag  60.205.111.19:5000/mysql:5.6
+docker tag  60.205.111.19:5000/java:7-alpine
+docker tag  60.205.111.19:5000/phpfpm:<none>
+docker tag  60.205.111.19:5000/redis:latest
+docker tag  60.205.111.19:5000/nginx:latest
+docker tag  60.205.111.19:5000/centos6:latest
+
+
+docker push  60.205.111.19:5000/alpine_jdk7:1.0
+docker push  60.205.111.19:5000/java_resume:2.0
+docker push  60.205.111.19:5000/centos:7
+docker push  60.205.111.19:5000/golang_mystica:latest
+docker push  60.205.111.19:5000/java_resume:latest
+docker push  60.205.111.19:5000/php_resume:latest
+docker push  60.205.111.19:5000/rabbitmq_admin:latest
+docker push  60.205.111.19:5000/nginx_php:latest
+docker push  60.205.111.19:5000/mysql:5.6
+docker push  60.205.111.19:5000/java:7-alpine
+docker push  60.205.111.19:5000/phpfpm:<none>
+docker push  60.205.111.19:5000/redis:latest
+docker push  60.205.111.19:5000/nginx:latest
+docker push  60.205.111.19:5000/centos6:latest
