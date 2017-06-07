@@ -31,7 +31,7 @@ class Man(People, Relation):
     def __init__(self, name):
         # People.__init__(self, name)
         # Relation.__init__(self)
-        super(Man, self).__init__(name)
+        super(Man, self).__init__(name)  # 依次调用父类的__init__
 
     def play(self):
         print('%s is playing' % self.name)
@@ -41,5 +41,5 @@ m1 = Man('khrystal')
 m2 = Man('jack')
 
 m1.make_friends(m2)
-m2.name = 'haha'
+m2.name = 'haha'  # m2在m1的list中
 print(m1.friends[0].name)
