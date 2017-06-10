@@ -81,4 +81,70 @@ Animal.animal_talk(c)
 		把一个方法变成静态属性 需要装饰器 @property @method.setter @method.deleter @method.getter
 		作用是隐藏实现细节
 
+反射
+
+    __getattr__()
+    __setattr__()
+    __hasattr__()
+    __delattr__()
+
+
+异常
+
+    异常捕获与自定义异常
+    raise # 抛出异常
+
+    try:
+        pass
+    except Exception as e:
+        pass
+    else:
+        pass
+    finally:
+        pass
+使用type创建类
+
+```
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def func(self):
+        """装配到类的函数"""
+        print('hello class %s' % self.name)
+
+    '''类名 父类 类的变量和函数'''
+    Foo = type('Foo', (object,), {'talk': func, '__init__': __init__})
+    print(type(Foo))
+    f = Foo('Hello', 22)
+    f.talk()
+```
+
+类的实例化过程
+
+    元类__metaclass__
+    类中由一个属性__metaclass__
+    其用来表示该类由谁来实例化创建
+    所以 我们可以为__metaclass__设置一个type类的派生类
+    从而查看类的创建过程
+    __new__
+    __init__
+
+动态导入
+
+    1.内置方法__import__('str')
+    2.improt importlib
+
+内置方法
+
+    __new__()
+    __call__() : obj = Dog(), obj() 会执行call方法
+    __metaclass__ : 定义类是由何种方法去创建对象
+    __setitem__
+    __getitem__
+    __delitem__
+
+断言
+
+    assert 如果不通过抛出异常
 

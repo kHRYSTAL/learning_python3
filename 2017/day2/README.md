@@ -18,9 +18,40 @@
 
 * 导入包
 
-标注库:
-1. time与datetime
+#### 标注库:
+
+time与datetime
+
     时间戳 格式化时间字符串 struct_time(以元组表示的时间)
+
     时间戳 time.time() 1970到现在的秒数
+
     time.struct_time()
+
+hashlib
+
+    用于加密相关操作 3.x 里代替了md5和sha模块 主要提供SHA1 SHA224 SHA256 SHA384 SHA512 MD5算法
+
+configparser
+
+    ini等配置文件解析
+
+shelve
+
+    字典格式对象序列化读写
+
+shutil
+
+    文件和文件夹操作: 增删改压缩
+
+xml.etree.ElementTree
+
+    xml解析与创建修改
+
+zipfile
+
+    文件压缩与解压
+
+
+
 

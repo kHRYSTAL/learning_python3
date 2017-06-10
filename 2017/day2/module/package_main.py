@@ -10,13 +10,12 @@
 # @software: PyCharm
 # @file: package_main.py
 # @time: 17/6/1 下午1:59
-import package_test
+import package_test  # 相当于导入__init__ 而不是包下的其他文件
 from package_test import package_module as module
 
 print(package_test.name)
 
 module.say_hello()
-
 
 if __name__ == '__main__':
     pass

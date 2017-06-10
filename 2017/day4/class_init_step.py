@@ -27,6 +27,7 @@ class MyType(type):
     """
     元类的实现 定义自己的类如果创建
     """
+
     def __init__(cls, what, bases=None, dict=None):
         print('MyType __init__')
         super(MyType, cls).__init__(what, bases, dict)
@@ -35,12 +36,11 @@ class MyType(type):
         print('MyType __call__')
         obj = cls.__new__(cls, *args, **kwargs)  # 执行Foo的__new__ 获取的obj传给__init__
         # 可以封装一些操作 在obj 创建时
-        cls.__init__(obj, *args, **kwargs)        # 执行Foo的__init__
+        cls.__init__(obj, *args, **kwargs)  # 执行Foo的__init__
 
 
 class Foo(object):
-
-    __metaclass__ = MyType
+    __metaclass__ = MyType  # 默认是type
 
     def __init__(self, name):
         self.name = name
@@ -59,7 +59,6 @@ class Foo(object):
 
 f = Foo("Foo's Name")
 print(f.name)
-
 
 """
 python3 看不到效果
