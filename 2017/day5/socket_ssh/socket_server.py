@@ -13,8 +13,9 @@
 
 import socket
 import os
+import time
 
-server = socket.socket()
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(('localhost', 7777))
 server.listen()
 while True:
@@ -25,6 +26,14 @@ while True:
             print('client is lost')
             break
         res = os.popen(data.decode('utf-8')).read()
+
+        if len(res) == 0:
+            res = 'cmd has no output'
+
+        conn.send(str(len(res.encode('utf-8'))).encode('utf-8'))  # 先发数据大小给客户端
+        print('send len ', str(len(res)).encode('utf-8'))
+        time.sleep(1)
         conn.send(res.encode('utf-8'))
+        print('send res', res)
 
 server.close()
