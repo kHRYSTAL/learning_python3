@@ -13,7 +13,6 @@
 
 import socket
 import os
-import time
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(('localhost', 7777))
@@ -32,8 +31,8 @@ while True:
 
         conn.send(str(len(res.encode('utf-8'))).encode('utf-8'))  # 先发数据大小给客户端
         print('send len ', str(len(res)).encode('utf-8'))
-        time.sleep(1)
-        conn.send(res.encode('utf-8'))
+        client_ack = conn.recv(1024)  # wait client to confirm
+        conn.send(res.encode('utf-8'))  # 连续send有可能导致粘包, 因此在中间插入一条确认接收的方法
         print('send res', res)
 
 server.close()
