@@ -39,8 +39,11 @@ while True:
             for line in f:
                 m.update(line)
                 conn.send(line)
-            print('file md5', m.hexdigest())
+
             f.close()
+            print('file md5', m.hexdigest())
+            conn.recv(1024)  # 接收客户端拷贝完成消息,防止粘包
+            conn.send(m.hexdigest().encode())  # send md5
         print('send done')
 
 server.close()

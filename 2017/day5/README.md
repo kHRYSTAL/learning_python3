@@ -21,3 +21,13 @@ socket封装了tcp, udp
         开始边读边发数据
         发送md5给客户端
         关闭文件
+4. socketserver: 处理多个请求
+
+        First, you must create a request handler处理类 class by subclassing the BaseRequestHandler class and overriding覆盖 its handle() method; this method will process incoming requests. 　　
+        你必须自己创建一个请求处理类，并且这个类要继承BaseRequestHandler,并且还有重写父亲类里的handle()
+        Second, you must instantiate实例化 one of the server classes, passing it the server’s address and the request handler class.
+        你必须实例化TCPServer ，并且传递server ip 和 你上面创建的请求处理类 给这个TCPServer
+        Then call the handle_request() or serve_forever() method of the server object to process one or many requests.
+        server.handle_request() #只处理一个请求
+        server.serve_forever() #处理多个请求，永远执行
+        Finally, call server_close() to close the socket.

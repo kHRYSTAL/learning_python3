@@ -12,6 +12,7 @@
 # @time: 17/6/13 下午4:42
 
 import socket
+import hashlib
 
 client = socket.socket()
 client.connect(('localhost', 9999))
@@ -30,14 +31,21 @@ while True:
         received_size = 0
         filename = cmd.split()[1]
         f = open(filename + '.new', 'wb')
+        m = hashlib.md5()
         while received_size < file_total_size:
             data = client.recv(1024)
             received_size += len(data)
+            m.update(data)
             f.write(data)
             print(file_total_size, received_size)
         else:
+            client.send(b'received done')  # 发送完成消息
+            new_file_md5 = m.hexdigest()
             print('file received done', received_size, file_total_size)
             f.close()
 
+        server_file_md5 = client.recv(1024)
+        print("server file md5:", server_file_md5.decode('utf-8'))
+        print("client file md5:", new_file_md5)
 
 client.close()
