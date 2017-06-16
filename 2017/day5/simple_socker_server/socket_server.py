@@ -16,6 +16,15 @@ import socketserver
 
 
 class MyHandle(socketserver.BaseRequestHandler):
+
+    def setup(self):
+        """父类方法"""
+        pass
+
+    def finish(self):
+        """父类方法"""
+        pass
+
     """
     服务端处理请求类 所有的请求都会最终都会在handle方法中处理
     每一个请求传递到服务器都会实例化这个类
@@ -42,7 +51,7 @@ class MyHandle(socketserver.BaseRequestHandler):
 if __name__ == '__main__':
     HOST, PORT = 'localhost', 9876
     # 创建TCPServer
-    server = socketserver.TCPServer((HOST, PORT), MyHandle)
+    server = socketserver.ThreadingTCPServer((HOST, PORT), MyHandle)
     """
     server.handle_request() #只处理一个请求
     server.serve_forever() #处理多个请求，永远执行

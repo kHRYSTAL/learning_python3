@@ -31,3 +31,18 @@ socket封装了tcp, udp
         server.handle_request() #只处理一个请求
         server.serve_forever() #处理多个请求，永远执行
         Finally, call server_close() to close the socket.
+
+        ThreadingTCPServer: 每一个请求就会开启一个线程
+        ForkingTCPServer: 每一个请求就会开启一个进程(windows系统下没有fork, 所以在windows上无效)
+
+
+allow_reuse_address:允许重用地址
+
+    断开后重新运行有时会出现'address already in use'错误
+    需要等待几十秒 如果不想等待 可以使用该参数
+    在普通socket上:
+        server = socket.socket()
+        server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    在socketserver上:
+        self.allow_reuse_address
