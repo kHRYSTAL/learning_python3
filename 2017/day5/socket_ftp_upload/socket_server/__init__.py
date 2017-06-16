@@ -8,6 +8,9 @@
 # @contact: khrystal0918@gmail.com
 # @site: https://github.com/kHRYSTAL
 # @software: PyCharm
-# @file: socket_server.py
-# @time: 17/6/16 上午10:05
+# @file: __init__.py.py
+# @time: 17/6/16 上午11:49
 
+
+if __name__ == '__main__':
+    pass

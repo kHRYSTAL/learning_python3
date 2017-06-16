@@ -66,7 +66,7 @@ class FtpClient(object):
                 for line in f:
                     self.client.send(line)
                 else:
-                    print('file upload success...')
+                    # print('file upload success...')
                     f.close()
             else:
                 print(filename, 'is not exist')
