@@ -61,6 +61,63 @@ A: 10.0.0.31(持有A公钥) ---> B: 10.0.0.41 (持有A私钥)
     对于父进程的修改(不是删除) 不会影响子进程
 
 
+线程实现方式
+
+    1.方法调用
+    def run(n):
+    """
+    task
+    """
+    print('task', n)
+    time.sleep(2)
+
+
+    # target 参数为执行的目标函数, args 为参数 元组
+    t1 = threading.Thread(target=run, args=('t1',))
+    t2 = threading.Thread(target=run, args=('t2',))
+
+    t1.start()
+    t2.start()
+
+    2.类的继承
+
+
+线程的join()函数 如果线程没有执行完, 会在join()函数等待
+
+线程执行完成之后才会向下继续执行 可以进行线程控制操作和顺序执行
+
+    start_time = time.time()
+    t_objs = []  # 将数据添加到列表里,用于循环执行完执行join()
+    for i in range(20):
+        t = MyThread(('i=%s' % i))
+        t.start()
+        t_objs.append(t)
+
+    for t in t_objs:
+        t.join()
+    print('cost time:', time.time() - start_time)
+
+
+守护进程(线程) setDeamon(True)
+
+    线程可以设置主从关系
+    如果不加join 线程实际是并行的没有主从关系
+        (实际上主线程还是等所有线程都执行完才退出程序, 说明最后有一个join())
+    如果设置了其他线程为守护线程 ,如果主线程执行完毕 就会直接退出程序
+            守护线程也会退出 不再执行 因为守护线程是'从' 程序不会管它是否结束
+
+    start_time = time.time()
+    t_objs = []  # 将数据添加到列表里,用于循环执行完执行join()
+    for i in range(20):
+        t = MyThread(('i=%s' % i))
+        t.setDaemon(True) # 一定要在start之前设置
+        t.start()
+        t_objs.append(t)
+    print('cost time:', time.time() - start_time)
+    # 执行到这里程序退出 不会管t的操作是否完成
+    print('main thread:', threading.current_thread())
+
+
 
 
 
