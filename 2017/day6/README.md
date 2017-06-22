@@ -189,6 +189,39 @@ GIL 全局解释器锁:
     (Java 线程池)
 
 
+事件(Events)
 
+    事件是简单的同步对象 用于线程之间的数据同步
+    事件可被所有线程查看或修改 实际上事件就是线程之间共享的资源
+    通过事件的修改 可以对多个线程进行不同的控制
 
+    红绿灯(线程) 车辆(线程) (改变红绿灯)event
 
+    红绿灯线程通过改变红绿灯 车辆进行轮询检测event状态 如果是红灯就停止 绿灯就执行
+
+    event = threading.Event()
+    event.wait() # 等待被设定 如果没有设置 会阻塞 (红灯)不向下执行
+    event.set() # 设置event 绿灯 wait()就不会阻塞
+    event.clear() # 清空 再次等待被设定 会阻塞(红灯)
+    event.is_set() # 判断是否设置标志
+
+队列(Queen)
+
+    queue.Queue(maxsize=0) # 先进先出 FIFO
+    queue.LifoQueue(maxsize=0) # 后进先出 LIFO
+    queue.ProiorityQueue(maxsize=0) # 存储数据时可设置优先级(VIP先出)
+
+    可以调用q.get_nowait()
+    如果没有数据会抛出异常
+    或者判断q.qsize()
+
+    """
+    参数block 为True就是没数据时阻塞, time 为超时时间
+    Queue.get(block=True, timeout=None)
+    """
+    # 可以设置队列最大容量
+    # q = queue.Queue(maxsize=3)
+    # 如果队列满了 再put会阻塞
+
+    # todo
+    Queue.task_done()
