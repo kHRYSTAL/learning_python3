@@ -20,6 +20,7 @@ def fib(max):
     """斐波那契函数"""
     n, a, b = 0, 0, 1
     while n < max:
+        n += 1
         yield b
         a, b = b, a + b
     return 'done'  # 当next不会再执行时 会执行到这里 抛出StopIteration异常

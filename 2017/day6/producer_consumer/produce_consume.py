@@ -18,7 +18,7 @@ import queue
 q = queue.Queue(10)
 
 
-def Producer(name):
+def producer(name):
     count = 1
     while True:
         print('生产骨头%s' % count)
@@ -27,15 +27,15 @@ def Producer(name):
         count += 1
 
 
-def Consumer(name):
+def consumer(name):
     while True:
         print('[%s] 取到 [%s]' % (name, q.get()))
         time.sleep(1)
 
 
-p = threading.Thread(target=Producer, args=('kHRYSTAL',))
-c = threading.Thread(target=Consumer, args=('Baladuu',))
-c1 = threading.Thread(target=Consumer, args=('Dingding',))
+p = threading.Thread(target=producer, args=('kHRYSTAL',))
+c = threading.Thread(target=consumer, args=('Baladuu',))
+c1 = threading.Thread(target=consumer, args=('Dingding',))
 
 p.start()
 c.start()

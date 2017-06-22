@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # @version: ??
-# @usage: 
+# @usage: 使用join函数 使主线程能够接收到所有线程结束的信号
 # @author: kHRYSTAL
 # @license: Apache Licence 
 # @contact: khrystal0918@gmail.com
