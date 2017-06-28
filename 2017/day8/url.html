@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<!--[if IE 6]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 7]><html class="ie lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<!--[if !IE]><!--> <html> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width"/>
+  <meta name="HandheldFriendly" content="true"/>
+  <meta name="mobile-agent" content="format=html5;url=http://www.jianshu.com/p/ebac88cdf9d6">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description"  content="Battery Historian工具使用 Battery Historian 一款由Google提供的Android系统电量分析工具，从手机中导出bugreport文件上传至页面，在网页中生成详细的图表数据来展示手机上各模块电量消耗过程，最后通过App数据的分析制定出相关的电量优化的方法。https://github.com/google/battery-historian 运行环境 根据...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8" />
+  <meta property="wb:webmaster" content="294ec9de89e7fadb" />
+  <meta property="qc:admins" content="104102651453316562112116375" />
+  <meta property="qc:admins" content="11635613706305617" />
+  <meta property="qc:admins" content="1163561616621163056375" />
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4" />
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI" />
+  <meta http-equiv="mobile-agent" content="format=html5; url=http://www.jianshu.com/p/ebac88cdf9d6">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/7890239">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="Android应用耗电量分析与优化建议" property="twitter:title">
+  <meta content="Battery Historian工具使用 Battery Historian 一款由Google提供的Android系统电量分析工具，从手机中导出bugreport文件上传至页面，在网页中生成详细的图表数据来展示手机上各模块电量消耗过程，最后通过App数据的分析制定出相关的电量优化的方法。https://github.com/google/battery-historian 运行环境 根据gitbub上面介绍，Battery Historian工具的安装有两种方式： 通过安装Docker环境来安装。（这种方式很简单，推荐使用） 安装GO环境、Python、Java环境。（安装比较繁琐感..." property="twitter:description">
+  <meta content="http://www.jianshu.com/p/ebac88cdf9d6" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="Android应用耗电量分析与优化建议">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://www.jianshu.com/p/ebac88cdf9d6">
+  <meta property="og:description" content="Battery Historian工具使用 Battery Historian 一款由Google提供的Android系统电量分析工具，从手机中导出bugreport文件上传至页面，在网页中生成...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/7890239" />
+  <meta property="al:ios:app_store_id" content="888237539" />
+  <meta property="al:ios:app_name" content="简书" />
+
+  <meta property="al:android:url" content="jianshu://notes/7890239" />
+  <meta property="al:android:package" content="com.jianshu.haruki" />
+  <meta property="al:android:app_name" content="简书" />
+  <!-- End -->
+
+
+    <title>Android应用耗电量分析与优化建议 - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="k9HfGCo4WNgBbwFbNyPH/YrFMzdwyNhYJPlckNMsIHVIMOJdnEy1rBnJY0wJbabdkqCnr/l/3urcifaFFLTwJw==" />
+
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web-778edda27c438b97ebce.css" />
+  
+  <link rel="stylesheet" media="all" href="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-778edda27c438b97ebce.css" />
+
+  <link href="//cdn2.jianshu.io/assets/favicons/favicon-783beb88ed621ceab614de960376ac0c.ico" rel="icon">
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/57-47624b2e2161e8eb144462c85db0a5ff.png" sizes="57x57" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/72-c00cde7cf98fc49e50cbb3ee1dcd5804.png" sizes="72x72" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/76-e8af0bdeaf1ba31e303b1fde8b5e66c4.png" sizes="76x76" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/114-f4c78569bbf1977e8382a5fd90c9237a.png" sizes="114x114" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/120-cf10c3711dba269522743729efe66bbc.png" sizes="120x120" />
+      <link rel="apple-touch-icon-precomposed" href="//cdn2.jianshu.io/assets/apple-touch-icons/152-7bd60457b5f3ecbf1343f0e6241be4f8.png" sizes="152x152" />
+</head>
+
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="/"><img src="//cdn2.jianshu.io/assets/web/logo-58fd04f6f0de908401aa561cda6a0688.png" alt="Logo" /></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" href="/sign_up">注册</a>
+      <a class="btn log-in" href="/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div id="view-mode-ctrl">
+    </div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="">
+              <a href="/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="">
+              <a class="app-download-btn" href="/apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+              <input type="text" name="q" id="q" value="" placeholder="搜索" class="search-input" />
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+              <!-- <div id="navbar-trending-search"></div> -->
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+  <div class="post">
+    <div class="article">
+        <h1 class="title">Android应用耗电量分析与优化建议</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="/u/efb1b44fe24a">
+            <img src="//upload.jianshu.io/users/upload_avatars/4116408/5eafe8860e10?imageMogr2/auto-orient/strip|imageView2/1/w/144/h/144" alt="144" />
+</a>          <div class="info">
+            <span class="tag">作者</span>
+            <span class="name"><a href="/u/efb1b44fe24a">哎你的益达</a></span>
+            <!-- 关注用户按钮 -->
+            <div data-author-follow-button></div>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time">2016.12.23 21:59</span>
+              <span class="wordage">字数 1565</span>
+            </div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+        <!-- -->
+
+        <!-- 文章内容 -->
+        <div class="show-content">
+          <h2>Battery Historian工具使用</h2>
+<p>Battery Historian 一款由Google提供的Android系统电量分析工具，从手机中导出bugreport文件上传至页面，在网页中生成详细的图表数据来展示手机上各模块电量消耗过程，最后通过App数据的分析制定出相关的电量优化的方法。<br><a href="https://github.com/google/battery-historian" target="_blank">https://github.com/google/battery-historian</a></p>
+<h3>运行环境</h3>
+<p>根据gitbub上面介绍，Battery Historian工具的安装有两种方式：</p>
+<ol>
+<li>通过安装Docker环境来安装。（这种方式很简单，推荐使用）</li>
+<li>安装GO环境、Python、Java环境。（安装比较繁琐感兴趣可以去GitHub上看看）</li>
+</ol>
+<h3>Docker环境</h3>
+<p>Docker是一种容器，一般用于云计算和大数据平台。提倡的一种思想就是：软件即服务。一句话就可以将别人发布的docker服务环境一次全部copy过来(注意是整个软件环境，相当于复制了一台一模一样的主机，连软件都不要安装了，全有了。)</p>
+<p>官方下载地址：</p>
+<ul>
+<li>Mac：<a href="https://docs.docker.com/docker-for-mac/" target="_blank">https://docs.docker.com/docker-for-mac/</a>
+</li>
+<li>Windows：<a href="https://docs.docker.com/docker-for-mac/" target="_blank">https://docs.docker.com/docker-for-mac/</a>
+</li>
+</ul>
+<h3>安装Battery Historian命令</h3>
+<p>安装完Docker环境后通过以下命令来安装Battery Historian工具：</p>
+<p> <strong>Mac：</strong></p>
+<pre><code class="powershell"># &lt;port&gt;替换成本机一个端口
+$ docker -- run -p &lt;port&gt;:9999 gcr.io/android-battery-historian:2.1 --port 9999</code></pre>
+<p>在此需要个漫长的下载安装等待，完成后在浏览器输入<a href="http://localhost:9999%E5%9C%B0%E5%9D%80%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E8%AE%BF%E9%97%AE%E5%88%B0Battery" target="_blank">http://localhost:9999地址可以正常访问到Battery</a> Historian页面说明已经成功了。</p>
+<div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/4116408-00ad3f5c1eb45ee0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/4116408-00ad3f5c1eb45ee0.png?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">提交文件页面</div>
+</div>
+<p><strong>Windows：</strong></p>
+<p>没有尝试！可参考：<a href="https://github.com/google/battery-historian" target="_blank">https://github.com/google/battery-historian</a></p>
+<h3>App电量消耗分析</h3>
+<p>工具安装成功后我们需要从手机上导出数据进行分析</p>
+<pre><code class="powershell"># 将bugreport的信息保存到.zip文件中
+$ adb bugreport bugreport.zip</code></pre>
+<p>Android 6.0以下系统请使用以下导出命令</p>
+<pre><code class="powershell"># 将bugreport的信息保存到txt文档中
+$ adb bugreport bugreport.txt</code></pre>
+<p>打开浏览器输入<a href="http://localhost:9999%E6%88%90%E5%8A%9F%E8%AE%BF%E9%97%AE%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%B0%86%E5%AF%BC%E5%87%BA%E7%9A%84.zip%E6%88%96.txt%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E6%8F%90%E4%BA%A4%E7%94%9F%E6%88%90%E5%88%86%E6%9E%90%E5%9B%BE%E8%A1%A8%EF%BC%9A" target="_blank">http://localhost:9999成功访问页面，将导出的.zip或.txt文件进行提交生成分析图表：</a></p>
+<p>在该图中左侧为各单元模块，X轴为对应的时间线，可通过点击左侧Batter level（电量百分比）、Coulomb charge（电池容量）、Temperature（手机温度）选项展示出相应的变化曲线</p>
+<div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/4116408-4bf4cc14383568b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/4116408-4bf4cc14383568b9.png?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">电量消耗明细</div>
+</div>
+<p>通过选择标签System Stats、History Stats来查看手机整体的运行状态详情，也可以通过指定App包名选择App Stats标签查看单个的运行状态详情</p>
+<div class="image-package">
+<img src="http://upload-images.jianshu.io/upload_images/4116408-f21f1a3ae5bcd9aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" data-original-src="http://upload-images.jianshu.io/upload_images/4116408-f21f1a3ae5bcd9aa.png?imageMogr2/auto-orient/strip%7CimageView2/2"><br><div class="image-caption">详细数据</div>
+</div>
+<h3>导致电量消耗过快的原因</h3>
+<p>Android系统为了尽可能的增加设备的续航，会不断的关闭各种硬件模块来节省电量。当我们的App在设备处于休眠状态下想要执行一次网络请求的时候；首先需要唤醒设备，接着会发送数据请求，然后等待服务端返回的结果，最后再经过一段时间的等待才会慢慢进入休眠状态。</p>
+<ul>
+<li>
+<p>尽可能地避免唤醒锁或批量操作以避免频繁的唤醒设备即使屏幕没有被点亮CPU也会保持运行状态，通过AlarmManager可唤醒设备，而项目中不限制的滥用，导致系统被频繁唤醒；Android 的 Timer 类可以用来计划需要循环执行的任务，Timer 的问题是它需要用 WakeLock 让 CPU 保持唤醒状态，再加上不恰当的使用WakeLock最终没有合理释放掉，使得系统长时间无法进入休眠，势必导致高耗电，可参考（android设备休眠[<a href="http://www.cnblogs.com/kobe8/p/3819305.html%5D%EF%BC%89" target="_blank">http://www.cnblogs.com/kobe8/p/3819305.html]）</a>     </p>
+</li>
+<li>
+<p>CPU和网络耗电方面，主要是减少I/O操作（包括数据库操作），大量的计算；减少网络网络请求次数和数据量，将不重要的操作放在用户充电或已经连接至WiFi的时候。分析和记录之类的操作不需要实时进行。</p>
+</li>
+<li>
+<p>传感器方面设备屏幕亮度、颜色背景等需要考虑，但除了阅读类等应用，一般是不太考虑屏幕消耗的。更多的是对GPS的使用注意，减少无用的GPS请求和及时关闭GPS搜索。</p>
+</li>
+</ul>
+<h2>优化建议</h2>
+<p>开发过程中可以尝试通过调整任务优先级等策略来达到降低损耗的目的，使用<strong>JobScheduler</strong>是个不错的选择：</p>
+<ul>
+<li>可以推迟的非面向用户的任务(如定期数据库数据更新)；</li>
+<li>当充电时才希望执行的工作(如备份数据)；</li>
+<li>需要访问网络或 Wi-Fi 连接的任务(如向服务器拉取配置数据)；</li>
+<li>零散任务合并到一个批次去定期运行；</li>
+<li>当设备空闲时启动某些任务；</li>
+<li>只有当条件得到满足, 系统才会启动计划中的任务（充电、WIFI...）；</li>
+</ul>
+<p>官方建议优化的一些方法<br><a href="https://developer.android.google.cn/training/monitoring-device-state/index.html" target="_blank">https://developer.android.google.cn/training/monitoring-device-state/index.html</a></p>
+<p>对低电耗模式和应用待机模式进行针对性优化<br><a href="https://developer.android.google.cn/training/monitoring-device-state/doze-standby.html" target="_blank">https://developer.android.google.cn/training/monitoring-device-state/doze-standby.html</a></p>
+<p>Android 7.0新特性对电池管理进一步加强，一些新的变化可能多对我们现有的业务会造成影响需关注<br><a href="https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#perf" target="_blank">https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#perf</a></p>
+<h3>JobScheduler</h3>
+<p>自 Android 5.0 发布以来，JobScheduler 已成为执行后台工作的首选方式，其工作方式有利于用户。应用可以在安排作业的同时允许系统基于内存、电源和连接情况进行优化。JobSchedule的宗旨就是把一些不是特别紧急的任务放到更合适的时机批量处理。这样做有两个好处：</p>
+<ul>
+<li>避免频繁的唤醒硬件模块，造成不必要的电量消耗。</li>
+<li>避免在不合适的时间(例如低电量情况下、弱网络或者移动网络情况下的)执行过多的任务消耗电量；</li>
+</ul>
+<p>JobScheduler的简单使用，首先自定义一个Service类，继承自JobService</p>
+<pre><code class="java">public class JobSchedulerService extends JobService{
+    private String TAG = JobSchedulerService.class.getSimpleName();
+
+    @Override
+    public boolean onStartJob(JobParameters jobParameters) {
+        Log.d(TAG, "onStartJob:" + jobParameters.getJobId());
+
+        if(true) {
+            // JobService在主线程运行，如果我们这里需要处理比较耗时的业务逻辑需单独开启一条子线程来处理并返回true，
+            // 当给定的任务完成时通过调用jobFinished(JobParameters params, boolean needsRescheduled)告知系统。
+
+            //假设开启一个线程去下载文件
+            new DownloadTask().execute(jobParameters);
+
+            return true;
+
+        }else {
+            //如果只是在本方法内执行一些简单的逻辑话返回false就可以了
+            return false;
+        }
+    }
+
+    /**
+     * 比如我们的服务设定的约束条件为在WIFI状态下运行，结果在任务运行的过程中WIFI断开了系统
+     * 就会通过回掉onStopJob()来通知我们停止运行，正常的情况下不会回掉此方法
+     *
+     * @param jobParameters
+     * @return
+     */
+    @Override
+    public boolean onStopJob(JobParameters jobParameters) {
+        Log.d(TAG, "onStopJob:" + jobParameters.getJobId());
+
+        //如果需要服务在设定的约定条件再次满足时再次执行服务请返回true，反之false
+        return true;
+    }
+
+    class DownloadTask extends AsyncTask&lt;JobParameters, Object, Object&gt; {
+        JobParameters mJobParameters;
+
+        @Override
+        protected Object doInBackground(JobParameters... jobParameterses) {
+            mJobParameters = jobParameterses[0];
+
+            //比如说我们这里处理一个下载任务
+            //或是处理一些比较复杂的运算逻辑
+            //...
+
+            try {
+                Thread.sleep(30*1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            //如果在onStartJob()中返回true的话,处理完成逻辑后一定要执行jobFinished()告知系统已完成，
+            //如果需要重新安排服务请true，反之false
+            jobFinished(mJobParameters, false);
+        }
+    }
+}</code></pre>
+<p>记得在Manifest文件内配置Service <code>&lt;service android:name=".JobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/&gt;</code></p>
+<p>创建工作计划</p>
+<pre><code class="java">public class MainActivity extends Activity{
+    private JobScheduler mJobScheduler;
+    private final int JOB_ID = 1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.mai_layout);
+
+        mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE );
+
+        //通过JobInfo.Builder来设定触发服务的约束条件，最少设定一个条件
+        JobInfo.Builder jobBuilder = new JobInfo.Builder(JOB_ID, new ComponentName(this, JobSchedulerService.class));
+
+        //循环触发，设置任务每三秒定期运行一次
+        jobBuilder.setPeriodic(3000);
+
+        //单次定时触发，设置为三秒以后去触发。这是与setPeriodic(long time)不兼容的，
+        // 并且如果同时使用这两个函数将会导致抛出异常。
+        jobBuilder.setMinimumLatency(3000);
+
+        //在约定的时间内设置的条件都没有被触发时三秒以后开始触发。类似于setMinimumLatency(long time)，
+        // 这个函数是与 setPeriodic(long time) 互相排斥的，并且如果同时使用这两个函数，将会导致抛出异常。
+        jobBuilder.setOverrideDeadline(3000);
+
+        //在设备重新启动后设置的触发条件是否还有效
+        jobBuilder.setPersisted(false);
+
+        // 只有在设备处于一种特定的网络状态时，它才触发。
+        // JobInfo.NETWORK_TYPE_NONE,无论是否有网络均可触发，这个是默认值；
+        // JobInfo.NETWORK_TYPE_ANY，有网络连接时就触发；
+        // JobInfo.NETWORK_TYPE_UNMETERED，非蜂窝网络中触发；
+        // JobInfo.NETWORK_TYPE_NOT_ROAMING，非漫游网络时才可触发；
+        jobBuilder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
+
+        //设置手机充电状态下触发
+        jobBuilder.setRequiresCharging(true);
+
+        //设置手机处于空闲状态时触发
+        jobBuilder.setRequiresDeviceIdle(true);
+
+        //得到JobInfo对象
+        JobInfo jobInfo = jobBuilder.build();
+
+        //设置开始安排任务，它将返回一个状态码
+        //JobScheduler.RESULT_SUCCESS，成功
+        //JobScheduler.RESULT_FAILURE，失败
+        if (mJobScheduler.schedule(jobInfo) == JobScheduler.RESULT_FAILURE) {
+            //安排任务失败
+        }
+
+        //停止指定JobId的工作服务
+        mJobScheduler.cancel(JOB_ID);
+        //停止全部的工作服务
+        mJobScheduler.cancelAll();
+    }</code></pre>
+
+        </div>
+        <!--  -->
+
+        <div class="show-foot">
+          <a class="notebook" href="/nb/8533448">
+            <i class="iconfont ic-search-notebook"></i> <span>Android技术</span>
+</a>          <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+            © 著作权归作者所有
+          </div>
+          <div class="modal-wrap" data-report-note>
+            <a id="report-modal">举报文章</a>
+          </div>
+        </div>
+    </div>
+
+    <!-- 文章底部作者信息 -->
+      <div class="follow-detail">
+        <div class="info">
+          <a class="avatar" href="/u/efb1b44fe24a">
+            <img src="//upload.jianshu.io/users/upload_avatars/4116408/5eafe8860e10?imageMogr2/auto-orient/strip|imageView2/1/w/144/h/144" alt="144" />
+</a>          <div data-author-follow-button></div>
+          <a class="title" href="/u/efb1b44fe24a">哎你的益达</a>
+        </div>
+      </div>
+
+      <div class="support-author"></div>
+
+    <div class="meta-bottom">
+      <div class="btn like-group"></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;http://cwb.assets.jianshu.io/notes/images/7890239/weibo/image_001cee276592.jpg&#39;, &#39;推荐 哎你的益达 的文章《Android应用耗电量分析与优化建议》（ 分享自 @简书 ）&#39;,&#39;http://www.jianshu.com/p/ebac88cdf9d6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+          <a class="share-circle" data-toggle="tooltip" href="http://cwb.assets.jianshu.io/notes/images/7890239/weibo/image_001cee276592.jpg" target="_blank" data-original-title="下载长微博图片">
+            <i class="iconfont ic-picture"></i>
+          </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content='
+          <ul class="share-list">
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;http://www.jianshu.com/p/ebac88cdf9d6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 哎你的益达 的文章《Android应用耗电量分析与优化建议》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-zone"></i><span>分享到QQ空间</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/ebac88cdf9d6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 哎你的益达 的文章《Android应用耗电量分析与优化建议》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-twitter"></i><span>分享到Twitter</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=http://www.jianshu.com/p/ebac88cdf9d6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-facebook"></i><span>分享到Facebook</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;http://www.jianshu.com/p/ebac88cdf9d6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();"><i class="social-icon-sprite social-icon-google"></i><span>分享到Google+</span></a></li>
+            <li><a href="javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;http://www.jianshu.com/p/ebac88cdf9d6?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;Android应用耗电量分析与优化建议&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()"><i class="social-icon-sprite social-icon-douban"></i><span>分享到豆瓣</span></a></li>
+          </ul>
+        '>更多分享</a>
+      </div>
+    </div>
+    <div id="vue_comment"></div>
+  </div>
+
+  <div class="vue-side-tool"></div>
+</div>
+<div class="note-bottom">
+  <div class="js-included-collections"></div>
+  <div data-vcomp="recommended-notes" data-note-id="7890239"></div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"other","read_mode":"day","read_font":"font2","note_show":{"is_author":false,"is_following_author":false,"is_liked_note":false,"uuid":"15ae867b-bdac-4747-be25-9aa4d20926ad"},"note":{"id":7890239,"slug":"ebac88cdf9d6","user_id":4116408,"notebook_id":8533448,"commentable":true,"likes_count":45,"views_count":2051,"public_wordage":1565,"comments_count":10,"author":{"total_wordage":1565,"followers_count":13,"total_likes_count":45}}}</script>
+    
+    <script src="//cdn2.jianshu.io/assets/babel-polyfill-f2c0b85b9d0fcc12d94a.js"></script>
+    <script src="//cdn2.jianshu.io/assets/web-base-778edda27c438b97ebce.js"></script>
+<script src="//cdn2.jianshu.io/assets/web-503f6c44089ff6e9c091.js"></script>
+    
+    <script src="//cdn2.jianshu.io/assets/web/pages/notes/show/entry-040755f9f6c80c7a8ebe.js"></script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-35169517-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  </body>
+</html>

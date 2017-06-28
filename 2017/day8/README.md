@@ -43,5 +43,91 @@
 
 ### gevent 基于greenlet封装 不需要再去手动切换
 
+    import gevent
+    import time
+
+
+    def foo():
+        print('Running in foo')
+        gevent.sleep(2)  # 模拟io A
+        print('Explicit 精确的 context switch to foo again')
+
+
+    def bar():
+        print('Explicit context to bar')
+        gevent.sleep(1)  # 模拟io B
+        print('Implicit context switch back to bar')
+
+
+    """
+    spawn 发起
+
+    按列表顺序遍历执行生成器, 遇到sleep就切换函数, 如果遍历后重新执行, 函数还在sleep, 继续按顺序切换
+    foo 遇到A 执行bar 遇到B  执行foo A还在执行 切换到foo B执行完了 执行bar后面代码
+    执行foo
+
+    相比串行执行(3秒) 代码执行io就跳转 实际上只执行了2秒
+    """
+    start_time = time.time()
+    gevent.joinall([
+        gevent.spawn(foo),
+        gevent.spawn(bar)
+    ])
+
+    print(time.time() - start_time)  # 2s左右
+
+
+### monkey 给程序中所有的io操作做上标记 用于让gevent进行协程操作
+
+    from urllib import request
+    import gevent
+    from gevent import monkey
+    import time
+
+    """
+    经过log判断 实际还是串行的, urllib进行io操作时,
+    gevent 检测不到进行了io操作 因此不会遇到阻塞跳转,需要给urllib打monkey补丁
+    """
+
+    # 把当前程序的所有io操作单独做上标记
+    monkey.patch_all()
+
+    """
+    在这里 相当于读取urllib内部的io操作做上标记
+    """
+
+
+    def f(url):
+        print('GET: %s' % url)
+        resp = request.urlopen(url)
+        data = resp.read()
+        # file = open('url.html', 'wb')
+        # file.write(data)
+        # file.close()
+        print('%d bytes received from %s.' % (len(data), url))
+
+
+    # f('http://www.jianshu.com/p/ebac88cdf9d6')
+    # 串行爬取网页
+    urls = ['http://www.python.org',
+            'http://www.jianshu.com/p/ebac88cdf9d6',
+            'http://github.com']
+
+    start_time = time.time()
+    for url in urls:
+        f(url)
+
+    print("串行", time.time() - start_time)  # 6秒
+
+
+    # 协程爬取网页
+    start_time = time.time()
+    gevent.joinall([
+        gevent.spawn(f, 'http://www.python.org'),
+        gevent.spawn(f, 'http://www.jianshu.com/p/ebac88cdf9d6'),
+        gevent.spawn(f, 'http://github.com')
+    ])
+    print("协程:", time.time() - start_time)  # 2秒
+
 
 
