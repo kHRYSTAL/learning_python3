@@ -21,7 +21,7 @@ import time
 gevent 检测不到进行了io操作 因此不会遇到阻塞跳转,需要给urllib打monkey补丁
 """
 
-# 把当前程序的所有io操作单独做上标记
+# 把当前程序的所有io阻塞操作单独做上标记, 遇到阻塞就switch spawn包裹的函数
 monkey.patch_all()
 
 """
@@ -54,6 +54,7 @@ print("串行", time.time() - start_time)  # 6秒
 
 # 协程爬取网页
 start_time = time.time()
+# joinall的意思是批量执行并加入当前程序所在线程
 gevent.joinall([
     gevent.spawn(f, 'http://www.python.org'),
     gevent.spawn(f, 'http://www.jianshu.com/p/ebac88cdf9d6'),

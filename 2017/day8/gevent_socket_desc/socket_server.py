@@ -59,4 +59,14 @@ while True:
     遇到阻塞 再挂起频繁切换
     """
     spawn = gevent.spawn(handle_request, conn)  # 此处代码并不执行, 而是等待while循环accept阻塞的switch
-    print('generate a generator add to main thread')  # 加入一个生成器至当前线程, 等待阻塞
+    print('generate a generator add to main thread')  # gevent生成一个协程函数, 等待switch时被调用
+
+
+"""
+简而言之
+用了gevent.monkey.patch_all(), 一遇到io阻塞就switch到gevent.spawn包裹的函数, 而gevent.spawn包裹的函数遇到阻塞, 会跳转至其他正在阻塞的位置检查,
+如果此时其他位置不阻塞了 会继续向下执行 直到遇到阻塞(再次switch)或执行完
+
+io执行完了cpu.epoll的回调, 会通过gevent再还原回协程阻塞的位置继续向下执行
+
+"""

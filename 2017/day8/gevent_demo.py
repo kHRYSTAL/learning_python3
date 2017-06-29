@@ -17,13 +17,13 @@ import time
 
 def foo():
     print('Running in foo')
-    gevent.sleep(2)  # 模拟io A
+    gevent.sleep(2)  # 模拟阻塞-A
     print('Explicit 精确的 context switch to foo again')
 
 
 def bar():
     print('Explicit context to bar')
-    gevent.sleep(1)  # 模拟io B
+    gevent.sleep(1)  # 模拟阻塞-B
     print('Implicit context switch back to bar')
 
 
@@ -37,9 +37,10 @@ foo 遇到A 执行bar 遇到B  执行foo A还在执行 切换到foo B执行完�
 相比串行执行(3秒) 代码执行io就跳转 实际上只执行了2秒
 """
 start_time = time.time()
+
+# 批量执行并加入当前程序线程
 gevent.joinall([
     gevent.spawn(foo),
     gevent.spawn(bar)
 ])
-
 print(time.time() - start_time)  # 2s左右
