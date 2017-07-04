@@ -220,7 +220,7 @@
 
     3. I/O多路复用 multiplexing model 实际上还是同步IO 或者说是多个同步阻塞IO
 
-        多路IO其实与同步阻塞原理相同(也就是说也会卡住) 但是select() 同时传递多个socket句柄给kernel
+        多路IO其实与同步阻塞原理相同(也就是说也会卡住) 但是select() 能够同时传递多个socket句柄给kernel
 
         select poll epoll (event driven IO) (发送多个socket)
         select/poll 好处在于单个process就可以同时处理多个网络连接IO
@@ -243,6 +243,8 @@
 
         也就是说不会阻塞 read操作后 进程会拿到一个票据 当kernel完成操作之后 返回结果 进程通过结果进行后续操作
 
+    5. 信号驱动IO
+
 
 
     blocking和non-blocking的区别
@@ -262,6 +264,44 @@
     而asynchronous IO则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。在这整个过程中，进程完全没有被block。
 
 ![几种IO模型区别](http://images2015.cnblogs.com/blog/720333/201609/720333-20160916171648430-240094129.png)
+
+
+#### 多路复用中的函数
+> 每个链接大概消耗4k
+
+* select 用于检测多个socket链接状态 在多路复用IO模型中使用
+
+    最多只能维护1024个socket (linux默认文件最多打开数1024)
+
+    当kernel 返回其中一个socket结果 select需要去循环遍历socket找到结果
+
+* poll
+
+    与select相同 但去掉了1024的限制
+
+* epoll
+
+    (nginx Django 等使用) centOS6后支持 windows不支持(只支持select)
+    当socket有结果 kernel会告诉epoll 哪个socket有结果 去掉了遍历的时间消耗
+
+    水平触发
+        当用户(进程) 在收到kernel通知 由于忙碌没取数据, 数据存在kernel里
+        除非用户主动调用read(socket调用receive) 下一次kernel还会再通知
+    边缘触发
+        kernel不会再通知 数据相当于取不回来了
+
+    epoll的最大优点:
+        1.没有最大数限制
+            早期apache 没有使用epoll 3000个访问就瘫痪 nginx 10万个也没问题
+        2.时间损耗少
+
+    epoll是最常用的 内核对于异步IO支持不是很好 实现也比较复杂 (kernel需要自己去检测socket结果
+        和拷贝结果到用户态)
+    所谓的nginx 等框架 说是异步IO 实际上是使用epoll的多路复用
+
+
+> 在python中 asyncio是真正的异步IO
+
 
 
 
