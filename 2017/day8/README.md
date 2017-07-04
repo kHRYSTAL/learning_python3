@@ -206,4 +206,68 @@
 ![event-drive-model](http://www.aosabook.org/images/twisted/threading_models.png?_=5248247)
 
 
+### IO模型
+
+    所有的IO 最终结果都是执行完成后存在于kernel 其他进程从kernel去进行拷贝
+    fd 文件描述符 IO操作的指令字符串(read, block, recvfrom) 通过文件描述符进程能够进行相关的操作
+
+
+    1. 同步阻塞 遇到阻塞等待IO操作完成才能继续
+
+    2. 同步非阻塞 遇到阻塞 返回error 通过判断是否是error(当不是error 执行拷贝和后续逻辑) 同时可以执行其他流程 (发送一个socket)
+        也就是说 向kernel发送指令并不需要等待 这里是非阻塞的
+        而从kernel拷贝数据到进程 实际上还是阻塞的
+
+    3. I/O多路复用 multiplexing model 实际上还是同步IO 或者说是多个同步阻塞IO
+
+        多路IO其实与同步阻塞原理相同(也就是说也会卡住) 但是select() 同时传递多个socket句柄给kernel
+
+        select poll epoll (event driven IO) (发送多个socket)
+        select/poll 好处在于单个process就可以同时处理多个网络连接IO
+
+        当用户进程调用了select 那么整个进程就会block 同时kernel会监视所有select
+        负责的socket, 当任何一个socket数据准备好了 select就会返回
+        这时用户进程再调用read操作 将数据从kernel拷贝到用户进程(拷贝过程是阻塞的)
+
+        所以 IO多路复用的特点就是通过一种机制 一个进程能同时等待多个fd(文件描述符)(单线程)
+        而这些 其中任意一个进入读就绪状态 select()函数就可以返回
+
+    4. 异步IO (asynchronous IO)
+
+        用户进程发起read操作之后，立刻就可以开始去做其它的事。
+        而另一方面，从kernel的角度，当它收到一个asynchronous read (指令)之后，
+        首先它会立刻返回，[所以不会对用户进程产生任何block]。
+        然后，[kernel会等待数据准备完成，然后将数据拷贝到用户内存]
+        (与其他模型不同的是 数据的准备和拷贝都是内核解决的 而不是进程, 由于kernel进行拷贝 因此这步也是非阻塞的)，
+        当这一切都完成之后，kernel会给用户进程发送一个signal，告诉它read操作完成了。
+
+        也就是说不会阻塞 read操作后 进程会拿到一个票据 当kernel完成操作之后 返回结果 进程通过结果进行后续操作
+
+
+
+    blocking和non-blocking的区别
+
+    调用blocking IO会一直block住对应的进程直到操作完成，而non-blocking IO在kernel还准备数据的情况下会立刻返回。
+
+    synchronous IO和asynchronous IO的区别
+
+    在说明synchronous IO和asynchronous IO的区别之前，需要先给出两者的定义。POSIX的定义是这样子的：
+    - A synchronous I/O operation causes the requesting process to be blocked until that I/O operation completes;
+    - An asynchronous I/O operation does not cause the requesting process to be blocked;
+
+    两者的区别就在于synchronous IO做”IO operation”的时候会将process阻塞。按照这个定义，之前所述的blocking IO，non-blocking IO，IO multiplexing都属于synchronous IO。
+
+    有人会说，non-blocking IO并没有被block啊。这里有个非常“狡猾”的地方，定义中所指的”IO operation”是指真实的IO操作，就是例子中的recvfrom这个system call。non-blocking IO在执行recvfrom这个system call的时候，如果kernel的数据没有准备好，这时候不会block进程。但是，当kernel中数据准备好的时候，recvfrom会将数据从kernel拷贝到用户内存中，这个时候进程是被block了，在这段时间内，进程是被block的。
+
+    而asynchronous IO则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。在这整个过程中，进程完全没有被block。
+
+![几种IO模型区别](http://images2015.cnblogs.com/blog/720333/201609/720333-20160916171648430-240094129.png)
+
+
+
+
+
+
+
+
 
