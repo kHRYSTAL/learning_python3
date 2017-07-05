@@ -225,9 +225,8 @@
         select poll epoll (event driven IO) (发送多个socket)
         select/poll 好处在于单个process就可以同时处理多个网络连接IO
 
-        当用户进程调用了select 那么整个进程就会block 同时kernel会监视所有select
-        负责的socket, 当任何一个socket数据准备好了 select就会返回
-        这时用户进程再调用read操作 将数据从kernel拷贝到用户进程(拷贝过程是阻塞的)
+        当用户进程调用了select 那么整个进程就会block 同时kernel会监视所有select负责的socket, 当任何一个socket数据准备好了 select就会返回
+        这时用户进程再调用连接server, select会返回活动socket, 服务端可read操作 将数据从kernel拷贝到当前进程(拷贝过程是阻塞的)
 
         所以 IO多路复用的特点就是通过一种机制 一个进程能同时等待多个fd(文件描述符)(单线程)
         而这些 其中任意一个进入读就绪状态 select()函数就可以返回
