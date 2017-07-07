@@ -66,5 +66,3 @@ while True:
             print('收到数据', data)
             r.send(data)
 
-if __name__ == '__main__':
-    pass
