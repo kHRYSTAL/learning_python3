@@ -45,8 +45,11 @@ outputs = []
 """
 
 """
-select 的操作相当于监听一组socket 在没有收到活动的socket通知时是阻塞的
+select 的操作相当于监听一组socket列表 在没有收到活动的socket(收到 或 发出)通知时是阻塞的
+output参数, 像output放置什么 select就会发送什么(发出)
 """
+
+msg_dic = {}
 while True:
     readable, writeable, exceptional = select.select(inputs, outputs, inputs)
     print(readable, writeable, exceptional)
@@ -55,14 +58,37 @@ while True:
     当监听到活动的 会继续执行 获取readable的socket, 建立与客户端的连接
     """
     for r in readable:
-        if r is server:  # r是server本身的socket 新来了个连接
+        if r is server:  # r是server本身的socket 表示新来了个连接
             conn, addr = server.accept()
             print(conn, addr)
             # conn.recv(1024) # 由于设置的是不阻塞 且客户端还没发数据 会报错
             # 将conn加到监测列表里 监听客户端与服务端建立的连接是否活动
             inputs.append(conn)
-        else:  # r是连接 新来数据
+            msg_dic[conn] = queue.Queue()  # 用于存储给客户端返回的数据, key为客户端的链接
+        else:  # r是客户端连接 表示新来数据
             data = r.recv(1024)
             print('收到数据', data)
-            r.send(data)
+            msg_dic[r].put(data)  # 将数据存储到当前queue中, 用于select监听后再发送
+            outputs.append(r)  # 放入用于发送的socket的列表中
+            # # 发送数据给客户端
+            # r.send(data)
 
+    """
+    要返回给客户端的socket列表
+    """
+    for w in writeable:
+        data_to_client = msg_dic[w].get()  # w 与 r 是同一个socket
+        w.send(data_to_client)
+        outputs.remove(w)  # 确保下次循环的时候writable, 不返回已经处理完的连接
+
+    """
+    出现异常的socket列表 (断开)
+    如果e再要发送的列表里 需要删除
+    e 肯定在接受到的列表里 因为客户端不连接不会存在socket 需要删除
+    客户端发送消息 服务器接收到还没返回 客户端就断开了 那么说明消息列表中的数据也需要删除
+    """
+    for e in exceptional:
+        if e in outputs:
+            outputs.remove(e)
+        inputs.remove(e)
+        del msg_dic[e]

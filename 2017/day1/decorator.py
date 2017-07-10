@@ -24,20 +24,20 @@ import time
 def timer(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
-        func()
+        func(*args, **kwargs)
         stop_time = time.time()
         print('cost time: %s' % (stop_time - start_time))
 
     return wrapper
 
 
-def timer_args(args):
+def timer_args(arg):
     def out_wrapper(func):
         def wrapper(*args, **kwargs):
             start_time = time.time()
-            func()
+            func(*args, **kwargs)
             stop_time = time.time()
-            if args:
+            if arg:
                 print('cost time: %s' % (stop_time - start_time))
 
         return wrapper
@@ -57,9 +57,10 @@ test1 = timer(test1)
 
 
 @timer_args(True)
-def test2():
-    print('in the test2')
+def test2(x):
+    print('in the test2', x)
 
+test2(111)
 """
 带参数相当于
 timer_args = timer_args(args)
