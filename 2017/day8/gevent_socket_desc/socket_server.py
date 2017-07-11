@@ -67,6 +67,6 @@ while True:
 用了gevent.monkey.patch_all(), 一遇到io阻塞就switch到gevent.spawn包裹的函数, 而gevent.spawn包裹的函数遇到阻塞, 会跳转至其他正在阻塞的位置检查,
 如果此时其他位置不阻塞了 会继续向下执行 直到遇到阻塞(再次switch)或执行完
 
-io执行完了cpu.epoll的回调, 会通过gevent再还原回协程阻塞的位置继续向下执行
+io执行完了cpu的epoll的回调, 会通过gevent再还原回协程阻塞的位置继续向下执行
 
 """
