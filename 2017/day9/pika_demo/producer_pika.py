@@ -23,13 +23,14 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 # 在这个socket中创建一个管道
 channel = connection.channel()
 # 在管道中创建一个叫hello的队列
-channel.queue_declare(queue='hello')
+channel.queue_declare(queue='hello', durable=True)
 
 # RabbitMQ a message can never be sent directly to the queue, it always needs to go through an exchange.
 # 向管道中发送消息
 channel.basic_publish(exchange='',  #
                       routing_key='hello',  # 发送消息到哪个序列
-                      body='Hello World!')  # 消息内容
+                      body='Hello World!',  # 消息内容
+                      properties=pika.BasicProperties(delivery_mode=2))  # 消息持久化存储
 print(" [x] Sent 'Hello World!'")
 connection.close()
 
