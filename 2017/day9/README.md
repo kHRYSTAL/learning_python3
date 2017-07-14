@@ -69,6 +69,35 @@
                       body='Hello World!',  # 消息内容
                       properties=pika.BasicProperties(delivery_mode=2))  # 消息持久化存储
 
+
+##### RabbitMQ fanout广播模式
+        1. 当生产消息过多时
+            RabbitMQ 消息是公平的分发的 但是机器配置有可能有高有低 因此需要负载均衡处理
+            机器配置高的机器 处理的消息多, 配置低的机器 处理的消息少
+            RabbitMQ 只需要简单的处理就可以"公平"的分发消息:
+                检查处理消息的客户端 队列中还有多少条消息 如果消息数量大于1 则不发给客户端
+
+                消费者(客户端)添加channel.basic_qos(prefetch_count=1) 加到consume之前
+        2. 广播(群发消息)
+           生产者生产一条消息 所有的消费者都能接收到
+           如果需要这种效果, 就需要使用exchange参数了
+
+           Exchange在定义的时候是有类型的，以决定到底是哪些Queue符合条件，可以接收消息
+
+
+            fanout: 所有bind到此exchange的queue都可以接收消息
+            direct: 通过routingKey和exchange决定的那个唯一的queue可以接收消息
+            topic:所有符合routingKey(此时可以是一个表达式)的routingKey所bind的queue可以接收消息
+
+            　　 表达式符号说明：#代表一个或多个字符，*代表任何字符
+                  例：#.a会匹配a.a，aa.a，aaa.a等
+                      *.a会匹配a.a，b.a，c.a等
+                 注：使用RoutingKey为#，Exchange Type为topic的时候相当于使用fanout　
+            headers: 通过headers 来决定把消息发给哪些queue
+
+![exchange_publisher](http://www.rabbitmq.com/img/tutorials/python-three-overall.png?_=5248247)
+
+
 ### Redis
 
 ### Mysql

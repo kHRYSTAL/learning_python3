@@ -39,6 +39,7 @@ def callback(ch, method, properties, body):
     ch.base_ack(delivery_tag=method.delivery_tag)  # 告知rabbitMQ 消息被正确处理
 
 
+channel.basic_qos(prefetch_count=1)  # 最大处理中消息数量, 如果超过这个值, RabbitMQ不会给这个消费者发送消息
 # 消费消息
 channel.basic_consume(callback,  # 接收到消息的回调, 收到消息执行该函数
                       queue='hello',
