@@ -22,7 +22,7 @@ channel.exchange_declare(exchange='logs',  # tag
                          type='fanout')  # 群发消息
 
 message = ' '.join(sys.argv[1:]) or "info: Hello World!"  # 通过命令行调用, 后面输入要发送的消息
-channel.basic_publish(exchange='logs',
+channel.basic_publish(exchange='logs',  # 将消息发送到名称为logs的转换器,
                       routing_key='',  # 广播不需要输入queue名称, 但是要写空
                       body=message)
 print(" [x] Sent %r" % message)

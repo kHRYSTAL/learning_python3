@@ -42,7 +42,7 @@ def callback(ch, method, properties, body):
 channel.basic_qos(prefetch_count=1)  # 最大处理中消息数量, 如果超过这个值, RabbitMQ不会给这个消费者发送消息
 # 消费消息
 channel.basic_consume(callback,  # 接收到消息的回调, 收到消息执行该函数
-                      queue='hello',
+                      queue='hello',  # 接收名称为hello的管道的消息
                       # no_ack=True
                       )
 # no_ack 默认为false 表示rabbitMQ需要确认callback是否执行完, 应该按照需求设置这个参数,

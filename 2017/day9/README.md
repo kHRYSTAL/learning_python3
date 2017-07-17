@@ -86,7 +86,9 @@
 
 
             fanout: 所有bind到此exchange的queue都可以接收消息
-            direct: 通过routingKey和exchange决定的那个唯一的queue可以接收消息
+            direct: 通过routingKey和exchange决定的哪个queue可以接收消息
+                    注:这里的routingKey可以认为是tag或级别
+                       生产者将消息发送给exchange exchange按照routingKey 发送给相应的级别, 监听这个routingKey级别的消费者能够接收
             topic:所有符合routingKey(此时可以是一个表达式)的routingKey所bind的queue可以接收消息
 
             　　 表达式符号说明：#代表一个或多个字符，*代表任何字符
@@ -96,6 +98,8 @@
             headers: 通过headers 来决定把消息发给哪些queue
 
 ![exchange_publisher_fanout](http://www.rabbitmq.com/img/tutorials/python-three-overall.png?_=5248247)
+
+        fanout 方式 群发:
 
             生产者生产消息后 将消息发给转化器exchange 转化器去发送广播,
             消费者还是从queue去取消息 因此queue需要去绑定转化器
@@ -136,6 +140,12 @@
             ======不管消费者是否消费收没收到,======
             ======广播消息是实时的======
             ======发完消息就不管了======
+
+        direct 有指向性的发送:
+                在queue中,
+                生产者可以判断将消息发送到哪个级别的消费者
+                消费者可以绑定接收那几个级别的消息
+                也就是说 多个消费者可以按照级别选择接收同一个queue中的消息
 
 ### Redis
 
