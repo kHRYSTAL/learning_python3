@@ -79,7 +79,7 @@
 
                 消费者(客户端)添加channel.basic_qos(prefetch_count=1) 加到consume之前
         2. 广播(群发消息)
-           生产者生产一条消息 所有的消费者都能接收到
+           生产者生产一条消息 所有绑定相关转化器的消费者都能接收到
            如果需要这种效果, 就需要使用exchange参数了
 
            Exchange在定义的时候是有类型的，以决定到底是哪些Queue符合条件，可以接收消息
@@ -95,8 +95,47 @@
                  注：使用RoutingKey为#，Exchange Type为topic的时候相当于使用fanout　
             headers: 通过headers 来决定把消息发给哪些queue
 
-![exchange_publisher](http://www.rabbitmq.com/img/tutorials/python-three-overall.png?_=5248247)
+![exchange_publisher_fanout](http://www.rabbitmq.com/img/tutorials/python-three-overall.png?_=5248247)
 
+            生产者生产消息后 将消息发给转化器exchange 转化器去发送广播,
+            消费者还是从queue去取消息 因此queue需要去绑定转化器
+            消息流程
+                生产者->转化器(遍历绑定的队列fanout群发)->绑定转化器的队列->消费者
+
+            消费者:
+                import pika
+
+                connection = pika.BlockingConnection(pika.ConnectionParameters(
+                    host='localhost'))
+                channel = connection.channel()
+
+                channel.exchange_declare(exchange='logs',
+                                         type='fanout')
+                # exclusive 排他的 唯一的
+                result = channel.queue_declare(exclusive=True)  # 不指定queue名字,rabbit会随机分配一个名字,exclusive=True会在使用此queue的消费者断开后,自动将queue删除
+                queue_name = result.method.queue  # 获取随机生成的队列名称
+
+                channel.queue_bind(exchange='logs',  # 绑定这个生产者的tag(转化器/exchange)
+                                   queue=queue_name)
+
+                print(' [*] Waiting for logs. To exit press CTRL+C')
+
+
+                def callback(ch, method, properties, body):
+                    print(" [x] %r" % body)
+
+
+                channel.basic_consume(callback,
+                                      queue=queue_name,
+                                      no_ack=True)
+
+                channel.start_consuming()
+
+
+            ======注意: 广播群发消息======
+            ======不管消费者是否消费收没收到,======
+            ======广播消息是实时的======
+            ======发完消息就不管了======
 
 ### Redis
 
