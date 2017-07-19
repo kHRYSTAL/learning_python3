@@ -97,7 +97,10 @@
                  注：使用RoutingKey为#，Exchange Type为topic的时候相当于使用fanout　
             headers: 通过headers 来决定把消息发给哪些queue
 
-![exchange_publisher_fanout](http://www.rabbitmq.com/img/tutorials/python-three-overall.png?_=5248247)
+            ======注意: 广播群发消息======
+            ======不管消费者是否消费收没收到,======
+            ======广播消息是实时的======
+            ======发完消息就不管了======
 
         fanout 方式 群发:
 
@@ -135,17 +138,28 @@
 
                 channel.start_consuming()
 
-
-            ======注意: 广播群发消息======
-            ======不管消费者是否消费收没收到,======
-            ======广播消息是实时的======
-            ======发完消息就不管了======
+![exchange_publisher_fanout](http://www.rabbitmq.com/img/tutorials/python-three-overall.png?_=5248247)
 
         direct 有指向性的发送:
                 在queue中,
                 生产者可以判断将消息发送到哪个级别的消费者
                 消费者可以绑定接收那几个级别的消息
                 也就是说 多个消费者可以按照级别选择接收同一个queue中的消息
+
+![publisher-direct](http://www.rabbitmq.com/img/tutorials/python-four.png)
+
+        topic: 更细致的指向性发送
+            topic能够更细致的按照关键字去发送
+            在相同转换器且是topic类型下
+            消费者绑定的如果是'#' 则是接收所有消息
+
+
+![publisher-topic](http://www.rabbitmq.com/img/tutorials/python-five.png?_=5248247)
+
+
+
+
+
 
 ### Redis
 
