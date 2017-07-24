@@ -1,3 +1,5 @@
+### RabbitMQ, Redis, MySQL
+
 ### 协程与异步IO的区别
 
     多路复用中 epoll 在linux底层是通过 libevent.so实现的
@@ -164,13 +166,65 @@
 ### Redis 缓存系统
     常用缓存系统
         mongodb  默认配置是存到内存也存到硬盘
-        redis    默认配置是只存到内存(可配置持久化) 效率更高速度更快
+        redis    默认配置是只存到内存(可配置持久化至硬盘) 效率更高速度更快
         memcache 轻量级缓存, 只能存到内存
 
 ##### 为什么使用Redis
 
     redis 是单线程的 使用epoll模式实现了高并发
 
+[安装redis](https://jingyan.baidu.com/article/f3e34a12dfefddf5eb6535fe.html)
+
+    默认端口6379
+    启动redis-server:安装目录src下 启动redis-server
+    启动redis-client:安装目录src下 启动redis-cli
+
+    语法:
+        set [key] [value] 存储 键值对
+        set name khrystal
+        set name khrystal ex 2 存储键值对 只存活2秒钟
+        -------
+        get [key] 通过key获取value
+        get name
+        如果返回(nil) 表示为空
+        -------
+        keys * 列出所有key
+
+###### 在python中使用redis
+
+    import redis
+    r = redis.Redis(host='127.0.0.1', port=6379)  # 创建redis连接
+    r.set('foo', 'bar')
+    print(r.get('foo'))
+
+    每次set和get实际上都是一个socket连接, 为了避免频繁连接 释放开销
+    可以使用连接池
+
+
+#### Redis API使用
+    redis-py 的API的使用可以分类为：
+
+    连接方式
+    连接池
+    操作
+    String 操作
+    Hash 操作
+    List 操作
+    Set 操作
+    Sort Set 操作
+    管道
+    发布订阅
+
+### [api 参考](http://www.cnblogs.com/alex3714/articles/6217453.html)
+
+  >  set(name, value, ex=None, px=None, nx=False, xx=False)
+
+    在Redis中设置值，默认，不存在则创建，存在则修改
+    参数：
+         ex，过期时间（秒）
+         px，过期时间（毫秒）
+         nx，如果设置为True，则只有name不存在时，当前set操作才执行
+         xx，如果设置为True，则只有name存在时，岗前set操作才执行
 
 ### Mysql
 
