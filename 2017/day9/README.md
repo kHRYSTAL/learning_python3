@@ -159,7 +159,18 @@
 ![publisher-topic](http://www.rabbitmq.com/img/tutorials/python-five.png?_=5248247)
 
 
+#### Rabbit MQ RPC
 
+    remote procedure call 远程调用协议
+    远程发送指令 另一端接收指令执行 执行完成后返回结果
+    如SNMP 等等都是RPC
+
+    在rabbitmq中 之前的使用方式都是一端(server)发送消息至queue,  另一端(client)去接收queue中的消息处理 但处理完成后没有返回结果
+    通知发送消息的一端, 那么如何返回结果呢?
+
+    建立两个mq, 一个用于server发送消息给client, 一个用于client发送结果给server
+
+    [参考demo rpc]
 
 
 
