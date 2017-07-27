@@ -189,7 +189,8 @@
     默认端口6379
     启动redis-server:安装目录src下 启动redis-server
     启动redis-client:安装目录src下 启动redis-cli
-
+#### redis string 操作
+![](http://images2015.cnblogs.com/blog/720333/201612/720333-20161224160558276-436576532.png)
     语法:
         set [key] [value] 存储 键值对
         set name khrystal
@@ -202,7 +203,6 @@
         keys * 列出所有key
 
 ###### 在python中使用redis
-
     import redis
     r = redis.Redis(host='127.0.0.1', port=6379)  # 创建redis连接
     r.set('foo', 'bar')
@@ -236,6 +236,27 @@
          px，过期时间（毫秒）
          nx，如果设置为True，则只有name不存在时，当前set操作才执行
          xx，如果设置为True，则只有name存在时，岗前set操作才执行
+#### redis hash操作
+![](http://images2015.cnblogs.com/blog/720333/201612/720333-20161224162531620-762875117.png)
+
+    hset info name khrystal # 在info 中存放key-value
+    hset info age 22
+    hset info sex male
+
+    HGETALL info # 获取数据
+    HGET info name # 获取某个value
+    HKEYS info # 获取info中的所有key
+    HVALS info # 获取info 中所有value
+
+    批量操作
+    HMSET info name khrystal age 22 # 批量设置key-value
+    HMGET info name age # 批量获取
+    hlen info # 获取有几个key
+    hexists info sex # 判断是否存在 0 不存在 1 存在
+    hdel info name # 删除一个key
+
+
+### [python中hash操作api](http://www.cnblogs.com/alex3714/articles/6217453.html)
 
 ### Mysql
 
