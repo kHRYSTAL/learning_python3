@@ -175,6 +175,9 @@
 
 
 ### Redis 缓存系统
+
+    用于应用/后台 对某些数据的存放和获取
+
     常用缓存系统
         mongodb  默认配置是存到内存也存到硬盘
         redis    默认配置是只存到内存(可配置持久化至硬盘) 效率更高速度更快
@@ -257,6 +260,58 @@
 
 
 ### [python中hash操作api](http://www.cnblogs.com/alex3714/articles/6217453.html)
+
+#### redis list操作
+![](http://images2015.cnblogs.com/blog/720333/201612/720333-20161224164119620-243246367.png)
+
+    lpush names khrystal, matt, jack # 存放key - [value1, value2]
+    lrange names 0 -1 # 获取第0个到倒数第一个, 就是取所有
+                # 返回 jack, matt, khrystal 栈, 后进先出
+    lpush 是从左向列表放置数据 RPUSH 是从右向列表放数据这lrange就能获取正序数据
+
+    LINSERT names BEFORE matt haha # 向matt左边插入haha
+    LINSERT names AFTER matt haha # 向matt右边插入haha
+    LSET names 3 PAPA # 修改第三个位置为PAPA
+    LREM names 1 PAPA # 从左侧删除 1个 value为PAPA的item
+    LPOP names # 从左侧获取并删除这个数据
+    LTRIM 1 3 # 只保留1-3index的数据 其他都移除
+    RPOPLPUSH names names2 # 从names右侧获取数据并在names删除 从左侧设置到names2中
+    BLPOP names 10 # 删除names中的第一个数据并获取 如果没有值等待10秒 在10秒中如果有值会删除
+                   # 可以做类似生产者消费者模式
+    BROPOLPUSH names names2 40 # 在40秒中 names中如果被设置了数据 会pop出,并设置到names2中
+                                # 两个列表同步, 一边删除一边增加
+
+#### redis set集合操作
+
+    sadd name matt matt # 向集合中设置两个相同数据 实际上只有一个 因为去重了 这里集合是无序的
+    SMEMBERS name # 获取name集合中的成员 无序
+    sdiff name name2 # 获取name和name2的差集, 即name中存在 但name2中不存在的数据
+    SDIFFSTORE name3 name name2 将name和name2的差集放到name3中
+    SINTER name name2 # 获取name和name2的交集 即name中存在且在name2中也存在的数据
+    SISMEMBER name matt # matt是否是name中的元素
+    SRANDMEMBER name [n] # 从name中随机获取一个或多个值
+    SREM name matt # 从name中删除matt
+    SUNION name name2 # 获取name和name2的并集
+    SUNION name4 name name2 # 将name和name2的并集放到name4
+    sscan name4 0 match m* # 获取name4中 从第0个开始 m开头的元素
+
+
+##### redis 有序集合
+
+    zadd name 10 khrystal 5 matt 8 jack  # 在name中添加value的权重和value
+    ZRANGE name 0 -1 # 获取集合中所有数据,此时是按照权重从小到大排列
+    zadd name 4 khrystal # 因为是集合 此时会把khrystal的权重改为4
+    ZRANGE name 0 -1 withscores 获取所有数据 包涵权重
+    ZCARD name 获取name中元素的数量
+    ZCOUNT name 6 12 # 获取name中权重在 6到12之间的value的个数
+    ZRANK name matt # 获取matt在name中的排行 排行从0开始
+    ZREM name matt  # 删除matt
+    ZREMRANGEBYRANK name  0 2 # 删除排行从0到2的value
+    ZSCORE name matt # 获取matt的权重
+    ZINTERSTORE name3  2 name name2 # 获取两个(2的作用)有序集合的交集
+                                   # 则会把权重相加放到name3
+
+#### redis 其他常用操作
 
 ### Mysql
 
