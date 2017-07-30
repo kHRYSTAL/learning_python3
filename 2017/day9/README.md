@@ -194,6 +194,7 @@
     启动redis-client:安装目录src下 启动redis-cli
 #### redis string 操作
 ![](http://images2015.cnblogs.com/blog/720333/201612/720333-20161224160558276-436576532.png)
+
     语法:
         set [key] [value] 存储 键值对
         set name khrystal
@@ -212,7 +213,16 @@
     print(r.get('foo'))
 
     每次set和get实际上都是一个socket连接, 为了避免频繁连接 释放开销
+
     可以使用连接池
+
+    import redis
+
+    pool = redis.ConnectionPool(host='127.0.0.1', port='6379')
+
+    r = redis.Redis(connection_pool=pool)
+    r.set('foo', 'bar')
+    print(r.get('foo'))
 
 
 #### Redis API使用
@@ -312,6 +322,21 @@
                                    # 则会把权重相加放到name3
 
 #### redis 其他常用操作
+
+    redis默认有16个db, 0 - 15, 因此可以切换数据库 select 0 至 select 15
+    所有的key都存在db中, 不同的db可以适用于不同的业务
+
+    keys na* # 列出na开头的key
+    del name 删除key为name的key-value
+    expire name 2 设置name的过期时间为2s
+    move name 3 将name的k-v移动到db 3, 如果3中存在key为name的k-v, 则不移动
+
+
+    redis-py 每次请求连接和断开(包括连接和归还连接池), 都会创建一次连接操作
+    为了避免频繁操作, 可以适用pipline实现类似事务的操作
+
+##### redis 发布者订阅者
+![](http://images2015.cnblogs.com/blog/720333/201612/720333-20161224173546276-1470500342.png)
 
 ### Mysql
 
