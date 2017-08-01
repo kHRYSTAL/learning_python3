@@ -22,7 +22,7 @@ channel = connection.channel()
 channel.exchange_declare(exchange='direct_logs',
                          type='direct')
 
-result = channel.queue_declare(exclusive=True)  # 断开后删除消费者和转换器之间的管道 管道为随机生成
+result = channel.queue_declare(exclusive=True)  # 断开后删除消费者和转换器之间的管道, 管道为随机生成
 queue_name = result.method.queue
 
 severities = sys.argv[1:]
