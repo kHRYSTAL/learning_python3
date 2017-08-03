@@ -140,6 +140,210 @@
         alter table student RENAME TO students;
         修改student表名为students
 
+    添加主键:
+        主键只能作用在一个列上 添加主键时需要确保该列默认不为空
+        alter table student MODIFY name char(16) not null;
+        设置为主键
+        alter table student ADD PRIMARY KEY(name)
+
+    删除主键
+        alter table student DROP PRIMARY KEY
+        删除主键不需要指定列名
+
+
+##### 模糊匹配
+
+    %表示模糊匹配
+
+
+##### 外键关联
+
+    外键创建
+
+        1.创建学生考勤表
+            create table study_record(
+                id int auto_increment primary key, # 可以在声明的时候直接在后面声明主键
+                day int not null,
+                status char(32) not null default Yes,
+                stu_id int not null,
+
+                key 'fk_student_key' ('stu_id'), # 声明stu_id为外键, 别名为fk_student_key
+                constraint 'fk_student_key' foreign key ('stu_id') reference student ('stu_id')
+                # 约束 该表的stu_id字段 参考student表的stu_id, 即这个表的stu_id是外键 依赖student表的stu_id
+            )
+
+        查看表结构
+            desc study_record;
+            表结构中 KEY 列 显示stu_id 为MUL 表示stu_id为外键
+
+        2.插入数据
+            insert into study_record (day, status, stu_id) values (1, YES, 1)
+            注意 因为stu_id是外键, 具有参照完整性, 不能插入student表中不存在的stu_id
+            即study_record表的stu_id需要参照(引用)student表的stu_id;
+
+            ##########
+            注意! 如果此时执行删除student表的数据
+            如 delete from student where stu_id=1;
+            如果此时student表中的数据被study_record表的数据引用 则会报错不能删除, 需要先删除study_record表的数据
+            使引用不被持有 才可以删除
+            ##########
+##### 空值处理
+
+        IS NULL: 当列的值为空时返回true
+        IS NOT NULL: 当列的值不为空时返回true
+        < = >: 当比较的两个值为空时 返回true
+
+        在MySQL中 NULL值与任何其他值的比较 永远返回false 即时NULL = NULL
+
+        例句 select * from student where name is null;
+
+
+##### 连接查询
+
+        两个活多个表连接查询, 得到的结果集合方式
+        left join 获取左表的所有记录, 即使右表没有匹配对象
+        right join 获取右表所有记录, 即使左表没有匹配对象
+        inner join 内连接  获取两个表中字段匹配关系的记录
+        full join
+
+        A表      B表
+        a        b
+        -        -
+        1        3
+        2        4
+        3        5
+        4        6
+
+        1.inner join: 交集查询
+          select * from a INNER JOIN b on a.a = b.b  # on 后为声明两个表的连接点 即连接条件
+          select a.*, b.* from a, b where a.a = b.b
+          两句等价
+
+          返回
+          a b
+          3 3
+          4 4
+
+        2.left join
+          select * from A left join B on A.a = B.b;
+          先查询表A所有数据, 在查询表B中符合连接条件的数据 B符合条件的数据与A中对应的数据同行
+
+        3.right join
+          select * from A right join B on A.a = B.b;
+          先查询表B所有数据, 在查询表A中符合连接条件的数据
+          相当于: select * from B left join A on A.a = B.b;
+
+        4.full join
+          求并集, 查询表A 和表B所有数据 符合条件的数据处于同一行
+          MySQL 不直接支持并集 因为没用
+
+          select * from A left join B on A.a = B.b UNION select * from A right join B on A.a = B.b;
+          相当于查询表A所有数据与B符合条件的数据获取的结果
+          与查询表B所有的数据与A符合条件的数据获取的结果, 去重后联合显示
+
+##### 事务 Transaction
+
+    事务用于处理频繁操作或数据量大的操作 避免频繁连接或修改表 一次性执行所有操作
+    同时也是完整性的体现, 要么全部执行 要么全部不执行
+    MySQL 中只有使用了Innodb数据库引擎的数据库或表才支持事务
+    事务可以管理insert, update, delete的写操作
+
+    事务回滚与提交
+
+    1.
+    begin;
+    insert into student (name, register_date, gender) values ("kHRYSTAL", 1990-08-31, "M");
+    insert into student (name, register_date, gender) values ("Matt", 1990-08-31, "M");
+    # 此时查看表中是存在这两个数据的 数据实际存在内存中 并没有刷新到硬盘存储上 但是id实际上已经写入了
+
+    rollback;
+    # 回滚 事务结束 再次查看表中不存在这两行数据
+
+    2.
+    begin;
+    insert into student (name, register_date, gender) values ("kHRYSTAL", 1990-08-31, "M");
+    insert into student (name, register_date, gender) values ("Matt", 1990-08-31, "M");
+    commit; # 结束事务并保存提交
+
+
+##### 索引
+
+        索引能够优化查询,建立索引后不需要改变任何查询操作, 使用B+树原理查找, 效率更高
+        索引分为单列索引和组合索引,
+            单列索引, 即一个索引只包含单个列, 一个表可以有多个单列索引
+            组合索引, 即一个索引包含多个列
+
+        创建索引时 需要确保是应用在SQL查询语句的条件(一般作为WHERE 子句的条件)
+            即查询时 按照索引去查找, 如身份证号为索引 但查找时却按照性别去查找, 实际上查询并没有根据索引实现优化
+
+        缺点 使用索引 会导致读快写慢
+            滥用会导致更新表的速度, 对表进行写操作(增删改), 表进行刷新时 MySQL 不仅要保存数据 还要保存索引文件
+            (对存储的数据进行排序 这样可以在查询时优化 但是写操作会花费更多的时间)
+            同时,建立索引会占用磁盘空间
+
+
+        操作:
+
+            查看表中的索引
+                show index from [table name];\G
+            有一列indexType, 是索引类型 显示BTree
+                默认主键也是一种索引
+            创建索引
+                第一种方式
+                    CREATE INDEX [indexName] ON [table name]([column_name]([indexlength]));
+                    例: create index index_name on student(name(32));
+                    # indexlength为索引的长度 意思是说列的数据进行hash处理生成的长度不超过多少位, 一般建议是不超过字段的长度
+                第二种方式
+                    alter student add index index_name on (name(32));
+                第三种方式
+                    创建表的时候直接指定
+
+                    create table student(
+                        id int auto_increament primary key,
+                        name varchar(16) not null,
+                        index index_name (name(16))
+                    );
+
+            删除索引 drop index index_name on student
+
+
+        唯一索引:
+            主键就是唯一索引的一种, 与普通索引不同的是 列的每个数据的值都是唯一的, 允许有空值
+            如果索引是组合索引 则列的数据的值的组合hash必须是唯一的
+
+            创建索引:
+                CREATE UNIQUE INDEX [index_name] on [table_name]([column_name](length));
+                例子: create unique index index_stu_name on student(name(32));
+                如果name为重复的 则不能创建
+
+                第二种方式
+                alter student add index index_name on (name(32));
+
+                第三种方式
+                创建表的时候直接指定
+
+                    create table student(
+                        id int auto_increament primary key,
+                        name varchar(16) not null,
+                        UNIQUE index_name (name(16))
+                    );
+
+#### MySQL 与 python 交互
+
+    python3.x 可以使用pymysql这个lib实现交互
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
