@@ -332,6 +332,34 @@
 
     python3.x 可以使用pymysql这个lib实现交互
 
+### python ORM框架 SQLAlchemy
+    ORM Object Relational Mapping 对象关系映射
+    alchemy	英[ˈælkəmi] 魔法 魔力
+    将数据库/表/行数据 映射成python对象
+    通过操作对象 执行操作数据库的操作
+
+![](http://images2015.cnblogs.com/blog/720333/201610/720333-20161019162806842-1144462684.png)
+
+    SQLAlchemy
+    根据配置文件的不同调用不同的数据库API，从而实现对数据库的操作，如：
+
+    MySQL-Python
+        mysql+mysqldb://<user>:<password>@<host>[:<port>]/<dbname>
+
+    pymysql
+        mysql+pymysql://<username>:<password>@<host>/<dbname>[?<options>]
+
+    MySQL-Connector
+        mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>
+
+    cx_Oracle
+        oracle+cx_oracle://user:pass@host:port/dbname[?key=value&key=value...]
+
+    ###################################
+    # 操作                            #
+    #    参考sqlalchemy_basic.py      #
+    ###################################
+
 
 
 
