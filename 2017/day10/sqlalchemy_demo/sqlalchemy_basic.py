@@ -13,11 +13,11 @@
 
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy import func
 
 # 创建数据库引擎
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 engine = sqlalchemy.create_engine("mysql+pymysql://root:yyg1990918@localhost/awesome",
                                   encoding='utf-8', echo=True)
@@ -57,6 +57,7 @@ CREATE TABLE user (
 Session_class = sessionmaker(bind=engine)  # 创建与数据库的会话session class ,注意,这里返回给session的是个class,不是实例
 Session = Session_class()  # 生成session实例
 
+
 # user_obj = User(name="khrystal", password="123456")  # 生成你要创建的数据对象
 # print(user_obj.name, user_obj.id)  # 此时还没创建对象呢，不信你打印一下id发现还是None
 #
@@ -92,17 +93,17 @@ Session = Session_class()  # 生成session实例
 
 # region 回滚操作
 # 在Session.commit()之前 修改的数据都存在于内存中 所有写操作都可以回滚 但是id不会回滚
-my_user = Session.query(User).filter_by(id=1).first()
-my_user.name = "Jack"
-
-fake_user = User(name='Rain', password='12345')
-Session.add(fake_user)
-
-print(Session.query(User).filter(User.name.in_(['Jack', 'rain'])).all())  # 这时看session里有刚添加和修改的数据
-
-Session.rollback()  # 此时rollback一下
-
-print(Session.query(User).filter(User.name.in_(['Jack', 'rain'])).all())  # 再查就发现刚才添加的数据没有了。
+# my_user = Session.query(User).filter_by(id=1).first()
+# my_user.name = "Jack"
+#
+# fake_user = User(name='Rain', password='12345')
+# Session.add(fake_user)
+#
+# print(Session.query(User).filter(User.name.in_(['Jack', 'rain'])).all())  # 这时看session里有刚添加和修改的数据
+#
+# Session.rollback()  # 此时rollback一下
+#
+# print(Session.query(User).filter(User.name.in_(['Jack', 'rain'])).all())  # 再查就发现刚才添加的数据没有了。
 
 # Session
 # Session.commit()
@@ -113,3 +114,20 @@ print(Session.query(User).filter(User.name.in_(['Jack', 'rain'])).all())  # 再�
 
 # 分组操作
 # print(Session.query(func.count(User.name), User.name).group_by(User.name).all())
+
+
+# 创建地址表 用于外键关联
+class Address(Base):
+    __tablename__ = 'addresses'
+    id = Column(Integer, primary_key=True)
+    email_address = Column(String(32), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+
+    user = relationship("User", backref="addresses")  # 关联两个对象, 并不熟数据库真实存在的, 而是orm操作存储在内存中的
+    # 相当于 user = Session.query(User).filter(Address.user_id == User.id).first()
+    # 这句话的意思是, 可以通过user字段获取表User关联的数据, User表可以通过addresses字段获取Address表的数据
+
+    def __repr__(self):
+        return "<Address(email_address='%s', UserName= '%s')>" % (self.email_address, self.user.name)
+
+# Base.metadata.create_all(engine)
