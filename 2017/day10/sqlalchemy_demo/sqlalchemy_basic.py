@@ -123,7 +123,8 @@ class Address(Base):
     email_address = Column(String(32), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
 
-    user = relationship("User", backref="addresses")  # 关联两个对象, 并不熟数据库真实存在的, 而是orm操作存储在内存中的
+    user = relationship("User", backref="addresses")  # 关联两个对象, 并不是数据库真实存在的列, 而是orm操作存储在内存中的
+    # 即在查询address数据时 orm会通过外键去获取user的数据 并赋值给user这个变量
     # 相当于 user = Session.query(User).filter(Address.user_id == User.id).first()
     # 这句话的意思是, 可以通过user字段获取表User关联的数据, User表可以通过addresses字段获取Address表的数据
 
