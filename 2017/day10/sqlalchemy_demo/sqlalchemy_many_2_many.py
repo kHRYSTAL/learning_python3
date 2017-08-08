@@ -63,6 +63,6 @@ class Author(Base):
         return self.name
 
 
-engine = sqlalchemy.create_engine("mysql+pymysql://root:yyg1990918@localhost/awesome",
+engine = sqlalchemy.create_engine("mysql+pymysql://root:yyg1990918@localhost/awesome?charset=utf8",
                                   encoding='utf-8', echo=True)
 Base.metadata.create_all(engine)

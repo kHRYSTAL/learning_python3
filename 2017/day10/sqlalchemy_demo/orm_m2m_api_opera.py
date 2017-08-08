@@ -43,3 +43,8 @@ book_obj = Session.query(m2m.Book).filter(m2m.Book.name == 'learn python').first
 print(book_obj.name)
 # 反查获取书的作者
 print(book_obj.authors)
+
+
+# 删除书中的一个作者 关联关系会自动删除
+# book_obj.authors.remove(author_obj)
+# Session.commit()
