@@ -34,32 +34,43 @@ Base = declarative_base()
 class BindHost(Base):
     """
     远程机器与远程用户与属组的关系
-    远程机器可以包含多个远程用户 远程机器又可以属于多个组
-    保存关联关系, 三列需要联合唯一
-    ip              remote_user     group
-    192.168.1.11    web             bj_group
-    192.168.1.11    mysql           sh_group
+    远程机器可以包含多个远程用户
+    保存关联关系, 2列需要联合唯一
+    ip              remote_user
+    192.168.1.11    web
+    192.168.1.11    mysql
     """
     __tablename__ = 'bind_host'
     __table_args__ = (UniqueConstraint('host_id', 'group_id', 'remoteuser_id', name='_host_group_remoteuser_uc'),)
     id = Column(Integer, primary_key=True)
     host_id = Column(Integer, ForeignKey('host.id'))
-    group_id = Column(Integer, ForeignKey('group.id'))
+    # group_id = Column(Integer, ForeignKey('group.id'))
     remoteuser_id = Column(Integer, ForeignKey('remote_user.id'))
 
     # host能够通过bind_hosts反查当前类 再从当前类获取remote_user和group
     host = relationship('Host', backref='bind_hosts')
-    host_group = relationship('HostGroup', backref='bind_hosts')
+    # host_group = relationship('HostGroup', backref='bind_hosts')
     remote_user = relationship('RemoteUser', backref='bind_hosts')
 
     def __repr__(self):
         return '<%s -- %s -- %s>' % (self.host.ip, self.remote_user.username, self.host_group.name)
 
 
-# 堡垒机账户与bindhost多对多关系表, 这样在堡垒机账户就能获取他自己的bindhost对象 通过bindhost就能获取到指定的远程账户 属组和ip地址
+# 堡垒机账户与bindhost多对多关系表, 这样在堡垒机账户就能获取他自己的bindhost对象
+# 通过bindhost就能获取到指定的远程账户 ip地址 只对应没有属组的host
 user_m2m_bindhost = Table('user_m2m_bindhost', Base.metadata,
                           Column('userprofile_id', Integer, ForeignKey('user_profile.id')),
-                          Column('bindhost_id', Integer, ForeignKey('bind_host'.id)))
+                          Column('bindhost_id', Integer, ForeignKey('bind_host.id')))
+
+# bindhost表与group表的多对多关系表 由于存在机器可能不属于组, 单个存在, 因此 要把bindhost中的group单独分割成一个关系表
+bindhost_m2m_hostgroup = Table('bindhost_m2m_hostgroup', Base.metadata,
+                               Column('bindhost_id', Integer, ForeignKey('bind_host.id')),
+                               Column('hostgroup_id', Integer, ForeignKey('host_group.id')))
+
+# 堡垒机账户与属组多对多关系表 可以先获取属组 再通过属组获取bindhost
+user_m2m_hostgroup = Table('user_m2m_hostgroup', Base.metadata,
+                           Column('userprofile_id', Integer, ForeignKey('user_profile.id')),
+                           Column('hostgroup_id', Integer, ForeignKey('host_group.id')))
 
 
 # endregion
@@ -84,6 +95,8 @@ class HostGroup(Base):
     __tablename__ = 'host_group'
     id = Column(Integer, primary_key=True)
     name = Column(String(64), unique=True)
+    # 反查绑定的主机, 主机可以反查属组列表
+    bind_hosts = relationship('BindHost', secondary='bindhost_m2m_hostgroup', backref='host_groups')
 
     def __repr__(self):
         return self.name
@@ -114,8 +127,10 @@ class UserProfile(Base):
     username = Column(String(32), unique=True)
     password = Column(String(128))
 
-    # userprofile能够获取bindhost对象 bindhost能够通过user_profiles反查获取user_profile
+    # userprofile能够获取bindhost对象 bindhost能够通过user_profiles反查获取user_profile 只针对没有属组的主机
     bind_host = relationship('BindHost', secondary='user_m2m_bindhost', backref='user_profiles')
+    # userprofile能够获取可操作主机的属组, 属组能够反查获取哪些user可以具有这个属组
+    host_groups = relationship('HostGroup', secondary='user_m2m_hostgroup', backref='user_profiles')
 
     def __repr__(self):
         return self.username
