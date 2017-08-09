@@ -12,4 +12,4 @@
 # @time: 17/8/8 下午6:59
 
 # 数据库连接配置
-ConnParams = "mysql+pymysql://root:yyg1990918@localhost/awesome?charset=utf8"
+ConnParams = "mysql+pymysql://root:yyg1990918@localhost/fuckJPdb?charset=utf8"

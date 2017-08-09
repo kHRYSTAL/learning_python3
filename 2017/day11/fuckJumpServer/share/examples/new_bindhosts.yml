@@ -1,0 +1,33 @@
+bind1:
+  hostname: ubuntu test
+  # 远程主机用户
+  remote_users:
+    - user1:
+      username: root
+      auth_type: ssh-key
+      #password: 123
+    - user2:
+      username: alex
+      auth_type: ssh-passwd
+      password: alex3714
+  # 属组, 只要在这个组的用户都可以使用
+  groups:
+    - bj_group
+  # 堡垒机中的个人用户 即使不属于组也可以使用
+  user_profiles:
+    - alex
+    - jack
+
+bind2:
+  hostname: server2
+  remote_users:
+    - user1:
+      username: root
+      auth_type: ssh-passwd
+      password: abc!23
+  groups:
+    - bj_group
+    - sh_group
+
+  user_profiles:
+    - rain

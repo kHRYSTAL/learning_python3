@@ -12,13 +12,13 @@
 # @time: 17/8/8 下午7:03
 
 import sqlalchemy
-from sqlalchemy import Table, Enum, Column, Integer, String, DATE, ForeignKey, UniqueConstraint
+from sqlalchemy import Table, Column, Integer, String, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 # 用于枚举字段声明
 from sqlalchemy_utils import ChoiceType
+from sqlalchemy import create_engine
 
-# from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
 
 # 声明基类
@@ -41,7 +41,7 @@ class BindHost(Base):
     192.168.1.11    mysql
     """
     __tablename__ = 'bind_host'
-    __table_args__ = (UniqueConstraint('host_id', 'group_id', 'remoteuser_id', name='_host_group_remoteuser_uc'),)
+    __table_args__ = (UniqueConstraint('host_id', 'remoteuser_id', name='_host_group_remoteuser_uc'),)
     id = Column(Integer, primary_key=True)
     host_id = Column(Integer, ForeignKey('host.id'))
     # group_id = Column(Integer, ForeignKey('group.id'))
@@ -53,7 +53,7 @@ class BindHost(Base):
     remote_user = relationship('RemoteUser', backref='bind_hosts')
 
     def __repr__(self):
-        return '<%s -- %s -- %s>' % (self.host.ip, self.remote_user.username, self.host_group.name)
+        return '<%s -- %s>' % (self.host.ip, self.remote_user.username)
 
 
 # 堡垒机账户与bindhost多对多关系表, 这样在堡垒机账户就能获取他自己的bindhost对象
@@ -111,7 +111,7 @@ class RemoteUser(Base):
     username = Column(String(32))
     password = Column(String(128))  # 这里可以优化加密, 目前按照明文存储
     AuthTypes = [
-        ('ssh-passwd', 'SSH/Password'),  # 第一个是真正存到数据库的, 第二个是显示给用户看的
+        ('ssh-passwd', 'SSH/Password'),  # 第一个值是真正存到数据库的, 第二个是显示给用户看的
         ('ssh-key', 'SSH/KEY'),
     ]
     auth_type = Column(ChoiceType(AuthTypes))

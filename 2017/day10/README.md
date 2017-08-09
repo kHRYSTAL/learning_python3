@@ -44,6 +44,7 @@
     第二种
         创建并授权: 授权用户在所有ip地址下对某个数据库下的表拥有所有权限, []表示可修改, *表示库下的所有表
         grant [all] on [database name].* to '[username]'@'[ipaddress]' identified by '[user password]';
+        如: grant all on *.* to 'khrystal'@'%' identified by 'yyg1990918';
 
     查看用户权限
     show grants for [username];
