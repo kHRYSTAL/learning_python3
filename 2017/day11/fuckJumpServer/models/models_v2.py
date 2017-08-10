@@ -49,7 +49,7 @@ class BindHost(Base):
 
     # host能够通过bind_hosts反查当前类 再从当前类获取remote_user和group
     host = relationship('Host', backref='bind_hosts')
-    # host_group = relationship('HostGroup', backref='bind_hosts')
+    # host_group = relationship('HostGroup', backref='bind_hosts') # todo 没做组的关系绑定 所以user_m2m_hostgroup为空
     remote_user = relationship('RemoteUser', backref='bind_hosts')
 
     def __repr__(self):
@@ -127,9 +127,9 @@ class UserProfile(Base):
     username = Column(String(32), unique=True)
     password = Column(String(128))
 
-    # userprofile能够获取bindhost对象 bindhost能够通过user_profiles反查获取user_profile 只针对没有属组的主机
+    # userProfile能够获取bindhost对象 bindhost能够通过user_profiles反查获取user_profile 只针对没有属组的主机
     bind_host = relationship('BindHost', secondary='user_m2m_bindhost', backref='user_profiles')
-    # userprofile能够获取可操作主机的属组, 属组能够反查获取哪些user可以具有这个属组
+    # userProfile能够获取可操作主机的属组, 属组能够反查获取哪些user可以具有这个属组
     host_groups = relationship('HostGroup', secondary='user_m2m_hostgroup', backref='user_profiles')
 
     def __repr__(self):

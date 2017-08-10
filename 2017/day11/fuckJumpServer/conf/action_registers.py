@@ -13,7 +13,7 @@
 from modules import views
 
 actions = {
-    # 'start_session': views.start_session,
+    'start_session': views.start_session,
     # 'stop': views.stop_server,
     'syncdb': views.syncdb,
     'create_users': views.create_users,

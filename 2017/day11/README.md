@@ -45,3 +45,8 @@
 
     保存后刷新环境变量 source .bashrc 或source .bash_profile
     会自动执行 之后每次重新启动机器都会执行
+
+###### 实现数据库关系与命令行交互
+
+    查看fuckJumpServer 数据库交互已实现 在views.start_session中的todo是连接审计记录功能的位置
+    未完成
