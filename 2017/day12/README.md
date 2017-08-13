@@ -95,6 +95,36 @@ body中的常用标签
         <input type="password" name="password"/><br/>
         <input type="button" value="登录1"/><br/>
         <input type="submit" value="登录2"/>
+
+        单选 radio name 相同为互斥 提交的为value checked="checked"为默认选中
+             <form>
+                <div>
+                    <p>请选择性别</p>
+                    男:<input type="radio" name="sex" value="1" checked="checked"><br/>
+                    女:<input type="radio" name="sex" value="2"><br/>
+                </div>
+                <input type="submit" value="提交">
+             </form>
+
+        多选 checkbox name可以相同也可以不同
+            <form>
+                <p>请选择爱好</p>
+                篮球:<input type="checkbox" name="interest" value="1" checked="checked"><br/>
+                足球:<input type="checkbox" name="interest" value="2"><br/>
+                网球:<input type="checkbox" name="interest" value="3"><br/>
+                <input type="submit" value="提交">
+            </form>
+
+        上传文件 file 依赖form表单的属性 enctype="multipart/form-data" 表示分block上传
+            <form enctype="multipart/form-data">
+                <p>上传文件</p>
+                 <input type="file" name="fname">
+                <input type="submit" value="提交">
+            </form>
+
+        重置 reset 需要写到表单里
+            <input type="reset" value="重置"/>
+
 8
 ```
 
