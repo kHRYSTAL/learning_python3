@@ -16,8 +16,14 @@ import socket
 
 def handle_request(conn):
     buf = conn.recv(1024)
-    conn.send('HTTP/1.1 200 OK\r\n\r\n'.encode('utf8'))  # 浏览器接受首先需要指明http协议且返回码正确
-    conn.send('Hello, Seven'.encode('utf8'))
+    conn.send(bytes('HTTP/1.1 200 OK\r\n\r\n', encoding='utf-8'))  # 浏览器接受首先需要指明http协议且返回码正确
+    f = open('index.html', 'r', encoding='utf-8')
+    data = f.read()
+    f.close()
+    import time
+    str_time = str(time.time())
+    data = data.replace("@@@@@", str_time)  # 替换后需要重新赋值
+    conn.send(bytes(data, encoding='utf-8'))
 
 
 def main():

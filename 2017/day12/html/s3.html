@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--input 标签    -->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--表单 向action提交数据 method:get 或 post-->
+    <form action="http://localhost:8000/receiveAction" method="post">
+        <!--name 为key-->
+        <!--
+            {'username':'xxx', 'password':'xxx'}
+        -->
+        <input type="text" name="username"/><br/>
+        <input type="password" name="password"/><br/>
+        <input type="button" value="登录1"/><br/>
+        <input type="submit" value="登录2"/>
+    </form>
+
+    <br/>
+
+    <form>
+        <input type="text"/><br/>
+        <input type="password"/><br/>
+        <input type="button" value="登录1"/><br/>
+        <input type="submit" value="登录2"/>
+    </form>
+</body>
+</html>
