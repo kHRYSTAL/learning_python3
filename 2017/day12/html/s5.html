@@ -30,5 +30,36 @@
          <input type="file" name="fname">
         <input type="submit" value="提交">
     </form>
+
+    <textarea name="multi_text">default value</textarea>
+    <br/>
+
+    <select name="city">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+        <option value="4" selected="selected">天津</option>
+    </select>
+
+    <select name="city" size="4" multiple="multiple">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+        <option value="4" selected="selected">天津</option>
+    </select>
+
+    <select name="city" size="4">
+        <optgroup label="直辖市">
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3">南京</option>
+            <option value="4">天津</option>
+        </optgroup>
+        <optgroup label="山东省">
+            <option value="5">济南</option>
+            <option value="6">蓬莱</option>
+            <option value="7">泰安</option>
+        </optgroup>
+    </select>
 </body>
 </html>

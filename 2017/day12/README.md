@@ -77,7 +77,7 @@ body中的常用标签
     chrome 审查元素的使用
         -定位某个元素
         -查看样式
-
+=====================能提交到后台的标签start=======================
 1. 符号
     文字图标
     空格 &nbsp;
@@ -125,7 +125,112 @@ body中的常用标签
         重置 reset 需要写到表单里
             <input type="reset" value="重置"/>
 
-8
+8.  textarea  行内标签 多行文本输入
+    <textarea name="multi_text">default value</textarea>
+
+9. 下拉菜单
+    <select name="city">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+        <option value="4"  selected="selected">天津</option>
+    </select>
+
+    默认尺寸
+    <select name="city" size="10">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+        <option value="4"  selected="selected">天津</option>
+    </select>
+
+    多选
+    <select name="city" size="4" multiple="multiple">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+        <option value="4" selected="selected">天津</option>
+    </select>
+
+    分组
+    <select name="city" size="4">
+        <optgroup label="直辖市">
+            <option value="1">北京</option>
+            <option value="2">上海</option>
+            <option value="3">南京</option>
+            <option value="4">天津</option>
+        </optgroup>
+        <optgroup label="山东省">
+            <option value="5">济南</option>
+            <option value="6">蓬莱</option>
+            <option value="7">泰安</option>
+        </optgroup>
+    </select>
+=====================能提交到后台的标签end=======================
+
+=====================修饰/功能标签start=======================
+在html中 id是不能重复的 name是可以重复的
+        id是页面内的操作的标记 name是与服务器交互的标记key
+1. a标签
+    跳转
+        <a href="http://www.baidu.com">百度</a>
+        <!--在空白页打开-->
+        <a href="http://www.baidu.com" target="_blank">百度</a>
+
+    锚点-在当前页面导航 跳转到指定位置 #某个标签的id id不能重复
+        <a href="#i1">第一章</a>
+        <a href="#i2">第二章</a>
+        <a href="#i3">第三章</a>
+        <a href="#i4">第四章</a>
+
+        <div id="i1" style="height: 600px;">第一章的内容</div>
+        <div id="i2" style="height: 600px;">第二章的内容</div>
+        <div id="i3" style="height: 600px;">第三章的内容</div>
+        <div id="i4" style="height: 600px;">第四章的内容</div>
+
+2. img 在图片路径错误或解析失败显示alt的内容 在鼠标放到图片上显示title的内容
+     <a href="http://www.baidu.com">
+        <img src="1.jpeg" style="height: 200px; width: 200px" alt="保利尼奥" title="暴力鸟>
+     </a>
+
+3.列表
+    1.显示点
+        <ul>
+            <li></li>
+        </ul>
+    2.显示数字序号 order
+        <ol>
+            <li></li>
+        </ol>
+    3.分层缩进
+        <dl>
+            <dt>ttt</dt> 不缩进
+            <dd>ddd</dd> 缩进
+            <dd>ddd</dd>
+            <dd>ddd</dd>
+            <dt>ttt</dt>
+            <dd>ddd</dd>
+            <dd>ddd</dd>
+            <dd>ddd</dd>
+        </dl>
+
+4.表格
+
+    <table border="1">
+        <!--一行-->
+        <tr>
+            <td>第一行,第一列</td>
+            <td>第一行,第二列</td>
+            <td>第一行,第三列</td>
+        </tr>
+        <tr>
+            <td>第二行,第一列</td>
+            <td>第二行,第二列</td>
+            <td>第二行,第三列</td>
+        </tr>
+    </table>
+
+=====================修饰/功能标签end=======================
 ```
 
 ### 简易实现一个socket服务端 模拟http操作
