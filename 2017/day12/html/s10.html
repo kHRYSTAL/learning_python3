@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*id选择器*/
+        /*#i1, #i2, #i3{*/
+            /*background-color: #2459a2;*/
+            /*height: 48px;*/
+        /*}*/
+        /*类选择器*/
+        /*.c2 {*/
+            /*background-color: rebeccapurple;*/
+            /*height: 20px;*/
+        /*}*/
+
+        /*标签选择器*/
+        div{
+            background-color: black;
+            /** 这里的color 其他的选择器并没有设置 因此color会实现 但是background因为优先级被其他选择器覆盖*/
+            color: white;
+        }
+        /*关联选择器 span下的div标签修改style*/
+        .c3 div{
+            background-color: aqua;
+            color: #cdcdcd;
+        }
+
+        input[type="text"]{width:100px; height:200px;}
+        /*bbb为自定义属性 相当于自定义k-v*/
+        input[bbb='asd']{background-color: #333333}
+
+    </style>
+</head>
+<body>
+    <div id="i1">1</div>
+    <div class="c2">2</div>
+    <div class="c2">3</div>
+    <span class="c3">asasasasd
+        <div>sadsadasd</div>
+        sdasdasd
+    </span>
+
+    <br>
+
+    <!--属性标签-->
+    <input type="text">
+    <br/>
+    <br/>
+    <input type="password" bbb="asd">
+</body>
+</html>

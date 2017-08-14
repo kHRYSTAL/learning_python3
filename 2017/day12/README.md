@@ -20,6 +20,13 @@
                 主动闭合标签<xxx/>或<xxx></xxx>
 ```
 
+### 简易实现一个socket服务端 模拟http操作
+
+    参考http_sample
+
+    这个例子是为了演示浏览器请求网页 服务端接收后返回数据并断开的操作
+
+#### html 标签 s1~s9
 
 ```
 head中的标签
@@ -230,11 +237,232 @@ body中的常用标签
         </tr>
     </table>
 
+    规范写法
+        <table border="1">
+        <!--表头-->
+            <thead>
+                <tr>
+                    <th>表头1</th>
+                    <th>表头2</th>
+                    <th>表头3</th>
+                    <th>表头4</th>
+                </tr>
+            </thead>
+            <!--表体-->
+            <tbody>
+                <tr>
+                    <th>表体1</th>
+                    <th>表体2</th>
+                    <th>表体3</th>
+                    <th>表体4</th>
+                </tr>
+            </tbody>
+        </table>
+
+    合并单元格
+            <tr>
+                <td>表体1</td>
+                <!--占两列-->
+                <td colspan="2">表体2</td>
+                <td>表体4</td>
+            </tr>
+
+            <tr>
+                <!--占两行-->
+                <td rowspan="2">表体1</td>
+                <td>表体2</td>
+                <td>表体4</td>
+            </tr>
+
+5. label 用于input控件获取焦点 行内标签
+
+    <label for="username">用户名:</label>
+    <input type="text" name="user" id="username">
+
+6. fieldset 不常用 实现文字框包裹内容
+
+
+
+
+
 =====================修饰/功能标签end=======================
 ```
 
-### 简易实现一个socket服务端 模拟http操作
+#### css s10~
 
-    参考http_sample
+    在标签上设置style属性 如:
+    <div style="background-color: #2459a2; height: 48px;">1</div>
 
-    这个例子是为了演示浏览器请求网页 服务端接收后返回数据并断开的操作
+    style的重用
+    1.head中的id选择器 通过找到标签的id设置style 并不常用 因为id不允许重复
+        <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+            #i1, #i2, #i3{
+                background-color: #2459a2;
+                height: 48px;
+            }
+        </style>
+        </head>
+        <body>
+            <div id="i1">1</div>
+            <div id="i2">2</div>
+            <div id="i3">3</div>
+        </body>
+
+
+    2. ################################################
+        常用 class选择器 通过找到标签的class设置标签的style
+            常用, 允许重复
+        <head>
+            <meta charset="UTF-8">
+            <title>Title</title>
+            <style>
+                .c2 {
+                    background-color: rebeccapurple;
+                    height: 20px;
+                }
+            </style>
+            </head>
+        <body>
+            <div id="i1">1</div>
+            <div class="c2">2</div>
+            <div id="i3">3</div>
+        </body>
+
+    3.标签选择器 用于通用标签style设置
+        <head>
+            <meta charset="UTF-8">
+            <title>Title</title>
+            <style>
+                div{
+                    background-color: black;
+                    color: white; /** 这里的color 其他的选择器并没有设置 因此color会实现 但是background因为优先级被其他选择器覆盖*/
+                }
+            </style>
+        </head>
+        <body>
+            <div id="i1">1</div>
+            <div class="c2">2</div>
+            <div class="c2">3</div>
+        </body>
+
+    4.关联选择器
+        <head>
+            <meta charset="UTF-8">
+            <title>Title</title>
+            <style>
+                span div{
+                    background-color: aqua;
+                    color: #cdcdcd;
+                }
+            </style>
+        </head>
+        <body>
+            <span>asasasasd
+                <div>sadsadasd</div>
+                sdasdasd
+            </span>
+        </body>
+
+        ------------------ 层级选择器 c2下的c3下的div
+        <head>
+        <style>
+            .c2 .c3 div{
+                background-color: aqua;
+                color: #cdcdcd;
+            }
+        </style>
+        </head>
+        <body>
+            <div class="c2">
+                <span class="c3">asasasasd
+                    <div>sadsadasd</div>
+                    sdasdasd
+                </span>
+            </div>
+        </body>
+
+    5. 组合选择器
+        #i1, #i2, #i3 {
+               xxx
+        }
+
+        #i1, .c1, div {
+            xxx
+        }
+
+    6. 属性选择器
+        找到type为text的input标签
+        input[type="text"]{width:100px; height:200px;}
+         /*bbb为自定义属性 相当于自定义k-v*/
+        input[bbb='asd']{background-color: #333333}
+         /*c1可以进行一次style设置 然后根据标签的属性再进行一次筛选*/
+        .c1 [bbb='asd']{background-color: #333333}
+
+##### style的优先级
+    优先级 如果标签上有style 则style优先
+    head里有多个style, 标签均使用了, 则为并集使用style
+        重复的属性按照就近原则使用(相同属性使用靠下的属性)
+
+##### 导入css
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <!--导入css-->
+        <link rel="stylesheet" href="commons13.css">
+    </head>
+    <body>
+        <div class="c1 c2">asasasa</div>
+    </body>
+
+##### 其他css 配置
+
+    1.边框 可以加到所有body的标签中
+        <div style="border: 1px solid red;">asasas</div>
+        <div style="border: 1px dotted red;">asasas</div>
+        <div style="border-left: 10px dotted red;">asasas</div>
+
+        <div style="height: 48px;width: 200px;border: 1px solid pink">asasas</div>
+
+    2.float
+        浮动属性 块级标签合并一行
+        <!--从左向右绘制 屏幕宽度的20%-->
+        <!--从左向右绘制 屏幕宽度的20%-->
+        <div style="width: 20%; background-color: red; float: left">1</div>
+        <!--从右向⬅️绘制 屏幕宽度的80%-->
+        <div style="width: 80%; background-color: black; float: right">2</div>
+
+        <!--注意 如果相加超过100% 会另起一行 不会叠加-->
+    4.display
+
+    5.padding margin(0, auto)
+
+    6.text-algin
+
+    7.height width line-height color font-size font-weight
+        <!--屏幕宽度的80%-->
+        <div style="height: 48px;width: 80%;border: 1px solid pink">asasas</div>
+
+        <br/>
+        <!--文字水平居中-->
+        <div style="height: 48px;width: 80%;border: 1px solid pink; font-size: 16px;text-align: center">asasas</div>
+        <br/>
+        <!--垂直方向居中 根据height高度居中-->
+        <div style="height: 48px;width: 80%;border: 1px solid pink; font-size: 16px;text-align: center; line-height: 48px">asasas</div>
+
+        <br/>
+        <!--文字加粗-->
+        <div style="height: 48px;
+            width: 80%;
+            border: 1px solid pink;
+            font-size: 16px;
+            text-align: center;
+            line-height: 48px;
+            font-weight: bold">asasas</div>
+
+
+
+

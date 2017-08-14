@@ -26,5 +26,67 @@
             <td>无</td>
         </tr>
     </table>
+    <br>
+    <!--规范写法-->
+    <table border="1">
+        <!--表头-->
+        <thead>
+            <tr>
+                <th>表头1</th>
+                <th>表头2</th>
+                <th>表头3</th>
+                <th>表头4</th>
+            </tr>
+        </thead>
+        <!--表体-->
+        <tbody>
+            <tr>
+                <td>表体1</td>
+                <td>表体2</td>
+                <td>表体3</td>
+                <td>表体4</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br/>
+    <!--合并单元格-->
+    <table border="1">
+        <!--表头-->
+        <thead>
+            <tr>
+                <th>表头1</th>
+                <th>表头2</th>
+                <th>表头3</th>
+                <th>表头4</th>
+            </tr>
+        </thead>
+        <!--表体-->
+        <tbody>
+            <tr>
+                <td>表体1</td>
+                <!--占两列-->
+                <td colspan="2">表体2</td>
+                <td>表体4</td>
+            </tr>
+            <tr>
+                <td rowspan="2">表体1</td>
+                <td>表体2</td>
+                <td>表体3</td>
+                <td>表体4</td>
+            </tr>
+            <tr>
+                <td>表体2</td>
+                <td>表体3</td>
+                <td>表体4</td>
+            </tr>
+            <tr>
+                <td>表体1</td>
+                <td>表体2</td>
+                <td>表体3</td>
+                <td>表体4</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>
