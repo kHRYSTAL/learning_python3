@@ -428,6 +428,7 @@ body中的常用标签
         <div style="height: 48px;width: 200px;border: 1px solid pink">asasas</div>
 
     2.float
+
         浮动属性 块级标签合并一行
         <!--从左向右绘制 屏幕宽度的20%-->
         <!--从左向右绘制 屏幕宽度的20%-->
@@ -440,13 +441,8 @@ body中的常用标签
         <!-- 由于子标签float 父标签没有float 会导致父控件压不住 需要加这句话 意思是让父标签包裹所有子标签-->
         <div style="clear: both;"></div>
         参考s15
-    4.display
 
-    5.padding margin(0, auto)
-
-    6.text-algin
-
-    7.height width line-height color font-size font-weight
+    3.height width line-height color font-size font-weight
         <!--屏幕宽度的80%-->
         <div style="height: 48px;width: 80%;border: 1px solid pink">asasas</div>
 
@@ -467,6 +463,33 @@ body中的常用标签
             line-height: 48px;
             font-weight: bold">asasas</div>
 
+    4.display 用于块标签与行内标签转换
+
+         <div style="background-color: red; display: inline">块标签</div>
+         <span style="background-color: black; display: block; color: white"> 行内标签</span>
+
+         ### 注意 行内标签(<span><a>)无法设置高度/宽度/间距/内边距
+         ### 块级标签可以, 块级标签默认占父级标签的100%
+         ### 可以使用display: inline-block 使标签即具有行内标签属性也具有block标签属性
+             支持宽度/高度margin/padding
+         ### display:none 为让标签消失 以后会经常用 用于控制控件的隐藏和显示
+
+         参考s16.html
+
+    5.padding margin(0, auto)
+
+        margin 外边距
+            margin-top
+            margin-bottom
+            margin-left
+            margin-right
+        padding 内边距
+            padding-top
+            padding-bottom
+            padding-left
+            padding-right
+
+        style="margin: 0 auto;" 上下间距是0 左右间距根据屏幕剩余宽度平均分割
 
 
 

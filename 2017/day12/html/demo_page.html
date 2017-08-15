@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header{
+            height: 38px;
+            background-color: #dddddd;
+            /*垂直居中*/
+            line-height: 38px;
+        }
+    </style>
+</head>
+<body style="margin: 0 auto">
+
+    <div class="pg-header">
+        <!--margin: 0 auto 上下间距是0 左右间距根据屏幕剩余宽度平均分割-->
+        <div style="margin: 0 auto; width: 980px">
+            <div style="float: left;">收藏本站</div>
+            <!--居右-->
+            <div style="float: right;">
+                <a>登录</a>
+                <a>注册</a>
+            </div>
+             <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <!-- 导航 -->
+    <div>
+        <div style="margin: 0 auto; width: 980px">
+            <div style="float: left">
+                Logo
+            </div>
+            <div style="float: right">
+                <div style="height: 50px; width: 100px; background-color: #dddddd">
+
+                </div>
+            </div>
+        </div>
+        <!-- 由于子标签float 父标签没有float 会导致父控件压不住 需要加这句话 意思是让父标签包裹所有子标签-->
+        <div style="clear: both;"></div>
+    </div>
+
+    <div style="background-color: red">
+         <div style="margin: 0 auto; width: 980px">asdf</div>
+    </div>
+
+    <div style="width: 300px;border: 1px solid red">
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+
+        <!-- 由于子标签float 父标签没有float 会导致父控件压不住 需要加这句话 意思是让父标签包裹所有子标签-->
+        <div style="clear: both;"></div>
+    </div>
+</body>
+</html>
