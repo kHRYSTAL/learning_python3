@@ -29,11 +29,11 @@ def handle_request(conn):
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind(('localhost', 8000))
-    sock.listen(5)
+    sock.listen(5)  # 最大连接数
     while True:
         conn, addr = sock.accept()
         handle_request(conn)
-        conn.close()
+        conn.close()  # 断开本次连接, 等待accept
 
 
 if __name__ == '__main__':
