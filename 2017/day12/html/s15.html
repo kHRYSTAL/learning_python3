@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header{
+            height: 38px;
+            background-color: #dddddd;
+            /*垂直居中*/
+            line-height: 38px;
+        }
+    </style>
+</head>
+<body style="margin: 0 auto">
+    <div class="pg-header">
+        <div style="float: left;">收藏本站</div>
+        <!--居右-->
+        <div style="float: right;">
+            <a>登录</a>
+            <a>注册</a>
+        </div>
+    </div>
+
+    <div style="width: 300px;border: 1px solid red">
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+        <div style="width: 98px;height: 60px ;border: 1px solid green; float: left;"></div>
+
+        <!-- 由于子标签float 父标签没有float 会导致父控件压不住 需要加这句话 意思是让父标签包裹所有子标签-->
+        <div style="clear: both;"></div>
+    </div>
+</body>
+</html>

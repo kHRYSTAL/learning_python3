@@ -436,6 +436,10 @@ body中的常用标签
         <div style="width: 80%; background-color: black; float: right">2</div>
 
         <!--注意 如果相加超过100% 会另起一行 不会叠加-->
+
+        <!-- 由于子标签float 父标签没有float 会导致父控件压不住 需要加这句话 意思是让父标签包裹所有子标签-->
+        <div style="clear: both;"></div>
+        参考s15
     4.display
 
     5.padding margin(0, auto)
