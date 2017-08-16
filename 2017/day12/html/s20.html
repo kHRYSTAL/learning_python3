@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--position 配置-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--position: absolute 表示标签固定在首屏某个位置 页面滑动也会跟随滚动 实现层叠样式 与position: relative结合使用-->
+    <!--top bottom left right 表示position后 距离上下左右的高度-->
+    <!--常用于页面点赞时 点赞动画所在的标签是子标签 使用position:absolute ,
+        父标签使用 position: relative 表示内部的position是相对于自己的位置
+    跟随item显示在某个相对item的位置-->
+
+    <!--fixed是相对屏幕固定的位置-->
+    <!--position: absolute是相对于position: relative的绝对位置-->
+
+
+   <div style="position: relative; width: 980px; height: 1000px; margin-top: 100px; background-color: red">
+       <!--子标签相对于父标签固定位置 且在父标签上层-->
+       <div style="background-color: green; position: absolute; top: 200px; left: 100px">asdf</div>
+   </div>
+</body>
+</html>

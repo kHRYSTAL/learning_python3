@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--遮罩上的对话框-->
+    <div style="display:none;position: fixed; background-color: white;
+        /* z轴高度 越大越在上层 */
+        z-index: 10;
+        height: 400px;
+        width: 500px;
+        top: 50%;
+        left: 50%;
+        /*绘制是从左上角开始的 因此需要将这个标签居中处理*/
+        margin-top: -200px;
+        margin-left: -250px;
+        ">
+
+        <input type="text">
+        <input type="text">
+        <input type="text">
+    </div>
+    <!--遮罩-->
+    <div style="display:none;position: fixed; background-color: black;
+        z-index: 9;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        /*opacity 表示透明度 0为全透明 1为不透明*/
+        opacity: 0.5;"></div>
+    <div style="height: 5000px; background-color: green">asasasas</div>
+</body>
+</html>

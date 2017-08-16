@@ -471,7 +471,7 @@ body中的常用标签
          ### 注意 行内标签(<span><a>)无法设置高度/宽度/间距/内边距
          ### 块级标签可以, 块级标签默认占父级标签的100%
          ### 可以使用display: inline-block 使标签即具有行内标签属性也具有block标签属性
-             支持宽度/高度margin/padding
+             设置这个属性 行内标签就支持宽度/高度margin/padding
          ### display:none 为让标签消失 以后会经常用 用于控制控件的隐藏和显示
 
          参考s16.html
@@ -490,6 +490,8 @@ body中的常用标签
             padding-right
 
         style="margin: 0 auto;" 上下间距是0 左右间距根据屏幕剩余宽度平均分割
+
+        参考s17.html
 
 
 ##### 问题
@@ -514,4 +516,103 @@ body中的常用标签
         img {
             border:0;
         }
+
+
+##### css的position
+
+        1. fixed 相对于屏幕的上层的固定位置
+        页面上某些控件不管页面滑动到什么位置 永远固定在浏览器的某个可见位置
+        如 菜单/返回按钮/返回顶部按钮等等
+
+        这时需要用到position: fixed
+
+        <body>
+            <!--position: fixed 表示标签固定在某个位置 页面滑动不跟随滚动 实现层叠样式-->
+            <!--top bottom left right 表示position后 距离上下左右的高度-->
+            <div style="width: 50px;height: 50px; background-color: black; color: white;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            ">
+                返回顶部
+            </div>
+            <div style="height: 5000px; background-color: #dddddd;"></div>
+        </body>
+
+        2. absolute 相对于 relative父标签的上层的固定位置
+            <!--position: absolute 表示标签固定在首屏某个位置 页面滑动也会跟随滚动 实现层叠样式 与position: relative结合使用-->
+            <!--top bottom left right 表示position后 距离上下左右的高度-->
+            <!--常用于页面点赞时 点赞动画所在的标签是子标签 使用position:absolute ,
+                父标签使用 position: relative 表示内部的position是相对于自己的位置
+            跟随item显示在某个相对item的位置-->
+
+            <!--fixed是相对屏幕固定的位置-->
+            <!--position: absolute是相对于position: relative的绝对位置-->
+
+
+           <div style="position: relative; width: 980px; height: 1000px; margin-top: 100px; background-color: red">
+               <!--子标签相对于父标签固定位置 且在父标签上层-->
+               <div style="background-color: green; position: absolute; top: 200px; left: 100px">asdf</div>
+           </div>
+
+
+        3. 遮罩 实际上有三层 最底层是正常页面 中间层是遮罩 最上层是类似dialog的控件
+
+                <!--遮罩上的对话框-->
+                <div style="position: fixed; background-color: white;
+                    /* z轴高度 越大越在上层 */
+                    z-index: 10;
+                    height: 400px;
+                    width: 500px;
+                    top: 50%;
+                    left: 50%;
+                    /*绘制是从左上角开始的 因此需要将这个标签居中处理*/
+                    margin-top: -200px;
+                    margin-left: -250px;
+                    "></div>
+                <!--遮罩-->
+                <div style="position: fixed; background-color: black;
+                    z-index: 9;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    left: 0;
+                    /*opacity 表示透明度 0为全透明 1为不透明*/
+                    opacity: 0.5;"></div>
+                <div style="height: 5000px; background-color: green">asasasas</div>
+
+            参考s21.html
+
+        4. overflow 属性
+
+            <!--overflow: hidden 超出的范围隐藏-->
+            <div style="width: 50px; height: 50px; overflow: hidden">
+                <img src="1.jpeg">
+            </div>
+            <br/>
+            <!--overflow: auto/scroll 超出的范围支持滚动-->
+            <div style="width: 50px; height: 50px; overflow: auto">
+                <img src="1.jpeg">
+            </div>
+            <br/>
+            <!--正常操作-->
+            <div style="width: 50px; height: 50px;">
+                <img src="1.jpeg" style="width: 50px; height: 50px">
+            </div>
+
+            参考s22.html
+
+        5. hover属性 鼠标移动到指定标签上的事件
+            当鼠标移动到标签时 以下css生效
+            /* hover 鼠标移动到这个标签上 样式会发生变化 */
+            .pg-header .menu:hover {
+                background-color: blue;
+            }
+
+            参考s23.html
+
+
+
+
+
 

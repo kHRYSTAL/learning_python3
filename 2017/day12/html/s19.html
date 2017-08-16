@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header {
+            background-color: black;
+            color: white;
+            height: 48px;
+            position: fixed;
+            /*width: 100%;*/
+            /*需要加top:0 否则会跟随pg-body的margin-top*/
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        .pg-body {
+            margin-top: 48px;
+            background-color: #666666;
+            height: 5000px;
+        }
+    </style>
+</head>
+
+<body style="margin: 0 auto">
+    <div class="pg-header">头部</div>
+    <div class="pg-body">内容</div>
+</body>
+</html>

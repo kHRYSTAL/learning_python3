@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--position 配置-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--position: fixed 表示标签固定在某个位置 页面滑动不跟随滚动 实现层叠样式-->
+    <!--top bottom left right 表示position后 距离上下左右的高度-->
+    <div onclick="goTop();" style="width: 50px;height: 50px; background-color: black; color: white;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    ">
+        返回顶部
+    </div>
+    <div style="height: 5000px; background-color: #dddddd;"></div>
+
+    <script>
+        function goTop() {
+            document.body.scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
