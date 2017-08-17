@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--实现一个跑马灯效果-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="i1">kHRYSTAL~~</div>
+
+    <script>
+        function cutFirstCharPasteEnd() {
+            var tag = document.getElementById("i1");
+            var text = tag.innerText;
+            var firstChar = text.charAt(0);
+            tag.innerText = text.substr(1, text.length) + firstChar;
+        }
+
+        setInterval("cutFirstCharPasteEnd();", 1000);
+
+    </script>
+</body>
+</html>

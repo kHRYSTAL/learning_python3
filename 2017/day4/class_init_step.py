@@ -25,7 +25,7 @@ type类如何实现创建类
 
 class MyType(type):
     """
-    元类的实现 定义自己的类如果创建
+    元类的实现 定义自己的类如何创建
     """
 
     def __init__(cls, what, bases=None, dict=None):

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--for 循环-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        var a = [11, 22, 33, 44];
+        for(var i in a) { // i 为 index
+            console.log(a[i]);
+        }
+
+        for(var i=0; i< a.length; i++) { // 类似java的for循环
+            console.log(a[i])
+        }
+
+        var b = {'k1':'v1', 'k2':'v2', 'k3':'v3'}
+        for (var i in b) { // i 为 key
+            console.log(b[i])
+        }
+
+    </script>
+</body>
+</html>

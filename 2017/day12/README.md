@@ -1,4 +1,4 @@
-### start html
+### start html&css
 
 1. html就是一个赤裸裸的人
 2. css就是华丽的衣服
@@ -518,9 +518,10 @@ body中的常用标签
         }
 
 
-##### css的position
+##### css的补充
 
-        1. fixed 相对于屏幕的上层的固定位置
+        1. position
+        fixed 相对于屏幕的上层的固定位置
         页面上某些控件不管页面滑动到什么位置 永远固定在浏览器的某个可见位置
         如 菜单/返回按钮/返回顶部按钮等等
 
@@ -610,6 +611,43 @@ body中的常用标签
             }
 
             参考s23.html
+
+        6. 设置背景图片
+
+            background-image:url('1.jpeg');
+            图片为自身大小 如果div宽高大于图片宽高, 则图片重复放置
+
+            重复放置方式
+            background-repeat: repeat-y y轴重复放置
+
+        7.  background-position-y 移动背景图
+
+            <div style="background: url('2.png') no-repeat;border: 1px solid red; height: 18px; width: 20px;"></div>
+            <!--背景图的y轴向上移动-->
+            <div style="background: url('2.png') no-repeat;border: 1px solid red; height: 18px; width: 20px;
+                background-position-y: -20px;"></div>
+            <div style="background: url('2.png') no-repeat;border: 1px solid red; height: 18px; width: 20px;
+                background-position-y: -40px;"></div>
+            <div style="background: url('2.png') no-repeat;border: 1px solid red; height: 18px; width: 20px;
+                background-position-y: -60px;"></div>
+
+            <!--优化写法 最后两个值表示x y轴偏移量-->
+            <div style="border: 1px solid red; height: 18px; width: 20px;
+                background: url('2.png') no-repeat 0 -80px;"></div>
+
+            参考s25.html
+
+        8. 实现登陆框
+            <!-- 内部position使用相对布局 -->
+            <div style="width: 400px; height: 35px;  position: relative">
+                <!--使用 position: absolute 相对于父容器位置-->
+                <span style="background: url('login.png') no-repeat;height: 16px; width: 16px; display: inline-block;
+                    position: absolute; right: 10px; top: 10px;
+                    "></span>
+                <input style="width: 370px; height: 100%; padding-right: 30px"/>
+            </div>
+
+            参考s26.html
 
 
 

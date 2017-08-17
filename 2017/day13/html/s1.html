@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 可以导入或直接写到head里 -->
+    <script src="common.js"></script>
+
+    <!--默认type就是javascript-->
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <input type="text" id="user">
+    <input type="button" value="点击" onclick="Toalert()">
+
+    <!-- 可以写到body里 但是body执行时 可能函数还不存在 -->
+    <script>
+        function getData() {
+            var a = document.getElementById("user");
+            alert(a.value)
+
+        }
+    </script>
+</body>
+</html>
