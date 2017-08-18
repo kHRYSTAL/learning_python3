@@ -162,3 +162,40 @@
 
         执行函数
             函数名(1, 2, 3);
+
+
+
+#### Dom操作
+
+    Dom将整个html转换为文档对象 这样dom就能通过特定的标记获取指定的标签
+
+    这样就能够进行删除 修改内容 修改属性等操作 就能让页面动起来
+
+    步骤:
+        1.找到标签
+
+            document.getElementById('id')
+            通过id获取标签
+            由于整个html中id不能重复
+            因此这种方式获取的标签最多只有一个
+
+            document.getElementsByTag('div')
+            通过标签类型获取标签
+            这样获取的标签是一个列表
+
+            document.getElementsByClassName('classname')
+            通过classname获取标签
+            这样获取的标签是一个列表
+
+            document.getElementsByName('name')
+            通过标签中name属性获取标签
+            这样获取的标签是一个列表
+
+        2.操作标签
+
+            获取标签中的文本内容
+            标签对象.innerText;
+
+            对标签内部文本进行重新赋值
+            标签对象.innerText = "xxx";
+

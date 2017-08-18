@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="i1">this is i1</div>
+    <a>asdf</a>
+    <a>123</a>
+    <a>qwe123</a>
+    <script>
+        document.getElementById("i1").innerText = "new content";
+        for(var i=0; i < document.getElementsByTagName("a").length; i++) {
+            document.getElementsByTagName("a")[i].innerText = 666;
+        }
+    </script>
+</body>
+</html>
