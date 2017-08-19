@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--hover 对子标签多重控制-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .item{
+            background-color: #666666;
+            color: #2459a2;
+        }
+        .item:hover{
+            color: red;
+        }
+        /*鼠标没放到b上不会变色*/
+        /*.item .b:hover{*/
+            /*color: green;*/
+        /*}*/
+
+        /* 当鼠标在item上 不管在没在b上 b都会变色*/
+        .item:hover .b{
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="item">
+        <div class="a">123</div>
+        <div class="b">456</div>
+    </div>
+</body>
+</html>

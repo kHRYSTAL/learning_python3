@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--通过fixed实现一个后台管理页面布局-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header{
+            background-color: #2459a2;
+            position: fixed;
+            height: 48px;
+            top: 0;
+            right: 0;
+            left: 0;
+        }
+        .pg-body .menu{
+            position: fixed;
+            width: 200px;
+            top: 48px;
+            left: 0;
+            bottom: 0;
+            background-color: #cc6600;
+        }
+        .pg-body .content{
+            position: fixed;
+            left: 200px;
+            right: 0;
+            top: 48px;
+            bottom: 0;
+            overflow: auto;
+            min-width: 400px;
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+<body style="margin: 0 auto">
+    <!--顶部菜单-->
+    <div class="pg-header"></div>
+    <div class="pg-body">
+        <div class="menu">
+            <p>qwert</p><p>qwert</p><p>qwert</p>
+            <p>qwert</p><p>qwert</p><p>qwert</p>
+            <p>qwert</p><p>qwert</p><p>qwert</p>
+            <p>qwert</p><p>qwert</p><p>qwert</p>
+        </div>
+        <div class="content">
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+            <p>asdfgh</p><p>asdfgh</p><p>asdfgh</p>
+        </div>
+    </div>
+    <div class="pg-footer"></div>
+</body>
+</html>
