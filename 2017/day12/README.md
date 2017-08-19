@@ -447,10 +447,10 @@ body中的常用标签
         <div style="height: 48px;width: 80%;border: 1px solid pink">asasas</div>
 
         <br/>
-        <!--文字水平居中-->
+        <!--内容水平居中-->
         <div style="height: 48px;width: 80%;border: 1px solid pink; font-size: 16px;text-align: center">asasas</div>
         <br/>
-        <!--垂直方向居中 根据height高度居中-->
+        <!--内容垂直居中 根据height高度居中-->
         <div style="height: 48px;width: 80%;border: 1px solid pink; font-size: 16px;text-align: center; line-height: 48px">asasas</div>
 
         <br/>

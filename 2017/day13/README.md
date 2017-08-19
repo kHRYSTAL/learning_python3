@@ -171,31 +171,111 @@
 
     这样就能够进行删除 修改内容 修改属性等操作 就能让页面动起来
 
-    步骤:
-        1.找到标签
+    1.Dom 直接选择器 直接找到指定的一个或一组标签
 
-            document.getElementById('id')
-            通过id获取标签
-            由于整个html中id不能重复
-            因此这种方式获取的标签最多只有一个
+        步骤:
+            1.找到标签
 
-            document.getElementsByTag('div')
-            通过标签类型获取标签
-            这样获取的标签是一个列表
+                document.getElementById('id')
+                通过id获取标签
+                由于整个html中id不能重复
+                因此这种方式获取的标签最多只有一个
 
-            document.getElementsByClassName('classname')
-            通过classname获取标签
-            这样获取的标签是一个列表
+                document.getElementsByTag('div')
+                通过标签类型获取标签
+                这样获取的标签是一个列表
 
-            document.getElementsByName('name')
-            通过标签中name属性获取标签
-            这样获取的标签是一个列表
+                document.getElementsByClassName('classname')
+                通过classname获取标签
+                这样获取的标签是一个列表
 
-        2.操作标签
+                document.getElementsByName('name')
+                通过标签中name属性获取标签
+                这样获取的标签是一个列表
 
+                参考s6.html
+
+    2. Dom 间接选择器 通过一个标签间接的找到另一个或一组标签
+
+         步骤:
+            1.找到一个标签对象
+                var tag = document.getElementById('id')
+
+            2. 通过这个标签对象获取与他有关系的标签
+               支持的api:
+
+                parentNode          // 父节点
+                childNodes          // 所有子节点
+                firstChild          // 第一个子节点
+                lastChild           // 最后一个子节点
+                nextSibling         // 下一个兄弟节点
+                previousSibling     // 上一个兄弟节点
+
+                parentElement           // 父节点标签元素
+                children                // 所有子标签
+                firstElementChild       // 第一个子标签元素
+                lastElementChild        // 最后一个子标签元素
+                nextElementtSibling     // 下一个兄弟标签元素
+                previousElementSibling  // 上一个兄弟标签元素
+
+                参考s7.html
+
+    3. 操作标签
+        1.innerText
             获取标签中的文本内容
             标签对象.innerText;
 
             对标签内部文本进行重新赋值
             标签对象.innerText = "xxx";
+        2. className
+
+            对标签设置classname
+            tag.className = "c1";
+
+            以列表形式获取className 结果为["c1"]
+            tag.classList
+
+            新增一个className
+            tag.classList.add("c3");
+
+            删除一个className
+            tag.classList.remove("c1");
+
+            通过className的设置可以进行模态对话框 展开菜单的设置
+            如菜单: 点击展开的时候 对菜单中的一行增加className 只有这个className
+            style效果是展开的
+
+    例子
+
+    1.实现模态框 输入后新增操作对话框实现
+    全选 取消 反选
+        获取checkbox是否选中
+        checkbox.checked;
+
+        设置checkbox选中或不选中
+        checkbox.checked = true;
+        checkbox.checked = false;
+        参考 s8.html
+
+    2.实现管理后台菜单
+        参考 s9.html
+
+
+#### jQuery 初试
+
+    jQuery简化了Dom操作
+
+    document.getElementById("id")
+        $('#id')
+
+    document.getElementsByClassName("c1")
+        $('.c1')
+
+    找到相邻标签
+    $('.c1').siblings()
+
+
+
+
+
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div>
+        <div></div>
+        <div>
+            c1
+        </div>
+    </div>
+
+    <div>
+        <div id="i1"></div>
+        <div>
+            c2
+        </div>
+    </div>
+
+    <div>
+        <div></div>
+        <div>
+            c3
+        </div>
+    </div>
+    <script>
+        tag = document.getElementById("i1")
+        console.log(tag.parentElement)
+        console.log(tag.parentElement.children)
+//        父标签的上一个兄弟标签
+        console.log(tag.parentElement.previousElementSibling)
+
+    </script>
+</body>
+</html>

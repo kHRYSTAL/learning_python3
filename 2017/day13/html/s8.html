@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 模态框实现 -->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 9;
+            background-color: black;
+            opacity: 0.6;
+        }
+        .c2{
+            width: 500px;
+            height: 400px;
+            background-color: white;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-top: -200px;
+            margin-left: -250px;
+            z-index: 10;
+
+            /*内容水平居中*/
+            text-align: center;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="button" value="新增" onclick="show();">
+        <input type="button" value="全选" onclick="chooseAll();">
+        <input type="button" value="取消" onclick="cancelAll();">
+        <input type="button" value="反选" onclick="reverseAll();">
+        
+        <table>
+            <thead>
+                <tr>
+                    <td>选择</td>
+                    <td>主机名</td>
+                    <td>端口</td>
+                </tr>
+            </thead>
+            <tbody id="tb">
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>1.1.1.1</td>
+                    <td>80</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>2.2.2.2</td>
+                    <td>8080</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>3.3.3.3</td>
+                    <td>8090</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--遮罩-->
+    <div id="i1" class="c1 hide"></div>
+    <!--弹出框-->
+    <div id="i2" class="c2 hide">
+        <p><input type="text"/></p>
+        <p><input type="text"/></p>
+        <p>
+            <input id="i3" type="button" value="取消" onclick="hide();"/>
+            <input id="i4" type="button" value="确定" onclick="hide();"/>
+        </p>
+    </div>
+
+    <script>
+        /**
+         * 点击时删除隐藏style 显示遮罩和对话框
+         */
+        function show() {
+            document.getElementById("i1").classList.remove("hide");
+            document.getElementById("i2").classList.remove("hide");
+        }
+
+        /**
+         * 点击时增加隐藏style 隐藏遮罩和对话框
+         */
+        function hide() {
+             document.getElementById("i1").classList.add("hide");
+            document.getElementById("i2").classList.add("hide");
+        }
+        
+        function chooseAll() {
+            var tbody = document.getElementById("tb")
+            // 获取所有tr
+            var trList = tbody.children;
+            // 遍历所有tr
+            for(var i=0; i<trList.length; i++) {
+                var currTr = trList[i];
+                var checkBox = currTr.children[0].children[0];
+                checkBox.checked = true;
+            }
+        }
+        
+        function cancelAll() {
+            var tbody = document.getElementById("tb")
+            // 获取所有tr
+            var trList = tbody.children;
+            // 遍历所有tr
+            for(var i=0; i<trList.length; i++) {
+                var currTr = trList[i];
+                var checkBox = currTr.children[0].children[0];
+                checkBox.checked = false;
+            }
+        }
+        
+        function reverseAll() {
+            var tbody = document.getElementById("tb")
+            // 获取所有tr
+            var trList = tbody.children;
+            // 遍历所有tr
+            for(var i=0; i<trList.length; i++) {
+                var currTr = trList[i];
+                var checkBox = currTr.children[0].children[0];
+                if (checkBox.checked){
+                    checkBox.checked = false;
+                } else {
+                    checkBox.checked = true;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
