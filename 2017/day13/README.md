@@ -101,6 +101,17 @@
         ||        或
         &&      且
 
+        switch(i) {
+            case x:
+                console.log('123');
+                break;
+            case y:
+                break;
+            default:
+                break;
+
+        }
+
 #### 语法
 
     条件
@@ -128,6 +139,13 @@
         var b = {'k1':'v1', 'k2':'v2', 'k3':'v3'}
         for (var i in b) { // i 为 key
             console.log(b[i])
+        }
+
+        continue;
+        break;
+
+        while(条件) {
+
         }
 
 
@@ -158,6 +176,7 @@
         括号中为形參
         function 函数名(a, b, c) {
             ...
+            return 返回值
         }
 
         执行函数
