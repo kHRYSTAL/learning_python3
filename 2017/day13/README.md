@@ -240,12 +240,21 @@
                 参考s7.html
 
     3. 操作标签
-        1.innerText
-            获取标签中的文本内容
-            标签对象.innerText;
+        1.innerText/innerHtml/value
+            innerText:获取标签中的文本内容 忽略html标签内容
+                        标签对象.innerText;
 
-            对标签内部文本进行重新赋值
-            标签对象.innerText = "xxx";
+                        对标签内部文本进行重新赋值
+                        标签对象.innerText = "xxx"; 不能设置html
+                        如 innerText = "<a href="">asas<a>" 是不行的
+
+            innerHtml: 包含标签内的文本和html标签文本
+
+                        可以设置html
+
+            value: 对input/select/textarea标签有效 获取和设置input标签中的内容
+
+
         2. className
 
             对标签设置classname

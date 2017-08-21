@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--实现一个搜索框-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div style="width: 600px; margin: 0 auto">
+        <input id="i1" onfocus="Focus();" onblur="Blur();" type="text" value="请输入关键字" />
+        <input id="i2" type="text" placeholder="请输入关键字" />
+    </div>
+
+    <script>
+        // 获取焦点
+        function Focus() {
+            var tag = document.getElementById("i1");
+            var val = tag.value;
+            if (val === "请输入关键字") {
+                tag.value = "";
+            }
+
+        }
+        // 失去焦点
+        function Blur() {
+            var tag = document.getElementById("i1");
+            var val = tag.value;
+            if (val.length == 0) {
+                tag.value = "请输入关键字";
+            }
+        }
+    </script>
+</body>
+</html>

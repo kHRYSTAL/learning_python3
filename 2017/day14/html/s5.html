@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--函数的作用域 与作用域链-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        xo = 'khrystal'
+        function func() {
+            var xo = 'eric';
+            function inner() {
+                console.log(xo);
+            }
+            var xo = 'tony';
+            return inner
+        }
+
+        ret = func(); // 返回inner函数 函数持有外部变量tony
+        ret(); // 执行inner 输出tony
+    </script>
+</body>
+
+</html>
