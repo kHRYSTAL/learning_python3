@@ -273,6 +273,17 @@
             如菜单: 点击展开的时候 对菜单中的一行增加className 只有这个className
             style效果是展开的
 
+        3. style
+
+            var obj = document.getElementById("i1");
+            // 设置color
+            obj.style.color="red";
+            // 设置font-size
+            obj.style.fontSize="16px";
+            // 设置背景色
+            obj.style.backgroundColor="red";
+
+
     例子
 
     1.实现模态框 输入后新增操作对话框实现

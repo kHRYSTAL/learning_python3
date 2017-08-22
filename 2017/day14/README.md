@@ -256,6 +256,32 @@
 
         //解释器 会先到对象中找方法名, 如果不存在 会到原型中去找, 如果还不存在, 会报错TypeError
 
+# DOM操作补充
+
+### 设置自定义属性
+
+    var obj = document.getElementById("i1");
+    // 设置自定义属性
+    obj.setAttribute("key", "value");
+
+    // 获取自定义属性
+    var value = obj.getAttribute("key");
+
+    // 删除属性
+    obj.removeAttribute("key");
+
+    // 获取所有属性 字典
+    obj.attributes
+
+### 创建一个标签 并添加到html中
+
+    创建标签:
+        1.以字符串创建
+        2.以标签对象创建
+
+        注:jQuery 没有提供创建标签的api 需要使用document
+
+    参考s8.html
 
 
 
