@@ -273,15 +273,62 @@
     // 获取所有属性 字典
     obj.attributes
 
-### 创建一个标签 并添加到html中
+### 其他操作
 
-    创建标签:
+    1.创建标签:
         1.以字符串创建
         2.以标签对象创建
 
         注:jQuery 没有提供创建标签的api 需要使用document
 
     参考s8.html
+
+    2.提交表单
+        // 在function中调用获取表单对象提交 任何控件点击事件都可以调用这个function
+        document.getElementById("id").submit()
+
+    3. 对话框
+
+        1.alert("");
+        2.var v = confirm(""); // v = true 确认或 false取消
+
+    4. 页面url操作
+
+       var url = location.href; // 获取当前url
+       location.href = "http://www.baidu.com" 重定向跳转
+       location.href = location.href; // 刷新
+       location.reload(); // 刷新
+
+    5. 定时器操作
+        1. setInterval(function, time); 按照时间间隔执行 一直执行
+            var obj = setInterval(function(){}, 5000) // 5秒钟执行一次函数
+            clearInterval(obj); // 清除定时器 定时器不再执行
+
+            // 要求定时器执行一次后停止
+            var obj = setInterval(function(){
+                console.log(1);
+                clearInterval(obj);
+            }, 1000);
+
+        2. setTimeout(function, time); 延时多少毫秒后执行, 指执行一次
+
+            // 1秒后执行
+            var obj = setTimeout(function(){
+                console.log("timeout");
+            }, 1000);
+
+
+            clearTimeout(obj); //在延时期间内终止定时器
+
+            参考s10
+
+### DOM 事件操作
+
+
+
+
+
+
 
 
 

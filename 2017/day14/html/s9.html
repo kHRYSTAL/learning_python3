@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--DOM 提交表单-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form id="f1" method="get" action="http://www.baidu.com">
+        <input type="text" name="aaa"/>
+        <!--按钮提交-->
+        <input type="submit" value="提交"/>
+        <!--DOM 提交-->
+        <a onclick="submitForm();">提交</a>
+
+
+        <script>
+            function submitForm() {
+                document.getElementById("f1").submit();
+//                alert(123);
+            }
+        </script>
+    </form>
+</body>
+</html>

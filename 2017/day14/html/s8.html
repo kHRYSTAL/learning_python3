@@ -6,23 +6,24 @@
 </head>
 <body>
     <input type="button" value="添加标签" onclick="addEle();"/>
-    <div id="i1"></div>
+    <div id="i1">div</div>
     <script>
         function addEle() {
             // 创建一个标签
             // 将创建的标签添加到i1里
 //// 第一种方式
-//            var tag = "<input type='text'/><br/>";
+            var tag = "<input type='text'/><br/>";
 ////            添加到id标签的最底部
-//            document.getElementById("i1").insertAdjacentHTML('beforeEnd', tag);
+//            // 有四种, beforeBegin 在div标签前 afterBegin 在div标签内部头部 beforeEnd 在div标签内部尾部 afterEnd 在div标签之后
+            document.getElementById("i1").insertAdjacentHTML('beforeEnd', tag);
 //第二种方式
-            var element = document.createElement("input");
-            element.setAttribute("type", "text");
-            element.style.color='red';
-            element.style.fontSize='20px';
-            var p = document.createElement('p');
-            p.appendChild(element);
-            document.getElementById("i1").appendChild(p);
+//            var element = document.createElement("input");
+//            element.setAttribute("type", "text");
+//            element.style.color='red';
+//            element.style.fontSize='20px';
+//            var p = document.createElement('p');
+//            p.appendChild(element);
+//            document.getElementById("i1").appendChild(p);
         }
 
     </script>
