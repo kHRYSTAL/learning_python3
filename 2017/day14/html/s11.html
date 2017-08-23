@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--行为样式结构分离-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #i1{
+        background-color: red;
+        height: 300px;
+        width: 400px;
+    }
+</style>
+<body>
+    <div id="i1">asdf</div>
+    <script>
+        var myDiv = document.getElementById("i1");
+        myDiv.onclick = function () {
+            alert("click");
+        };
+    </script>
+</body>
+</html>

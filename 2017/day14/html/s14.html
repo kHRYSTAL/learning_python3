@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--第三种绑定事件的方式 可重复添加监听器-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #test{
+        width: 300px;
+        height: 400px;
+        background-color: red;
+    }
+</style>
+<body>
+    <div id="test">asdf</div>
+    <script>
+
+        var elementById = document.getElementById("test");
+        elementById.addEventListener("click", function () {
+            this.innerText="123";
+        }, false);
+         elementById.addEventListener("click", function () {
+            this.style.backgroundColor="green";
+        }, false);
+    </script>
+</body>
+</html>

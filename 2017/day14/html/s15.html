@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--addEventListener 捕获true 从root到标签 与false 从标签到root
+    默认不写为false
+-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #content{
+        background-color: green;
+        height: 300px;
+        width: 300px;
+    }
+    #main {
+        width: 600px;
+        height: 600px;
+        background-color: red;
+    }
+</style>
+<body>
+    <div id="main">
+        <div id="content"></div>
+    </div>
+    <script>
+        var content = document.getElementById("content");
+        content.addEventListener("click", function () {
+            console.log("content");
+        }, true);
+
+        var main = document.getElementById("main");
+        main.addEventListener("click", function () {
+            console.log("main");
+        }, true);
+    </script>
+</body>
+</html>

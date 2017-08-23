@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--s12 行为样式结构分离-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+     <table border="1" width="300px">
+        <tr><td>1</td><td>2</td><td>2</td></tr>
+        <tr><td>1</td><td>2</td><td>2</td></tr>
+        <tr><td>1</td><td>2</td><td>2</td></tr>
+    </table>
+
+    <script>
+        var trs = document.getElementsByTagName("tr");
+        for(var i=0; i<trs.length; i++) {
+            trs[i].onmouseover = function () {
+                // 谁调用这个函数 这个this就指向谁
+                this.style.backgroundColor="red";
+
+                //trs[i].style.backgroundColor="red";
+                // 这么写会报错 由于函数作用域的问题 在解释器从上到下执行时, 匿名函数没有执行, 函数作用域中i永远等于2
+            };
+             trs[i].onmouseout = function () {
+                this.style.backgroundColor="";
+            };
+        }
+    </script>
+</body>
+</html>

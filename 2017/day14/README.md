@@ -163,9 +163,10 @@
 
 
         参考s5.html
+        注: 结合最后的词法分析 与作用域(链)结合 可以得到结论
 
 
-    4. 函数内部局部变量提前声明
+    4. 函数内部局部变量提前声明 参考最后的词法分析
 
         function func() {
             console.log(x)
@@ -323,6 +324,102 @@
             参考s10
 
 ### DOM 事件操作
+
+    1. onblur
+        失去焦点
+
+    2. onfocus
+         得到焦点
+
+    3. onclick
+        点击
+
+    4. onmouseouer onmouseout
+        行为 样式 结构分离
+        参考s11, s12, s13
+
+
+    绑定事件的三种方式
+        1. 标签中onClick="tagOnClock();"
+            1.1 在function中传递标签对象
+                标签中onClick="tagOnClick(this);"
+
+        2. script中 document.getElementById("id").onclick=function(){
+                // this 指当前触发事件的标签对象
+                this.style.backgroundColor="red";
+            };
+
+        3. addEventListener("click", function(){}, false)
+            // 这种方式可以针对事件重复添加触发函数, 事件触发时
+            // 调用的函数都会执行 而不会被覆盖 也就是说 上面两种方式是set覆盖的
+            // 这种方式是add 重复叠加的
+            参考s14.html
+
+            对于第三个参数 true表示捕捉 false表示冒泡
+                捕捉表示从最根部default->document->html->body->父标签->子标签
+                依次遍历去捕获事件
+
+                冒泡则相反 从子标签向根部去捕获事件
+            默认不写为false, 冒泡
+            参考s15.html
+
+
+### 词法分析(重点)
+
+     function t1(age) {
+            console.log(age); // 输出function
+            var age = 27;
+            console.log(age); // 27
+            function age() {
+
+            }
+            console.log(age);// 27
+        }
+
+     t1(3);
+
+     分析流程 active object 简称AO
+        1.形式参数
+        2.局部变量
+        3.函数内声明表达式 function age(){}
+
+    以下均在词法分析阶段 并不是执行阶段
+    1.形式参数
+        AO.age = undefine
+        分析到实际参数为3
+        AO.age = 3
+    2.局部变量
+        分析存在局部变量age, 但是因为在分析阶段不是执行阶段 会重新定义成undefine
+        AO.age = undefine;
+    3.函数内声明表达式
+        AO.age = function age // 函数内声明表达式在词法分析中优先级最高
+
+    结论 当变量名称相同时 在词法分析中
+        函数内声明表达式优先级最高(高于形參赋值与局部变量声明)
+        形參赋值与变量声明按照代码顺序赋值
+
+
+    执行阶段:
+        传递词法分析阶段的结果AO.age=function age至t1 输出;
+        age赋值为27 输出
+        由于function age在词法分析阶段已经声明 跳过
+        输出27
+
+    参考s16.html
+
+### 快捷键补充
+
+    table>tr*3>td*3 + tab 键快速创建3行3列表格
+    div.test 快速创建class为test的标签
+    div.test#test 创建class为test, id为test的标签
+
+
+    div.test{aaa} 内容为aaa
+    table>tr*3>td*3>{aaa}
+    table>tr*3>td*3>{aaa$} #内容为aaa1,aaa2,aaa3
+
+    c 生成注释
+
 
 
 
