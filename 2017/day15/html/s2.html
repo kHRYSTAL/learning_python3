@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--全选多选反选-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+    <input type="button" value="全选" onclick="checkAll();"/>
+    <input type="button" value="反选" onclick="cancelAll();"/>
+    <input type="button" value="取消" onclick="reverseAll();"/>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>选项</th>
+            <th>端口</th>
+            <th>ip</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox"/></td>
+            <td>1.1.1.1</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"/></td>
+            <td>1.1.1.1</td>
+            <td>80</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox"/></td>
+            <td>1.1.1.1</td>
+            <td>80</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--注意 不要自闭合 否则chrom不认-->
+    <script src="../jquery-1.12.4.js">
+
+    </script>
+    <!--prop
+        获取在匹配的元素集中的第一个元素的属性值。
+        或设置元素集的属性
+    -->
+    <script>
+        function checkAll() {
+            // 选中所有
+            $(':checkbox').prop('checked', true);
+        }
+        
+        function cancelAll() {
+            // 取消选中所有
+            $(':checkbox').prop('checked', false);
+            
+        }
+        
+        function reverseAll() {
+            // 反选 使用each遍历执行
+            $(':checkbox').each(function () {
+                // this 代指当前循环的每一个元素
+                console.log(this)
+                // 转为jquery对象 判断是否选中
+//                if ($(this).prop('checked')) {
+//                    $(this).prop('checked', false);
+//                } else {
+//                    $(this).prop('checked', true);
+//                }
+                // 优化
+                $(this).prop('checked', !$(this).prop('checked'));
+            });
+        }
+    </script>
+</body>
+</html>

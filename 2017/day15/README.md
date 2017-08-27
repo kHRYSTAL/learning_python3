@@ -100,7 +100,23 @@
 
             $(':disabled')
 
+        3. 表单相关
+            $(":checkbox") 查找input type=checkbox的标签
 
+
+    6. jQuery操作
+
+        1.prop
+            获取在匹配的元素集中的第一个元素的属性值。
+            或设置元素集的属性
+
+            参考s2.html
+        2.each
+            批量循环
+            参考s2.html
+
+        3.三元运算
+            var v = 条件 ? 真值 : 假值
 
 
 [更多参考](http://jquery.cuishifeng.cn/)
