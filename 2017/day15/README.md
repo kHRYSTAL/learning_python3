@@ -172,10 +172,32 @@
 
     8. 属性操作
         $().attr()
-            用于做自定义属性
-        $().prop()
+            用于操作自定义属性
+
+            获取#i1标签type的值
+            $("#i1").attr('type');
+
+            设置属性 如果重复会被覆盖
+            $('#i1').attr('name', 'khrystal');
+
+            删除属性
+            $('#i1').removeAttr('name');
+
+        $().prop()  专门用于checkbox, radio
+            因为在jQuery 3.x版本以下使用attr属性控制不彻底 存在bug
+                 $('#i1').attr('checked', 'checked'); 选中
+                 $('#i1').removeAttr('checked'); 取消选中
+                 再执行选中 就不执行了
+
              获取在匹配的元素集中的属性值。
              或设置元素集的属性
+                $('#i1').prop('checked'); 获取值
+                $(':checkbox').prop('checked', true); 将每一个checkbox遍历设置值
+                $('#i1').prop('checked', true); 设置值
+
+
+             参考s2.html
+
 
 
 
