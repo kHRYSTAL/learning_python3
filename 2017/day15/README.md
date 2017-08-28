@@ -118,5 +118,66 @@
         3.三元运算
             var v = 条件 ? 真值 : 假值
 
+        4.$(this).next()
+            获取当前标签的下一个标签
+          $(this).nextAll()
+            获取当前标签后续的所有同级标签
+          $(this).nextUntil('#i1')
+            带条件 获取直到指定标签的所有标签
+            参考s3.html
+        5.$(this).prev()
+            $(this).prevAll()
+            $(this).prevUntil()
+            获取当前标签的上一个标签
+        6.$(this).parent()
+            获取当前标签的父标签
+          $(this).parents()
+            获取所有祖先标签
+          $(this).parentsUntils(".c1")
+            获取直到class=c1为止的所有祖先标签
+
+        7.$(this).children()
+            获取当前标签的子标签集合
+
+        8.获取兄弟标签 不包括自己
+            $('#i1').siblings()
+            参考s4.html
+
+        9. addClass() removeClass()
+            增加删除class 不需要加"."
+
+        10. $(this).find(".content")
+            获取当前标签下 包含class=content的子标签
+
+        11. $(this).hasClass("class")
+        12. $(this).eq(index|-index)
+
+        13. $("#i2").toggleClass("hide");
+            如果没有class则添加如果有则移除
+
+    7. 文本内容操作
+
+        $().text() #获取文本
+        $().text("xsssd") # 设置文本内容
+        如果包含html不解析
+        $().html() # 获取html
+        $().html("<A>ASASDD</A>") # 设置html
+        如果包含html 解析
+
+        // input 系列 textarea
+        var value = $("#i2").val()
+        $("#i2").val("设置的值")
+
+        参考s7.html
+
+    8. 属性操作
+        $().attr()
+            用于做自定义属性
+        $().prop()
+             获取在匹配的元素集中的属性值。
+             或设置元素集的属性
+
+
+
 
 [更多参考](http://jquery.cuishifeng.cn/)

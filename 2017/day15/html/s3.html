@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .header {
+            background-color: black;
+            color: white;
+        }
+
+        .content {
+            min-height: 50px;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div style="height: 400px; width: 200px; border: 1px solid #dddddd">
+    <div class="item">
+        <div class="header">
+            标题一
+        </div>
+        <div class="content">
+            内容
+        </div>
+    </div>
+    <div class="item">
+        <div class="header">
+            标题二
+        </div>
+        <div class="content hide">
+            内容
+        </div>
+    </div>
+    <div class="item">
+        <div class="header">
+            标题三
+        </div>
+        <div class="content hide">
+            内容
+        </div>
+    </div>
+    <div class="item">
+        <div class="header">
+            标题四
+        </div>
+        <div class="content hide">
+            内容
+        </div>
+    </div>
+</div>
+<script src="../jquery-1.12.4.js"></script>
+<script>
+    // 把所有header标签绑定onclick事件
+    $('.header').click(function () {
+        // this为当前点击的标签 dom对象 转换为jquery对象
+        console.log(this);
+        // 获取this标签的下一个标签
+        // 获取this标签的父标签的兄弟标签
+        // 添加样式和移除样式 addClass(), removeClass()
+
+        // 当前点击的header的下一个标签 移除hide class
+        // 注意 方法名已经指明为class 不需要加"."
+       //$(this).next().removeClass("hide");
+        // 当前标签的父标签的兄弟标签的class存在content的子标签
+        //$(this).parent().siblings().find(".content").addClass("hide");
+
+        // 优化链式调用
+        $(this).next().removeClass("hide").parent().siblings().find(".content").addClass("hide");
+
+
+    });
+</script>
+</body>
+</html>

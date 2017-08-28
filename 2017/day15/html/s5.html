@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--模态对话框-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .model{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 400px;
+            margin-left: -250px;
+            margin-top: -200px;
+            background-color: #eeeeee;
+            z-index: 10;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.6;
+            background-color: black;
+            z-index: 9;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a onclick="addElement();">添加</a>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>端口</th>
+            <th>ip</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1.1.1.11</td>
+            <td>80</td>
+            <td><a class="edit">编辑</a>|<a>删除</a></td>
+        </tr>
+        <tr>
+            <td>1.1.1.12</td>
+            <td>80</td>
+            <td><a class="edit">编辑</a>|<a>删除</a></td>
+
+        </tr>
+        <tr>
+            <td>1.1.1.13</td>
+            <td>80</td>
+            <td><a class="edit">编辑</a>|<a>删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--遮罩-->
+    <div class="shadow hide">
+
+    </div>
+
+    <!--对话框-->
+    <div class="model hide">
+        <div>
+            <input name="host" type="text"/>
+            <input name="port" type="text"/>
+        </div>
+        <div>
+            <input type="button" value="取消" onclick="cancelModel();"/>
+        </div>
+    </div>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        // 移除hide class
+        function addElement() {
+            $(".model, .shadow").removeClass("hide");
+        }
+
+        function cancelModel() {
+            $(".model, .shadow").addClass("hide");
+            $('.model input[type="text"]').val("");
+        }
+
+        $(".edit").click(function () {
+            // this为当前点击标签, 获取父标签上部分的所有同级标签
+            // 获取到的是dom对象
+            var tds = $(this).parent().prevAll();
+            // 循环获取标签内部的内容
+            // 赋值给input标签中的value
+            console.log(tds[0].innerText);
+            console.log(tds[1].innerText);
+            // input 的jquery对象设置值使用val
+            $('.model input[name="host"]').val($(tds[1]).text());
+            $('.model input[name="port"]').val($(tds[0]).text());
+            addElement()
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--内容操作-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="i1">asdfa<a>123456</a>ghjkl</div>
+
+    <input id="i2" type="text"/>
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        var content = $("#i1").text();
+        console.log(content);
+        var contentHtml = $("#i1").html();
+        console.log(contentHtml);
+        $('#i1').html("<p>asdfoooo</p>");
+
+
+
+        ///////////////////
+        $("#i2").val("设置的值")
+    </script>
+</body>
+</html>

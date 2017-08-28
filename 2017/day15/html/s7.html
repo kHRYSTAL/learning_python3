@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--hasClass-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input id="i1" type="button" value="开关"/>
+    <div id="i2" class="hide">asdf</div>
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $("#i1").click(function () {
+            // 判断div是否存在class hide 如果有移除 否则添加
+//           if ($("#i2").hasClass("hide")) {
+//               $("#i2").removeClass("hide");
+//           } else {
+//               $("#i2").addClass("hide");
+//           }
+            // 优化 如果没有添加 如果有移除
+            $("#i2").toggleClass("hide");
+        });
+    </script>
+
+    <script>
+        $("#i1").attr()
+    </script>
+
+    <script>
+
+    </script>
+</body>
+</html>
