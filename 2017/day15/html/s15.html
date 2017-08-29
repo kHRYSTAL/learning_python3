@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <li id="l1">l1</li>
+    <div style="height: 100px; width: 100px; overflow: auto">
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+        <p>asdf</p><p>asdf</p><p>asdf</p><p>asdf</p>
+    </div>
+    <input id="i2" type="button" value="返回div顶部"/>
+    <div style="height: 1000px"></div>
+    <input id="i1" type="button" value="返回窗体顶部"/>
+    <li id="l2">l2</li>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        // 获取滚动位移窗体顶部的距离
+//            console.log($(window).scrollTop());
+        // 获取滚动距离div顶部距离
+//        console.log($('div').scrollTop());
+
+        $('#i1').click(function () {
+            // 返回顶部
+            $(window).scrollTop(0);
+        });
+        $('#i2').click(function () {
+            // 返回顶部
+            $('div').scrollTop(0);
+        });
+        // 起始左上角坐标为 0, 0
+        // 获取l1的坐标
+        console.log($('#l1').offset());
+        // 获取l2的坐标
+        console.log($('#l2').offset());
+    </script>
+
+</body>
+</html>

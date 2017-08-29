@@ -240,5 +240,39 @@
         例子: 点赞处理
         参考s14.html
 
+    7. 位置与尺寸
+        scrollXXX
+            获取滚动距离窗体顶部距离
+            $(window).scrollTop()
+            获取滚动距离div顶部距离
+            $('div').scrollTop()
+            返回创图顶部
+            $(window).scrollTop(0);
+            返回div顶部
+            $('div').scrollTop(0);
+            ...
+            $('div').scrollLeft(0);
+
+        offset()
+            指定标签在html(root布局)中的坐标
+            $('#l1').offset()
+            $('#l1').offset().left
+            $('#l1').offset().top
+
+            参考s16.html
+
+        position()
+            指定标签相对于父标签(relative)的坐标
+
+        height()
+            获取标签高度 纯高度
+        innerHeight()
+            边框+纯高度
+        outerHeight()
+        outerHeight(true)
+        纯高度 边框 外边距 内边距
+
+
+
 
 [更多参考](http://jquery.cuishifeng.cn/)
