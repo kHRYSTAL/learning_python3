@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input id="t1" type="text"/>
+    <input id="i1" type="button" value="添加">
+    <ul id="u1">
+        <li>123</li>
+        <li>234</li>
+    </ul>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $('#i1').click(function () {
+            var text = $('#t1').val();
+            console.log(text);
+            var html = "<li>" + text + "</li>";
+            console.log(html);
+            // 添加到标签内尾部
+//            $('#u1').append(html);
+            // 添加到标签内顶部
+//            $('#u1').prepend(html);
+            // 添加到标签外后方
+//            $('#u1').after(html);
+            // 添加到标签外前方
+            $('#u1').before(html);
+
+        });
+    </script>
+</body>
+</html>

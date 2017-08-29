@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<!--模态对话框 增加删除方法 确认修改方法-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .model{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 400px;
+            margin-left: -250px;
+            margin-top: -200px;
+            background-color: #eeeeee;
+            z-index: 10;
+        }
+        .shadow{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.6;
+            background-color: black;
+            z-index: 9;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a onclick="addElement();">添加</a>
+    <table id="tb" border="1">
+        <thead>
+        <tr>
+            <th>端口</th>
+            <th>ip</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!--自定义属性target-->
+            <td target="hostname">1.1.1.11</td>
+            <td target="port">80</td>
+            <td><a class="edit">编辑</a>|<a class="del">删除</a></td>
+        </tr>
+        <tr>
+            <td target="hostname">1.1.1.12</td>
+            <td target="port">80</td>
+            <td><a class="edit">编辑</a>|<a class="del">删除</a></td>
+
+        </tr>
+        <tr>
+            <td target="hostname">1.1.1.13</td>
+            <td target="port">80</td>
+            <td><a class="edit">编辑</a>|<a class="del">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--遮罩-->
+    <div class="shadow hide">
+
+    </div>
+
+    <!--对话框-->
+    <div class="model hide">
+        <div>
+            <input name="hostname" type="text"/>
+            <input name="port" type="text"/>
+        </div>
+        <div>
+            <input type="button" value="取消" onclick="cancelModel();"/>
+            <input type="button" value="确定" onclick="confirmModel();"/>
+        </div>
+    </div>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        // 显示模态框
+        function addElement() {
+            $(".model, .shadow").removeClass("hide");
+        }
+        // 隐藏模态框并滞空文字
+        function cancelModel() {
+            $(".model, .shadow").addClass("hide");
+            $('.model input[type="text"]').val("");
+        }
+
+        function confirmModel() {
+            var tr = document.createElement('tr');
+            $(".model input[type='text']").each(function () {
+//                var temp = "<td>...";
+                var td = document.createElement('td');
+                td.innerHTML = $(this).val();
+                $(tr).append(td);
+            });
+            $('#tb').append(tr);
+            cancelModel();
+        }
+
+        // 编辑按钮点击事件
+        $(".edit").click(function () {
+            // this为当前点击标签, 获取父标签上部分的所有同级标签
+            // 获取到的是dom对象
+            var tds = $(this).parent().prevAll();
+            // 应使用自定义属性(target)进行优化
+            tds.each(function () {
+                // this 代指每个td
+                // 获取td target 属性值
+                var n = $(this).attr('target');
+                // 获取td 内容
+                var text = $(this).text();
+                // 设置到对应name的input标签上
+                $('.model input[name="'+ n +'"]').val(text);
+            });
+            // 弹出浮层
+            addElement();
+        });
+
+        // 删除按钮点击事件
+        $('.del').click(function () {
+            $(this).parent().parent().remove();
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>

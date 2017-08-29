@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input id="t1" type="text" placeholder="输入索引"/>
+    <input id="i1" type="button" value="删除">
+    <input id="i2" type="button" value="复制">
+
+    <ul id="u1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+    </ul>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $('#i1').click(function () {
+            var index = $('#t1').val();
+//            $('#u1').children().eq(index).remove();
+            if(!isNaN(index)) {
+                $('#u1').children().eq(index).empty();
+            } else {
+                console.log("不是数字!")
+            }
+        });
+
+         $('#i2').click(function () {
+            var index = $('#t1').val();
+            if(!isNaN(index)) {
+                var cloneTag = $('#u1').children().eq(index).clone();
+                console.log(cloneTag);
+                $('#u1').append(cloneTag);
+            } else {
+                console.log("不是数字!")
+            }
+        });
+    </script>
+</body>
+</html>

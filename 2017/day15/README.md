@@ -199,7 +199,46 @@
              参考s2.html
 
 
+#### demo
 
+    1. 使用attr自定义属性实现模态框优化
+        参考s8.html
+
+    2. 使用自定义属性实现 tab菜单切换
+        主要练习 attr siblings click
+            siblings指除自己外的所有兄弟标签
+            click是遍历设置点击事件
+            children是子标签 可以加过滤参数
+        参考s9.html
+
+    3. 使用索引实现 tab菜单切换
+        主要练习 .index() 获取自己是一组序列中的第几个
+                通过索引值查找"eq(index)" 从0开始
+        参考s10.html
+
+    4. 文档处理 append 从标签内追加内容或对象
+            // 添加到标签内尾部
+            $('#u1').append(html);
+            // 添加到标签内顶部
+            $('#u1').prepend(html);
+            // 添加到标签外后方
+            $('#u1').after(html);
+            // 添加到标签外前方
+            $('#u1').before(html);
+            参考s11
+    5. 文档处理 删除与清空 复制
+            .remove() 删除标签内容
+            .empty() 清空标签内容
+            .clone() 克隆标签
+                var cloneTag = $('#u1').children().eq(index).clone();
+                $('#u1').append(cloneTag);
+            参考s12
+
+    6. css处理
+        $('').css('样式名称', '样式value');
+        练习 .css setInterval 创建标签 移除标签 移除定时器
+        例子: 点赞处理
+        参考s14.html
 
 
 [更多参考](http://jquery.cuishifeng.cn/)

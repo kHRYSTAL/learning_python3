@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--css操作处理 点赞效果实现-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container{
+            padding: 50px;
+            border: 1px solid #dddddd;
+        }
+        .item{
+            width: 30px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">
+            <span>赞</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="item">
+            <span>赞</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="item">
+            <span>赞</span>
+        </div>
+    </div>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $('.item').click(function () {
+            addFavour(this);
+        });
+        
+        function addFavour(self) {
+
+            var fontSize = 15;
+            var top = 0;
+            var right = 0;
+            var opacity = 1;
+
+            // 创建一个标签 DOM对象 用于点赞动画
+            var createTag = document.createElement('span');
+            $(createTag).text('+1');
+            $(createTag).css('color', 'green');
+            $(createTag).css('fontSize', fontSize + "px");
+            $(createTag).css('position', 'absolute');
+            $(createTag).css('right', right + "px");
+            $(createTag).css('top', top + "px");
+            $(createTag).css('opacity', opacity);
+
+            $(self).append(createTag);
+
+            var obj = setInterval(function () {
+                fontSize = fontSize + 5;
+                top = top - 5;
+                right = right - 5;
+                opacity = opacity - 0.2;
+                $(createTag).css('fontSize', fontSize + "px");
+                $(createTag).css('right', right + "px");
+                $(createTag).css('top', top + "px");
+                $(createTag).css('opacity', opacity);
+                // 当透明度为0 移除定时器 移除标签
+                if(opacity < 0) {
+                    clearInterval(obj);
+                    $(createTag).remove();
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
