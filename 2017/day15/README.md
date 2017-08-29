@@ -273,6 +273,29 @@
         纯高度 边框 外边距 内边距
 
 
+    8. 绑定事件
+
+        DOM 中有三种绑定方式: onclick="function..", tag.onclick=function(){};, addEventListener.
+
+        在jQuery中:
+            1.  $('.c1').click(...)
+
+            2.  $('.c1').bind('click', function(){}) 绑定
+                $('.c1').unbind('click', function(){}) 解除绑定
+
+            3.  对class=c1下的所有a标签绑定事件
+                $('.c1').delegate('a', 'click', function(){})
+                解绑
+                $('.c1').undelegate('a', 'click', function(){})
+
+                这种方式有特殊的功能
+                参考s17.html
+
+            4.  $('.c1').on('click', function(){}) 绑定
+                $('.c1').off('click', function(){}) 解绑
+
+
+
 
 
 [更多参考](http://jquery.cuishifeng.cn/)

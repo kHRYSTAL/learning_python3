@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input id="t1" type="text"/>
+    <input type="button" id="a1" value="添加"/>
+
+    <ul id="u1">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $('#a1').click(function () {
+            var v = $('#t1').val();
+            var temp = '<li>' + v + '</li>';
+            $('#u1').append(temp);
+        });
+
+//        $('ul li').click(function () {
+//            alert($(this).text());
+//        });
+//        由于脚本是从上至下执行 因此新添加的标签都没有点击事件
+
+//        使用delegate委托模式 在点击时才绑定事件  这样就使新添加定的标签也具有点击事件
+        $('ul').delegate('li', 'click', function () {
+            alert($(this).text());
+        });
+    </script>
+</body>
+</html>
