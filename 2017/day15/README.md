@@ -330,13 +330,15 @@
         参考s18.html
 
     10. 提前绑定 使用$(function(){}); 相当于document.ready(function(){})
+           首先, 如果script标签在html最下方 是没有问题的
+           如果遇到了script在某些标签的上方 而且js中又调用了下方的标签, 就会报错
 
-        一般情况下 图片都需要进行加载, 如果加载的比较慢 点击事件会导致不能执行
-        这是由于一般的click等事件都是在元素(图片)全部加载完后才进行绑定
-        因此需要进行事件的提前绑定, 不需要等待所有元素加载完成:
+        如 click
+            这是由于一般的click等事件都是在元素全部加载完后才进行绑定
+            因此需要进行事件的提前绑定, 不需要等待所有元素加载完成:
 
 
-        // 当页面框架加载完毕后 立即执行
+        // 当页面框架加载完毕后 才执行绑定
         $(function(){
             // 写到匿名函数里 可以在元素(图片)还没加载完成前就绑定事件
             $('#i1').click(function () {
@@ -374,7 +376,25 @@
         参考s20.html, plugin.js
 
 
+立即执行函数, 执行时间比提前绑定函数早, 因为立即执行函数检查到函数就会立即执行
+如:
+    ```
+        (function(arg){...})(jQuery);
+    ```
+就是相当于
+    ```
+        var func = function(arg){};
+        func($);
+    ```
+
+而 提前绑定函数 $(function(){...}) 相当于
+    `document.ready(function(){...})`
 
 [提前绑定](http://www.w3school.com.cn/jquery/event_ready.asp)
+
 [立即执行函数-隔离作用域](https://zhuanlan.zhihu.com/p/22465092)
+
+[立即执行函数与提前绑定区别](http://blog.csdn.net/qq_27093465/article/details/48518093)
+
+
 [更多参考](http://jquery.cuishifeng.cn/)

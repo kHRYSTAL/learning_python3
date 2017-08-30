@@ -6,7 +6,9 @@
     <title>Title</title>
 </head>
 <body>
-    <!--由于 html从上至下执行, 所以当 src 图片未加载完成 后面的script都不会编译 需要解决这个问题-->
+    <!--由于 html从上至下执行, 如果你script标签里执行的代码调用了当前还没加载过来的代码或者dom, 普通函数就会报错
+        当然 script标签在html最下面 没有问题
+    -->
     <img id="i1" src=""/>
 
 
