@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--jQuery 表单验证与提示-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form id="f1" action="http://www.github.com" method="post">
+        <div><input name="n1" type="text"/></div>
+        <div><input name="n2" type="text"/></div>
+        <div><input name="n3" type="password"/></div>
+        <div><input name="n4" type="text"/></div>
+        <div><input name="n5" type="text"/></div>
+
+        <input type="submit" value="提交"/>
+    </form>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        // 寻找所有input[type="submit"]的标签
+        $(':submit').click(function () {
+//            // 找到上一个标签 即输入框中的文字
+//            var v = $(this).prev().val();
+//            // 有内容执行跳转
+//            if(v.length > 0) {
+//                return true;
+//            } else {
+//                alert('输入内容不允许为空!');
+//                return false;
+//            }
+
+            // 点击时先清空所有提示标签
+            $('.error').remove();
+
+            var flag = true;
+            // 在f1中寻找type为text和password的input标签集合
+            $("#f1").find('input[type="text"], input[type="password"]').each(function () {
+                // 遍历判断输入内容是否合法, 只要有一个不合法 就终止页面跳转
+                var v = $(this).val();
+                if (v.length <=0) {
+                    // 通过flag判断点击后是否执行页面跳转
+                    flag = false;
+                    var tag = document.createElement('span');
+                    tag.className='error';
+                    tag.innerHTML = '必填';
+                    // 在当前标签后面增加提示标签
+                    $(this).after(tag);
+                    // 这里返回终止的是each函数 外部click匿名函数还会继续向下执行 如果加上false 则不会继续遍历
+//                    return false;
+                }
+            });
+
+            return flag;
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--image src问题-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--由于 html从上至下执行, 所以当 src 图片未加载完成 后面的script都不会编译 需要解决这个问题-->
+    <img id="i1" src=""/>
+
+
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        // 立即执行函数
+        // 当页面框架加载完毕后 自动执行
+        $(function(){
+            // 写到匿名函数里 在元素(图片)还没加载完成前就绑定事件
+            console.log('auto execute')
+            $('#i1').click(function () {
+               // 执行点击事件
+            });
+        });
+
+        // 普通函数
+        // 当页面的所有元素(图片)加载完毕后才执行
+        $('#i1').click(function () {
+           // 执行点击事件
+        });
+    </script>
+</body>
+</html>

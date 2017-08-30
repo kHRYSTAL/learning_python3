@@ -1,8 +1,8 @@
 /**
  * Created by kHRYSTAL on 17/8/17.
  */
-function Toalert() {
-    alert('asdf')
+function Toalert(msg) {
+    alert(msg)
     //
     /**/
 }

@@ -296,6 +296,85 @@
 
 
 
+    9. 事件执行顺序
+        在DOM中
+            <a onclick="clickOn();" href="http://www.baidu.com"></a>
 
+            点击时先执行clickOn 然后执行url跳转
+            如果想拦截掉url跳转
+            可以在 onclick 时返回 如:
+            <a onclick="return clickOn();" href="http://www.baidu.com"></a>
+            <script>
+                function clickOn() {
+                    // do something
+                    // 如果return true 会继续向下执行
+                    return false;
+                }
+            </script>
+
+        在jQuery中
+            <script>
+                $('#i1').click(function(){
+                    //do something
+                    return false;
+                })
+            </script>
+        常用于用户名密码等表单验证成功后跳转, 失败不跳转
+
+            练习: .after() 在标签后添加
+                  each中return false 阻止继续遍历
+                  click中return false 阻止后续事件发生
+                  find 在某个标签下寻找指定的标签
+
+
+        参考s18.html
+
+    10. 提前绑定 使用立即执行函数:
+        自执行函数 也就是立即执行函数 作用有两点
+         1 让编译器立即执行函数中的代码
+         2. 隔离作用域, 如果不使用立即执行函数 那么声明的变量就是全局变量了
+        参考 plugin.js
+
+        一般情况下 图片都需要进行加载, 如果加载的比较慢 点击事件会导致不能执行
+        这是由于一般的click等事件都是在元素(图片)全部加载完后才进行绑定
+        因此需要进行事件的提前绑定, 不需要等待所有元素加载完成:
+
+
+        // 当页面框架加载完毕后 立即执行
+        $(function(){
+            // 写到匿名函数里 可以在元素(图片)还没加载完成前就绑定事件
+            $('#i1').click(function () {
+               // 执行点击事件
+            });
+        });
+
+        参考s19.html
+
+    11. jQuery 扩展自定义方法
+            <script>
+                // 1. 扩展调用方法 参数为字典
+                $.extend({
+                    'extendFunction' : function () {
+                        return 'this is extendFunction';
+                    }
+                });
+
+                // 调用方法
+                console.log($.extendFunction());
+
+                // 2. 扩展筛选器调用方法
+                $.fn.extend({
+                    'selectorFunction' : function () {
+                        return 'this is selectorExtendFunction';
+                    }
+                });
+
+                // 调用方法 必须加上筛选器
+                console.log($('#i1').selectorFunction());
+            </script>
+
+        注意: 扩展名重复无法解决 同时需要注意全局变量冲突问题
+            需改为立即执行函数 类似11.提前绑定 将全局变量改为函数的局部变量
+        参考s20.html, plugin.js
 
 [更多参考](http://jquery.cuishifeng.cn/)

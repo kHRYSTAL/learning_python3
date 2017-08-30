@@ -13,13 +13,13 @@
 </head>
 <body>
     <input type="text" id="user">
-    <input type="button" value="点击" onclick="Toalert()">
+    <input type="button" value="点击" onclick="Toalert('点击')">
 
     <!-- 可以写到body里 但是body执行时 可能函数还不存在 -->
     <script>
         function getData() {
             var a = document.getElementById("user");
-            alert(a.value)
+            Toalert(a.value)
 
         }
     </script>

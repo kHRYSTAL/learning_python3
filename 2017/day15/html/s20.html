@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--jQuery扩展-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="i1">asdf</div>
+
+    <script src="../jquery-1.12.4.js"></script>
+    <script src="plugin.js"></script>
+    <script>
+        // 1. 扩展调用方法 参数为字典
+        $.extend({
+            'extendFunction' : function () {
+                return 'this is extendFunction';
+            }
+        });
+
+        // 调用方法
+        console.log($.extendFunction());
+
+        // 2. 扩展筛选器调用方法
+        $.fn.extend({
+            'selectorFunction' : function () {
+                return 'this is selectorExtendFunction';
+            }
+        });
+
+        // 调用方法 必须加上筛选器
+        console.log($('#i1').selectorFunction());
+
+
+        // 调用js文件方法
+        var v = $.pluginExtendFunction();
+        console.log(v);
+    </script>
+</body>
+</html>
