@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="checkbox"/>
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        // 验证checkbox是先执行点击事件(自定义事件)还是先执行选中事件(默认事件)
+        // 遍历checkbox标签 设置点击事件
+        $(':checkbox').click(function () {
+            // 获取当前点击的checkbox是否选中
+            var checked = $(this).prop("checked"); //  true 说明点击前 就已经选中了 先执行默认事件
+            console.log(checked);
+        })
+
+    </script>
+</body>
+</html>

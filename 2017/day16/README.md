@@ -61,9 +61,39 @@
                         reg.exec(str); ["Java", ""]
                         reg.exec(str); null 因为只匹配行的开头 不会匹配JavaBeans 因为不是行的开头
 
+    1.1 登录注册验证
+
+        <form>
+            <input type="text"/>
+            <input type="password"/>
+            <input type="submit"/>
+        </form>
+
+        $(":submit").click(function(){
+            boolean flag = true
+            $(":text, :password").each(function(){
+
+                if(...){
+                    // 如果输入不合法 不允许href跳转 return false
+                    flag = flase;
+                    return false; // 终止循环
+                }
+            });
+
+            return flag;
+        });
+
+        默认事件(href..) 与自定义事件(onclick..)的执行顺序
+            参考s1.html
+        默认事件先执行的标签
+            <input type="password"/>
+            <input type="checkbox"/>
+        自定义事件先执行
+            <a/>
+            <input type="submit"/>
 
 
-
+        注意: 在前端做表单验证是不完善的, 因为浏览器的js可以被禁用
 
 
 
@@ -75,9 +105,9 @@
                 缺点 重复造轮子
 
             2. 实现已经封装好的ui组件
-                常用:BootStrap 包含css, js的封装
-                    jQueryUI 包含css, js的封装
-                    EasyUI ...
+                常用:BootStrap 包含css, js的封装 ui好看 能够做后台管理 web主站ui
+                    jQueryUI 包含css, js的封装 功能丰富 但ui不好看 偏向做后台管理系统
+                    EasyUI  css js 需要ajax操作 改起来比较麻烦 偏向做后台管理系统
 
                 都需要学习组件实现的规则
 
@@ -86,5 +116,18 @@
 
     4. Django
         python实现web网站功能最齐全(orm, web, 模版等)的框架
+
+### 学习BootStrap规则
+
+    1.响应式布局
+        页面的自适应 会设置一个条件
+            如最小宽度 当页面最小宽度没有达到条件时 某些style不生效
+        页面样式会跟随浏览器大小修改而改变
+            使用@media
+        参考s2.html
+
+    2.图标
+
+    3.基本使用
 
 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+            background-color: red;
+            height: 50px;
+        }
+
+        /*设置了最小宽度 如果没达到最小宽度 @media中的属性不生效*/
+        @media (min-width: 700px) {
+            .c2{
+            /*这条属性覆盖c1的background-color*/
+            background-color: gray;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="c1 c2"></div>
+</body>
+</html>
