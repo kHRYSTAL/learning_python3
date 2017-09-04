@@ -137,3 +137,85 @@
     1. 使用bxslider 实现轮播
         参考s4.html
 
+
+### Django
+
+    1. socket后台
+        所有的服务器后台实际上都是基于socket 接收一个客户端socket请求, 返回数据后断开
+        参考s1.py
+
+    2.WSGI Web Server Gateway Interface 是一种规范 定义了使用python编写web app 与web server之间的接口
+        格式, 实现web app与web server之间的解藕
+
+        python标准库提供的独立WSGI服务器称为wsgiref. 是基于socket的封装
+        参考s2.py
+
+        wsgi本身是一套接口规则 用于实现socket
+        以下模块均实现了wsgi 本质上就是为了创建socket
+            server_names = {
+                'cgi': CGIServer,
+                'flup': FlupFCGIServer,
+                'wsgiref': WSGIRefServer,
+                'waitress': WaitressServer,
+                'cherrypy': CherryPyServer,
+                'paste': PasteServer,
+                'fapws3': FapwsServer,
+                'tornado': TornadoServer,
+                'gae': AppEngineServer,
+                'twisted': TwistedServer,
+                'diesel': DieselServer,
+                'meinheld': MeinheldServer,
+                'gunicorn': GunicornServer,
+                'eventlet': EventletServer,
+                'gevent': GeventServer,
+                'geventSocketIO':GeventSocketIOServer,
+                'rocket': RocketServer,
+                'bjoern' : BjoernServer,
+                'auto': AutoServer,
+            }
+
+    3. Web框架
+        1.MVC
+            Model - 数据层操作 基本为耗时操作 如查询数据库 查询远程服务器数据等
+            View - 视图层 用户可见ui 模版文件
+            Controler - 控制MV 业务处理
+        2.MTV (实际上就是改个名)
+            Model - 数据层
+            Templeate 模版文件
+            View - 业务处理
+
+
+        Django实际上就是个MTV框架
+            Model为数据层处理
+            Template为模版文件(ui)
+            View为业务处理
+
+    4. Django 命令 创建程序
+        1. 配置环境变量
+        2. 切换到指定目录 执行django-admin startproject [项目名称] 创建项目
+
+               自动生成的项目结构为
+               mysite
+                    mysite          # 对整个程序进行配置的文件夹
+                        __init__.py
+                        settings.py # 配置文件
+                        urls.py     # url对应关系 (path与函数的映射)
+                        wsgi.py     # 遵循wsgi规范, 默认使用uwsgi 配合nginx就是个完整的服务器了
+                    manage.py       # 管理django程序
+                                        - python manage.py
+                                        - python manage.py startapp
+                                        - python manage.py manemigrations
+                                        - python manage.py migrate
+
+        3. 命令行执行 python manage.py runserver [127.0.0.1:8001] 启动服务器
+        4. 浏览器打开127.0.0.1:8001
+            显示Django运行成功
+
+        5. 创建应用 python manage.py startapp [appname]
+        6. 填写逻辑代码至views测试
+
+        注ç django 是自动更新的 不需要手动重新启动
+
+
+
+
