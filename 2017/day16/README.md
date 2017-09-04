@@ -206,6 +206,8 @@
                                         - python manage.py startapp
                                         - python manage.py manemigrations
                                         - python manage.py migrate
+                    templates       # html模版存放路径 可自定义
+                    static          # 静态文件存放路径 css, js
 
         3. 命令行执行 python manage.py runserver [127.0.0.1:8001] 启动服务器
         4. 浏览器打开127.0.0.1:8001
@@ -214,7 +216,105 @@
         5. 创建应用 python manage.py startapp [appname]
         6. 填写逻辑代码至views测试
 
-        注ç django 是自动更新的 不需要手动重新启动
+        注: django 是自动更新的 不需要手动重新启动
+
+        project app下目录结构
+
+        app:
+            - migrations        # 数据库操作记录(修改表结构的记录)
+                与sqlarchemy不同 django支持修改表结构
+            - admin.py          # Django为开发者提供的后台管理系统
+                 参考 mysite
+            - apps.py           # 配置当前app的文件
+            - models.py         # 创建数据库表结构的文件 ORM工具 通过命令就可以创建修改数据库结构
+            - tests.py          # 单元测试使用
+            - views.py          # 用于写当前app的业务逻辑代码
+
+
+
+
+
+#### 创建数据库表结构:
+    1.在app的models中写好表结构 并在project settings中添加app后
+        执行 python manage.py makemigrations(更新表结构) 即可创建表 默认使用自带的sqlite3
+    2.在app的admin中注册后台管理可以看到的表
+        如:
+            admin.site.register(models.UserInfo)
+            admin.site.register(models.UserType)
+        并创建后台管理系统root用户, 使用命令:
+            python manage.py migrate 同步数据库
+            python manage.py createsuperuser 创建project 后台root用户
+
+            输入用户名密码邮箱后即创建完成
+            执行python manage.py runserver 127.0.0.1:8001
+            在http://127.0.0.1:8001/admin/即可看到管理系统
+
+        注意: 每次更新表结构都需要执行
+                python manage.py makemigrations
+                python manage.py migrate
+
+
+        在项目开发中 mysite就是一个完整的项目 而myapp相当于业务中的一个模块,
+            你可以把所有模块都写到一个app中 但是为了分层 不同的业务应写到不同的app中
+
+
+
+
+### views 操作
+
+    1. render(递交给客户端)
+        def login(request):
+            # f = open('template/login.html', 'r', encoding='utf-8')
+            # data = f.read()
+            # f.close()
+            # return HttpResponse(data)
+            # 上述代码可以使用render一行解决
+            return render(request, 'login.html')
+
+        为什么没有template? 可以在project的settings.py下配置模版文件路径
+
+### 配置模版路径
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
+
+    在views中使用:
+        def login(request):
+            # 使用render一行解决 去模版文件夹寻找模版文件
+            return render(request, 'login.html')
+
+
+### 配置静态文件路径
+    # 静态文件前缀 在template中使用的静态文件都会通过前缀去找寻STATICFILES_DIRS下的文件
+    STATIC_URL = '/static/'
+
+    # 配置静态文件目录路径
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+
+    在html中使用:
+        <link rel="stylesheet" href="/static/commons.css">
+
+
+
+
+
+
+
+
 
 
 

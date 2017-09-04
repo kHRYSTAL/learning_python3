@@ -20,5 +20,7 @@ from django.contrib import admin
 from myapp import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'h.html', views.home)
+    # url(r'h.html', views.home)
+
+    url(r'^login', views.login),
 ]
