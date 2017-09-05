@@ -273,6 +273,9 @@
 
         为什么没有template? 可以在project的settings.py下配置模版文件路径
 
+    2. redirect 重定向url
+        return redirect("http://www.baidu.com")
+
 ### 配置模版路径
     TEMPLATES = [
         {
@@ -307,6 +310,18 @@
 
     在html中使用:
         <link rel="stylesheet" href="/static/commons.css">
+
+### 客户端请求操作
+    1. 判断客户端请求方式
+        request.method == '[POST|GET]'
+    2. 获取客户端请求携带的数据
+        如 POST请求 第二个参数为默认值
+            request.POST.get('uname', None)
+
+    3. 操作模版
+        在模版中加上{{[msg]}} msg就是django可以设置的数据 支持回传到模版显示
+            替换这个特殊字符串
+        参考 login.html
 
 
 

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/static/commons.css">
 </head>
 <body>
-    <form action="/login" method="get">
+    <form action="/login" method="post">
         <p>
             <label for="username">用户名:</label>
             <input id="username" type="text" name="uname"/>
@@ -15,9 +15,9 @@
             <label for="password">密码:</label>
             <input id="password" type="password" name="pwd"/>
             <input type="submit" value="提交"/>
+            <span style="color: red">{{ error_msg }}</span>
         </p>
     </form>
-
     <script src="/static/jquery-1.12.4.js"></script>
 </body>
 </html>
