@@ -228,7 +228,7 @@
             - apps.py           # 配置当前app的文件
             - models.py         # 创建数据库表结构的文件 ORM工具 通过命令就可以创建修改数据库结构
             - tests.py          # 单元测试使用
-            - views.py          # 用于写当前app的业务逻辑代码
+            - views.py          # 用于写当前app的业务逻辑代码 视图函数
 
 
 
@@ -271,10 +271,17 @@
             # 上述代码可以使用render一行解决
             return render(request, 'login.html')
 
-        为什么没有template? 可以在project的settings.py下配置模版文件路径
+        为什么render中不需要填写template? 可以在project的settings.py下配置模版文件路径
+        注意:
+            retrun HttpResponse("字符串")中传递的是字符串
+            return render(request, 'login.html') 中传递的是模版文件
+
 
     2. redirect 重定向url
-        return redirect("http://www.baidu.com")
+        return redirect("http://www.baidu.com") http url
+        或
+        return redirect("/ + 当前项目urls.py设置的url")
+
 
 ### 配置模版路径
     TEMPLATES = [
@@ -318,11 +325,56 @@
         如 POST请求 第二个参数为默认值
             request.POST.get('uname', None)
 
-    3. 操作模版
+### 模版渲染
+
+    操作模版
+        直接设置为{{}} 语句设置为{% %}
+        1.直接设置
         在模版中加上{{[msg]}} msg就是django可以设置的数据 支持回传到模版显示
             替换这个特殊字符串
-        参考 login.html
+            return render(request, 'login.html', {'error_msg': error_msg})
 
+            <span style="color: red">{{ error_msg }}</span>
+
+        2.循环 多标签设置 支持嵌套
+
+            return render(request, 'home.html', {'user_list': USER_LIST})
+
+            <table>
+                <!-- 在代码之间的标签会循环 -->
+                <!-- 在模版语言中 字典中的数据都使用.获取 -->
+                {% for row in user_list %}
+                    {% if row.username =='khrystal' %}
+                        <tr>
+                            <td>{{row.username}}</td>
+                            <td>{{row.email}}</td>
+                            <td>{{row.gender}}</td>
+                        </tr>
+                    {%endif%}
+                {% endfor %}
+            </table>
+
+            注意 如果传递的是列表而不是字典
+                也是用.获取
+                如list.0, list.1
+
+        3. 条件判断 且支持嵌套
+            {% if age %} # 判断age是否有值
+                <a>有年龄</a>
+                {% if age > 16 %}
+                    <a>老男人</a>
+                {% else %}
+                    <a>小鲜肉</a>
+                {% endif %}
+            {% else %}
+                <a>没有年龄</a>
+            {% endif %}
+
+
+
+#### Django的生命周期
+
+    用户请求 -> project:urls路由表 -> app:views:获取db数据 模版文件 静态文件 -> 客户端浏览器
 
 
 

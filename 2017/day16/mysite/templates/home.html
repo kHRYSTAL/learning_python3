@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 后台管理主页面 -->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="margin: 0 auto">
+    <div style="height: 48px; background-color: #dddddd"></div>
+    <div>
+        <form action="/home" method="post">
+            <input type="text" name="username" placeholder="用户名"/>
+            <input type="text" name="email" placeholder="邮箱"/>
+            <input type="text" name="gender" placeholder="性别"/>
+            <input type="submit" value="添加"/>
+        </form>
+    </div>
+    <div>
+        <table>
+            <!-- 在代码之间的标签会循环 -->
+            <!-- 在模版语言中 字典中的数据都使用.获取 -->
+            {% for row in user_list %}
+                <tr>
+                    <td>{{row.username}}</td>
+                    <td>{{row.email}}</td>
+                    <td>{{row.gender}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

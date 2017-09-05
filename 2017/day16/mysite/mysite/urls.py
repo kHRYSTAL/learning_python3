@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'h.html', views.home)
 
-    url(r'^login', views.login),
+    url(r'^login', views.login),  # 注意:login后如果有/ 模版文件提交表单也必须加 两者必须一致
+    url(r'^home', views.home),
 ]

@@ -22,8 +22,8 @@ def login(request):
 
         # 验证用户名是否正确
         if uname == 'root' and pwd == '123':
-            # 如果正确 重定向到baidu
-            return redirect('http://www.baidu.com')
+            # 如果正确 重定向到 /home path
+            return redirect('/home')
         else:
             error_msg = "用户名密码不匹配"
             # # 用户名密码不匹配 替换模版文件对应字符串 可以与最后的return方法合并
@@ -36,5 +36,28 @@ def login(request):
     return render(request, 'login.html', {'error_msg': error_msg})
 
 
+# region 假数据
+USER_LIST = [
+    {'username': 'khrystal', 'email': '723526676@qq.com', 'gender': '男'}
+]
+
+# for i in range(20):
+#     temp = {'username': 'khrystal' + str(i), 'email': '723526676@qq.com', 'gender': '男'}
+#     USER_LIST.append(temp)
+
+# endregion
+
+
 def home(request):
-    return HttpResponse('<h1>hello</h1>')
+    """
+    管理后台主页 将假数据传递给home.html 在html中遍历列表填充
+    如果为post请求 说明该页面点击添加user进行的提交 将数据添加到USER_LIST 重新传递html给用户
+    """
+    if request.method == 'POST':
+        # 获取用户提交的数据
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        gender = request.POST.get('gender')
+        addUser = {'username': username, 'email': email, 'gender': gender}
+        USER_LIST.append(addUser)
+    return render(request, 'home.html', {'user_list': USER_LIST})
