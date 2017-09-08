@@ -113,3 +113,24 @@ USER_LIST = [
 
 def index(request):
     return render(request, 'index.html', {'user_dict': USER_DICT})
+
+
+# def detail(request):
+#     """获取拼接url中的数据"""
+#     # return HttpResponse("detail")
+#     nid = None
+#     if request.method == "GET":
+#         nid = request.GET.get('nid')
+#         detail_info = USER_DICT[nid]
+#     return render(request, 'detail.html', {'detail_info': detail_info})
+
+
+def detail(request, nid):
+    """获取正则url中的数据
+        url: detail-1
+        reg: detail-(\d+)
+        第二个参数是根据urls.py 定义的url正则中的括号包裹的数据返回的
+        这里返回1
+    """
+    detail_info = USER_DICT[nid]
+    return render(request, 'detail.html', {'detail_info': detail_info})

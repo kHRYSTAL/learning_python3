@@ -2,6 +2,70 @@ GET 获取数据
 POST 提交数据
 
 ##### 路由系统URL
+        1.支持CBV FBV
+            CBV
+                url(r'^home/', views.Home.as_view()),
+            FBV
+                url(r'^home/', views.home),
+
+        2. 路由系统正则与拼接, 通过url拼接或正则
+            从而实现跳转(如 用户列表跳转到用户详情url)
+
+            但是在SEO排名中, 拼接url的页面的排序低于正则url
+            也就是说动态页面排序低于静态页面
+            因为url拼接后相当于GET请求携带参数, 会认为是动态页面
+            如 detail?nid=1 认为是动态的
+            而 detail-1 认为是静态的
+
+            2.1 拼接url
+            urls.py:
+
+                url(r'^detail/', views.detail),
+            views.py:
+
+                def detail(request):
+                    """获取拼接url中的数据"""
+                    # return HttpResponse("detail")
+                    nid = None
+                    if request.method == "GET":
+                        nid = request.GET.get('nid')
+                        detail_info = USER_DICT[nid]
+                    return render(request, 'detail.html', {'detail_info': detail_info})
+            html:
+
+            <ul>
+                <!-- _blank 指打开一个新页 -->
+                {% for k, v in user_dict.items%}
+                    <li><a target="_blank" href="/detail/?nid={{ k }}">{{ v.name }}</a></li>
+                {% endfor %}
+            </ul>
+
+            2.2 正则实现url
+            urls.py:
+
+                url(r'^detail-(\d+)', views.detail)
+
+            views.py
+
+                def detail(request, nid):
+                    """获取正则url中的数据
+                        url: detail-1
+                        reg: detail-(\d+)
+                        第二个参数是根据urls.py 定义的url正则中的括号包裹的数据返回的
+                        这里返回1
+                    """
+                    detail_info = USER_DICT[nid]
+                    return render(request, 'detail.html', {'detail_info': detail_info})
+
+            html:
+
+                 <ul>
+                    <!--url正则方式跳转-->
+                    {% for k, v in user_dict.items %}
+                    <li><a href="/detail-{{ k }}" target="_blank">{{ v.name }}</a></li>
+                    {% endfor %}
+                 </ul>
+
 
 ##### 视图 View
     1. 请求对象

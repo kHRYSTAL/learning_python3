@@ -16,5 +16,22 @@
             <li>{{k}} - {{v}}</li>
         {% endfor %}
     </ul>
+
+    <div style="background-color: #1b6d85; height: 1px"></div>
+
+    <!--<ul>-->
+        <!--&lt;!&ndash;url拼接方式跳转&ndash;&gt;-->
+        <!--&lt;!&ndash; _blank 指打开一个新页 &ndash;&gt;-->
+        <!--{% for k, v in user_dict.items%}-->
+            <!--<li><a target="_blank" href="/detail/?nid={{ k }}">{{ v.name }}</a></li>-->
+        <!--{% endfor %}-->
+    <!--</ul>-->
+
+    <ul>
+        <!--url正则方式跳转-->
+        {% for k, v in user_dict.items %}
+        <li><a href="/detail-{{ k }}" target="_blank">{{ v.name }}</a></li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

@@ -22,4 +22,9 @@ urlpatterns = [
     url(r'^index/', views.index),
     url(r'^login/', views.login),
     url(r'^home/', views.Home.as_view()),
+    # 在html中拼接实现url携带数据
+    # url(r'^detail/', views.detail),
+
+    # 正则实现url携带数据
+    url(r'^detail-(\d+)', views.detail)
 ]
