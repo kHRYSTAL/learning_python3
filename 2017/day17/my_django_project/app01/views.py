@@ -4,8 +4,8 @@ from django.shortcuts import render, HttpResponse, redirect
 # Create your views here.
 
 
-def index(request):
-    return HttpResponse('index')
+# def index(request):
+#     return HttpResponse('index')
 
 
 # def login(request):
@@ -58,4 +58,58 @@ def login(request):
         return redirect('/index/')
 
 
+# def home(request):
+#     """fbv function base view"""
+#     return HttpResponse('home')
 
+from django.views import View
+
+
+class Home(View):
+    """class base view"""
+
+    def dispatch(self, request, *args, **kwargs):
+        # 重写dispatch方法 在父类中 dispatch会通过反射分发执行get或post函数
+        # 相当于装饰器的作用
+        print('before execute Home class dispatch')
+        # 调用父类函数
+        result = super(Home, self).dispatch(request, *args, **kwargs)
+        print('after execute Home class dispatch')
+        return result
+
+    def get(self, request):
+        # get请求执行
+        print(request.method)
+        return render(request, 'home.html')
+
+    def post(self, request):
+        # post 请求执行
+        print(request.method)
+        name = request.POST.get('name')
+        print('获取post提交的name:', name)
+        return HttpResponse('获取post提交的name:' + name)
+
+
+USER_DICT = {
+    '1': {'name': 'root', 'email': 'root@live.com'},
+    '2': {'name': 'khrystal', 'email': 'root@live.com'},
+    '3': {'name': 'matt', 'email': 'root@live.com'},
+    '4': {'name': 'gloria', 'email': 'root@live.com'},
+    '5': {'name': 'pig', 'email': 'root@live.com'},
+}
+
+"""
+USER_LIST = [
+     {'name': 'root', 'email': 'root@live.com'},
+     {'name': 'khrystal', 'email': 'root@live.com'},
+     {'name': 'matt', 'email': 'root@live.com'},
+     {'name': 'gloria', 'email': 'root@live.com'},
+     {'name': 'pig', 'email': 'root@live.com'},
+]
+
+{% for item in user_list %}
+"""
+
+
+def index(request):
+    return render(request, 'index.html', {'user_dict': USER_DICT})

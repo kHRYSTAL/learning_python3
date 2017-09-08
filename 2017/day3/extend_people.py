@@ -22,6 +22,9 @@ class People(object):
 
 
 class Relation(object):
+    def __init__(self):
+        print('Relation __init__')
+
     def make_friends(self, obj):
         print('%s is make friend with %s' % (self.name, obj.name))
         self.friends.append(obj)
@@ -29,9 +32,10 @@ class Relation(object):
 
 class Man(People, Relation):
     def __init__(self, name):
+        # 依次调用父类的__init__
         # People.__init__(self, name)
         # Relation.__init__(self)
-        super(Man, self).__init__(name)  # 依次调用父类的__init__
+        super(Man, self).__init__(name)  # 调用父类方法, 执行一个就不再执行
 
     def play(self):
         print('%s is playing' % self.name)

@@ -31,9 +31,61 @@ POST 提交数据
             else:
                 print('文件为空')
 
+        4. FBV, CBV
+            在urls.py 封装的url与函数的对应关系 叫做FBV
+            function base view
+
+            类与url对应, 如jsp, 叫做CBV
+            class base view
+
+            在Django中 两种绑定方式都支持
+
+            CBV 写法与FBV不同:
+
+                url需要配置
+                    url(r'^home/', views.Home.as_view()),
+
+                views中的调用类写法如下:
+                    class Home(View):
+                        """class base view"""
+
+                        def get(self, request):
+                            # get请求执行 写法同fbv
+                            pass
+
+                        def post(self, request):
+                            # post 请求执行
+                            pass
+
+                父类View中包含dispatch方法, 会通过反射(getAttr)获取外部设置的get和post函数
+                进行分发调用, 可以重写dispatch 进行请求处理前的逻辑封装
+
+        5. 装饰器
+            pass
+
+
+
 
 
 ##### 模板 Template
+
+        1. 遍历列表
+             {% for row in user_list %}
+                <li>{{row.name}}</li>
+            {% endfor %}
+
+        2. 遍历字典
+
+            <!-- 遍历字典的时候 是无序的
+                user_dict.keys # 键
+                user_dict.values # 值
+                user_dict.items # 键值对
+             -->
+            <ul>
+                {% for k, v in user_dict.items %}
+                    <li>{{k}} - {{v}}</li>
+                {% endfor %}
+            </ul>
 
 ##### Django-ORM操作
       原生sql语句与django orm语句都是有对应关系的

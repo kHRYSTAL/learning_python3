@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <h1>index</h1>
+    <!-- 遍历字典的时候 是无序的
+        user_dict.keys # 键
+        user_dict.values # 值
+        user_dict.items # 键值对
+     -->
+    <ul>
+        {% for k, v in user_dict.items %}
+            <li>{{k}} - {{v}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
