@@ -27,6 +27,13 @@
         <!--{% endfor %}-->
     <!--</ul>-->
 
+    <!-- 通过别名跳转 -->
+    <form action="{% url 'index_alias' %}" method="post">
+        <p><input type="text" placeholder="用户名"/></p>
+        <p><input type="text" placeholder="邮箱"/></p>
+        <input type="submit" value="添加"/>
+    </form>
+
     <ul>
         <!--url正则方式跳转-->
         {% for k, v in user_dict.items %}

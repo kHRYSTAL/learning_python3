@@ -129,6 +129,7 @@ def detail(request, nid):
     """获取正则url中的数据
         url: detail-1
         reg: detail-(\d+)
+        reg: detail-(P<nid>\d+) 分组正则
         第二个参数是根据urls.py 定义的url正则中的括号包裹的数据返回的
         这里返回1
     """

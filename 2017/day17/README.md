@@ -84,6 +84,70 @@ POST 提交数据
                         """
                         pass
 
+        3. url 设置别名:
+            在开发中 有可能需要频繁的修改url名称, 这样就导致了url.py的url需要频繁修改
+            html中如果存在表单 action也需要修改 就造成了修改复杂
+
+            在django中 提供了一种便利的方式 只需要给url添加别名 html的action设置别名即可
+            这样在修改url后 不需要再去修改html文件
+
+            参考index.html
+             url(r'^index/', views.index, name='index_alias'),  # 设置别名
+             <form action="{% url 'index_alias' %}" method="post"></form>
+
+             3.1 子path配置
+
+                 1. 固定path  向index/childpath 提交
+                     url(r'^index/(\w+)', views.index, name='index_alias')
+                     <form action="{% url 'index_alias', 'childpath' %}" method="post"></form>
+
+
+
+                 2. 分组  向index/3/1 提交
+                      url(r'^index/(?P<uid>\d+)/(?P<nid>\d+)', views.index, name='index_alias')
+                      <form action="{% url 'index_alias', nid=1, uid=3 %}" method="post"></form>
+
+
+                    这种方式 可以用于从指定页面跳转至登录注册操作后跳转回指定页面:
+                        在跳转登录时 传递当前页面path给登录页面, 登录页面action为跳转前页面的path 可以实现回到指定页面
+
+             3.2 反转: 通过别名 获取url
+                 url(r'^index/', views.index, name='index_alias')
+
+                 views.py
+                    from django.urls imports reverse
+                    v = reverse('index_alias') # index/
+
+                3.2.1 可变childpath
+                    url(r'^index/(\d+)', views.index, name='index_alias')
+
+                    views.py
+                        from django.urls imports reverse
+                        v = reverse('index_alias', (18,)) # index/18
+
+                3.2.1 分组childpath
+                    url(r'^index/(?P<nid>\d+)', views.index, name='index_alias')
+
+                    views.py
+                        from django.urls imports reverse
+                        v = reverse('index_alias', kwagrs={'nid': 18}) # index/18
+
+
+        4. 获取当前url path :
+            request.path_info
+            向当前页面url提交post请求
+            url配置
+                url(r'^index/(w+)', views.index, name='index_alias')
+            html配置
+                <form action="{{ url request.path_info }}" method="post"></form>
+
+            接收:
+                def index(request, child_path):
+                    # child_path = 'childpath'
+                    print(request.path_info) # index/childpath
+
+
+
 
 
 ##### 视图 View
