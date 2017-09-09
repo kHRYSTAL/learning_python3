@@ -66,6 +66,25 @@ POST 提交数据
                     {% endfor %}
                  </ul>
 
+                 2.2.1
+                    正则表达式分组:
+                         第一个匹配的赋值给uid 第二个匹配的赋值给uid 设定了分组 调用函数时就无关顺序
+                         url(r'^detail-(?P<uid>\d+)-(?P<nid>\d+)', views.detail)
+
+                          def detail(request, nid, uid):
+                                pass
+
+              2.3 可变长度参数接收
+
+                    def detail(request, *args, **kwargs)
+                        """
+                        不指定分组的方式通过*args方式接收 为元组
+                        指定分组的方式通过**kwargs方式接收 为字典
+
+                        """
+                        pass
+
+
 
 ##### 视图 View
     1. 请求对象
