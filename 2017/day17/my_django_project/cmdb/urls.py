@@ -14,21 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
-from app01 import views
+from cmdb import views
 
 urlpatterns = [
-    # region app01模块
-    url(r'^admin/', admin.site.urls),
-    url(r'^index/', views.index, name='index_alias'),  # 设置别名
-    url(r'^login/', views.login),
-    url(r'^home/', views.Home.as_view()),
-    # 在html中拼接实现url携带数据
-    # url(r'^detail/', views.detail),
-    # 正则实现url携带数据
-    url(r'^detail-(\d+)', views.detail),
-    # endregion
+
 
     # cmdb模块路由分发模式
-    url(r'^cmdb/', include("cmdb.urls"))
+    # url 为 cmdb/login
+    url(r'^login/', views.cmdb_login)
 ]

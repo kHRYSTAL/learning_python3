@@ -210,6 +210,13 @@ POST 提交数据
         5. 装饰器
             pass
 
+        6. 路由分发
+            原因: 在project中 可以有多个app, 但是urls.py只有一个, 多人开发时有可能导致同时改动的冲突
+                在django中 支持路由分发模式, 即:
+                    在project的urls.py指定一个父path, 与父path相关的子path写到对应的app下的urls.py中
+
+                    参考例子cmdb相关文件
+
 
 
 
