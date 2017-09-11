@@ -215,7 +215,22 @@ POST 提交数据
                 在django中 支持路由分发模式, 即:
                     在project的urls.py指定一个父path, 与父path相关的子path写到对应的app下的urls.py中
 
-                    参考例子cmdb相关文件
+                    参考例子cmdb相关文件 url:cmdb/login
+
+            project-urls.py:
+                # cmdb模块路由分发模式
+                url(r'^cmdb/', include("cmdb.urls"))
+
+            cmdb-urls.py
+                urlpatterns = [
+                    # cmdb模块路由分发模式
+                    # url 为 cmdb/login
+                    url(r'^login/', views.cmdb_login)
+                ]
+
+        7. 默认值:
+
+        8. 命名空间
 
 
 
@@ -254,3 +269,25 @@ POST 提交数据
 
         select * from tb where id = 1
         models.tb.objects.filter(id=1)
+
+    1. 根据类自动创建数据库表
+       1.1 app 下的models.py
+        创建数据建构
+
+        class UserInfo(models.Model):
+            # 默认创建一个id列 自增 主键
+            # 用户名列 字符串类型 指定长度
+            username = models.CharField(max_length=32)
+            password = models.CharField(max_length=64)
+       1.2 在project-settings.py INSTALLED_APPS 注册app
+
+       1.3
+            更新表结构 此时数据库结构在内存中
+                python manage.py makemigrations
+            同步表结构至数据库 写入数据库存储
+                python manage.py migrate
+
+
+
+    2. 根据类对表中数据进行增删改查操作
+
