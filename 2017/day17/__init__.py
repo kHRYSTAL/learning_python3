@@ -10,7 +10,7 @@
 # @software: PyCharm
 # @file: __init__.py.py
 # @time: 17/9/5 下午5:08
+import pymysql
 
+pymysql.install_as_MySQLdb()
 
-if __name__ == '__main__':
-    pass

@@ -270,21 +270,50 @@ POST 提交数据
         select * from tb where id = 1
         models.tb.objects.filter(id=1)
 
+    默认使用sqlite数据库
+
+    修改为mysql:
+        DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        # 注意 数据库名称 django不能创建 因此需要先在mysql命令行创建数据库名称
+        # 再在配置文件中填写数据库名称
+        'NAME':'dbname',
+        'USER': 'root',
+        'PASSWORD': 'xxx',
+        'HOST': '',
+        'PORT': '',
+        }
+    }
+
+    *******************注意******************
+    django连接mysql数据库默认使用MySQLdb模块
+    但是这个模块python3没有, 需要使用pymysql模块
+    因此需要做一些配置 在project的__init__.py中需要添加:
+
+    import pymysql
+    pymysql.install_as_MySQLdb()
+
+    这是告诉django安装了MySQLdb模块 实际使用的是pymysql的代码
+    *****************************************
+
     1. 根据类自动创建数据库表
        1.1 app 下的models.py
         创建数据建构
 
         class UserInfo(models.Model):
+            # 需要继承models.Model
             # 默认创建一个id列 自增 主键
             # 用户名列 字符串类型 指定长度
             username = models.CharField(max_length=32)
             password = models.CharField(max_length=64)
+
        1.2 在project-settings.py INSTALLED_APPS 注册app
 
        1.3
-            更新表结构 此时数据库结构在内存中
+            更新表结构 此时数据库结构在内存中 makemigrations: 生成需要同步的数据
                 python manage.py makemigrations
-            同步表结构至数据库 写入数据库存储
+            同步表结构至数据库 写入数据库存储 表名叫app01_userinfo migrate: 同步数据
                 python manage.py migrate
 
 
