@@ -316,7 +316,49 @@ POST 提交数据
             同步表结构至数据库 写入数据库存储 表名叫app01_userinfo migrate: 同步数据
                 python manage.py migrate
 
+       1.4 增
+            1. 第一种方式
+                models.UserInfo.objects.create(
+                    username='root',
+                    password='123'
+                )
 
+                或者
+                # dict = {'username': 'matt', 'password': '789'}
+                # # dict为字典 **dict为将字典数据遍历放置到参数中
+                # models.UserInfo.objects.create(**dict)
+
+            2. 第二种方式
+                # 实例化一个对象
+                obj = models.UserInfo(username='admin', password='345')
+                # 保存至数据库
+                obj.save()
+
+       1.5 查
+
+            # 查询所有数据
+            allSelect = models.UserInfo.objects.all()
+            for i in allSelect:
+                print(i.username)
+
+            # 条件查询
+            whereSelect = models.UserInfo.objects.filter(id=1)
+                for i in whereSelect:
+                print(i.username)
+            返回的类型为Django提供的QuerySet类型 理解为一个列表 列表里是UserInfo对象
+
+       1.6 删
+            # 删除所有
+            models.UserInfo.objects.all().delete()
+            # 条件删除
+            models.UserInfo.objects.filter(id=4).delete()
+
+       1.7 更新
+
+            # 更新所有密码
+            models.UserInfo.objects.all.update(password=123456)
+            # 条件更新
+            models.UserInfo.objects.filter(id=3).update(password=123456)
 
     2. 根据类对表中数据进行增删改查操作
 
