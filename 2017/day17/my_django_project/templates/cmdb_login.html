@@ -6,7 +6,8 @@
 </head>
 <body>
     <!--enctype 上传类型表明为文件, type为file的input能够上传文件给后台 如果不写为字符串-->
-    <form action="/login/" method="post" enctype="multipart/form-data">
+    <!-- 向当前页面提交 -->
+    <form action="{{request.path_info}}" method="post" enctype="multipart/form-data">
         <p>
             <input type="text" name="user" placeholder="用户名"/>
         </p>

@@ -542,7 +542,7 @@ body中的常用标签
         </body>
 
         2. absolute 相对于 relative父标签的上层的固定位置
-            <!--position: absolute 表示标签固定在首屏某个位置 页面滑动也会跟随滚动 实现层叠样式 与position: relative结合使用-->
+            <!--position: absolute 表示标签固定在首屏某个位置 页面滑动也会跟随滚动 实现层叠样式 也可与position: relative结合使用-->
             <!--top bottom left right 表示position后 距离上下左右的高度-->
             <!--常用于页面点赞时 点赞动画所在的标签是子标签 使用position:absolute ,
                 父标签使用 position: relative 表示内部的position是相对于自己的位置

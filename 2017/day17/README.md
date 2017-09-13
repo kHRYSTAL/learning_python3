@@ -139,7 +139,7 @@ POST 提交数据
             url配置
                 url(r'^index/(w+)', views.index, name='index_alias')
             html配置
-                <form action="{{ url request.path_info }}" method="post"></form>
+                <form action="{{request.path_info }}" method="post"></form>
 
             接收:
                 def index(request, child_path):
@@ -347,6 +347,10 @@ POST 提交数据
                 print(i.username)
             返回的类型为Django提供的QuerySet类型 理解为一个列表 列表里是UserInfo对象
 
+            # 只获取一条数据 如果不存在则报错 需要try-catch
+            obj = models.UserInfo.objects.get(id=1)
+
+
        1.6 删
             # 删除所有
             models.UserInfo.objects.all().delete()
@@ -360,5 +364,12 @@ POST 提交数据
             # 条件更新
             models.UserInfo.objects.filter(id=3).update(password=123456)
 
-    2. 根据类对表中数据进行增删改查操作
 
+       1.8 获取查询结果的第一个对象
+            whereSelect = models.UserInfo.objects.filter(id=1).first()
+       1.9 获取查询结果的数量
+            whereSelect = models.UserInfo.objects.filter(id=1).count()
+
+       2.0 获取查询结果的sql语句
+            whereSelect = models.UserInfo.objects.filter(id=1)
+            whereSelect.query

@@ -1,25 +1,50 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, reverse
 
 
 # Create your views here.
+def cmdb_index(request):
+    return render(request, 'cmdb_index.html')
+
 
 def cmdb_login(request):
     if request.method == 'GET':
         return render(request, 'cmdb_login.html')
     elif request.method == 'POST':
-
-        return render(request, 'cmdb_login.html')
+        u = request.POST.get('user')
+        p = request.POST.get('pwd')
+        obj = models.UserInfo.objects.filter(username=u, password=p).first()  # 获取第一个对象
+        count = models.UserInfo.objects.filter(username=u, password=p).count()  # 获取个数
+        print(obj)  # None, 不存在用户
+        print(count)
+        if obj:
+            # 通过别名反转获取url
+            return redirect(reverse('cmdb-index'))
+        else:
+            return render(request, 'cmdb_login.html')
     else:
         # PUT DELETE HEAD OPTION
         # 其他方式提交 跳转回首页
         return redirect('/index/')
 
 
+def cmdb_userinfo(request):
+    user_list = models.UserInfo.objects.all()
+    return render(request, 'cmdb_userinfo.html', {'user_list': user_list})
+
+
+def cmdb_userdetail(reuqest, uid):
+    user = models.UserInfo.objects.filter(id=uid).first()
+    return render(reuqest, 'cmdb_userdetail.html', {'user': user})
+
+
+def cmdb_usergroup(request):
+    return render(request, 'cmdb_usergroup.html')
+
+
 from app01 import models
 
 
 def orm(request):
-
     # 1,增
     # 增加, 创建数据 保存至数据库
     # models.UserInfo.objects.create(

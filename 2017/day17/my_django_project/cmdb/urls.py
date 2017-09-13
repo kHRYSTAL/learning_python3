@@ -21,7 +21,11 @@ urlpatterns = [
 
     # cmdb模块路由分发模式
     # url 为 cmdb/login
-    url(r'^login/', views.cmdb_login),
+    url(r'^login/', views.cmdb_login, name='cmdb-login'),
+    url(r'^index/', views.cmdb_index, name='cmdb-index'),
+    url(r'^user_info/', views.cmdb_userinfo, name='cmdb-userinfo'),
+    url(r'^user_group/', views.cmdb_usergroup, name='cmdb-usergroup'),
+    url(r'^userdetail-(?P<uid>\d+)', views.cmdb_userdetail, name='cmdb-userdetail'),
     # orm 测试
     url(r'^orm/', views.orm)
 ]

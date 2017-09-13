@@ -376,6 +376,12 @@
 
     用户请求 -> project:urls路由表 -> app:views:获取db数据 模版文件 静态文件 -> 客户端浏览器
 
+### render 与 redirect 区别
+
+    render是递交模版文件并渲染 返回码为200
+    redirect是重定向跳转url 不支持渲染 返回码为302
+
+
 
 
 
