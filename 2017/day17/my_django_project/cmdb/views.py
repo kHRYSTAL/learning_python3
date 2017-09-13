@@ -5,9 +5,10 @@ from django.shortcuts import render, HttpResponse, redirect
 
 def cmdb_login(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        return render(request, 'cmdb_login.html')
     elif request.method == 'POST':
-        return render(request, 'login.html')
+
+        return render(request, 'cmdb_login.html')
     else:
         # PUT DELETE HEAD OPTION
         # 其他方式提交 跳转回首页

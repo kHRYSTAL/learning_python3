@@ -14,6 +14,35 @@
             <input type="password" name="pwd" placeholder="密码">
         </p>
         <p>
+            <!--单选互斥 需要name相同-->
+            男:<input type="radio" name="gender" value="1"/>
+            女:<input type="radio" name="gender" value="2"/>
+        </p>
+
+        <p>
+            <!--多选 需要name相同-->
+            足球:<input type="checkbox" name="favour" value="11"/>
+            篮球:<input type="checkbox" name="favour" value="12"/>
+            网球:<input type="checkbox" name="favour" value="13"/>
+            板球:<input type="checkbox" name="favour" value="14"/>
+        </p>
+
+        <p>
+            <!--支持多选的菜单-->
+            <select name="city" multiple>
+                <option value="sh">上海</option>
+                <option value="bj">北京</option>
+                <option value="tj">天津</option>
+                <option value="gz">广州</option>
+            </select>
+        </p>
+
+        <p>
+            <!--上传文件-->
+            <input type="file" name="upload_file"/>
+        </p>
+
+        <p>
             <input type="submit" value="提交">
         </p>
     </form>
