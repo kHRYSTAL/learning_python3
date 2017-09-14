@@ -25,7 +25,9 @@ urlpatterns = [
     url(r'^index/', views.cmdb_index, name='cmdb-index'),
     url(r'^user_info/', views.cmdb_userinfo, name='cmdb-userinfo'),
     url(r'^user_group/', views.cmdb_usergroup, name='cmdb-usergroup'),
-    url(r'^userdetail-(?P<uid>\d+)', views.cmdb_userdetail, name='cmdb-userdetail'),
+    url(r'^userdetail-(?P<uid>\d+)/', views.cmdb_userdetail, name='cmdb-userdetail'),
+    url(r'^userdelete-(?P<uid>\d+)/', views.cmdb_userdelete, name='cmdb-userdelete'),
+    url(r'^useredit-(?P<uid>\d+)/', views.cmdb_useredit, name='cmdb-useredit'),
     # orm 测试
     url(r'^orm/', views.orm)
 ]

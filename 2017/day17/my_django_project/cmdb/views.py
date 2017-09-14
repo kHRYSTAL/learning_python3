@@ -28,13 +28,39 @@ def cmdb_login(request):
 
 
 def cmdb_userinfo(request):
-    user_list = models.UserInfo.objects.all()
-    return render(request, 'cmdb_userinfo.html', {'user_list': user_list})
+    if request.method == 'POST':
+        # Post提交为创建用户
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        # 创建用户
+        models.UserInfo.objects.create(username=u, password=p)
+        # 重新以get形式跳转回当前页面 可以使用redirect 状态码为302
+        return redirect(request.path_info)
+    else:
+        user_list = models.UserInfo.objects.all()
+        return render(request, 'cmdb_userinfo.html', {'user_list': user_list})
 
 
-def cmdb_userdetail(reuqest, uid):
+def cmdb_userdetail(request, uid):
     user = models.UserInfo.objects.filter(id=uid).first()
-    return render(reuqest, 'cmdb_userdetail.html', {'user': user})
+    return render(request, 'cmdb_userdetail.html', {'user': user})
+
+
+def cmdb_userdelete(request, uid):
+    models.UserInfo.objects.filter(id=uid).delete()
+    return redirect(reverse('cmdb-userinfo'))
+
+
+def cmdb_useredit(request, uid):
+    if request.method == 'GET':
+        obj = models.UserInfo.objects.filter(id=uid).first()
+        return render(request, 'cmdb_useredit.html', {'user': obj})
+    else:
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        models.UserInfo.objects.filter(id=uid).update(username=u, password=p)
+        return redirect(reverse('cmdb-userinfo'))
+
 
 
 def cmdb_usergroup(request):

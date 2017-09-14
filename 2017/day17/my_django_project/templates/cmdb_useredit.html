@@ -26,23 +26,15 @@
 
         <!--overflow: auto/scroll 超出父布局的内容支持滚动-->
         <div style="position: absolute; top: 48px; left: 210px; bottom: 0; right: 0; overflow: auto">
-            <h3>添加用户</h3>
+            <h3>编辑用户</h3>
             <form method="post" action="{{ request.path_info }}">
-                <input type="text" name="username"/>
-                <input type="text" name="password"/>
-                <input type="submit" value="添加"/>
-
+                <!-- id 不可编辑 -->
+                <input type="text" name="uid" placeholder="uid" disabled value="{{ user.id }}" style="display: none"/>
+                <input type="text" name="username" placeholder="username" value="{{ user.username }}"/>
+                <input type="text" name="password" placeholder="password" value="{{ user.password }}"/>
+                <input type="submit" value="提交"/>
             </form>
-            <h3>用户列表</h3>
-            <ul>
-                {% for row in user_list%}
-                    <li>
-                        <a href="/cmdb/userdetail-{{row.id}}/">{{row.username}}</a> |
-                        <a href="/cmdb/userdelete-{{row.id}}/">删除</a> |
-                        <a href="/cmdb/useredit-{{row.id}}/">编辑</a>
-                    </li>
-                {% endfor %}
-            </ul>
+
         </div>
     </div>
 </body>

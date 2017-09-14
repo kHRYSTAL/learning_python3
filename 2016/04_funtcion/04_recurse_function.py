@@ -56,4 +56,5 @@ def test(num, src, dst, rest):
                 test(num - 1, src, rest, dst)
                 test(1, src, dst, rest)
                 test(num - 1, rest, dst, src)
+
 test(3,'A','B','C')
