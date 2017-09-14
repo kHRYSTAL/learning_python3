@@ -15,6 +15,8 @@
 5. 同步表结构至数据库
     python manage.py migrate
 
+6. 创建后台管理root用户
+    python manage.py createsuperuser 创建project 后台root用户
 
 ### 配置模版路径
     TEMPLATES = [

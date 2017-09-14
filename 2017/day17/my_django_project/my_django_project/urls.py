@@ -19,7 +19,7 @@ from app01 import views
 
 urlpatterns = [
     # region app01模块
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),  # django自动生成的后台管理url
     url(r'^index/', views.index, name='index_alias'),  # 设置别名
     url(r'^login/', views.login),
     url(r'^home/', views.Home.as_view()),

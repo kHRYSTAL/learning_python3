@@ -312,9 +312,9 @@ POST 提交数据
 
        1.3
             更新表结构 此时数据库结构在内存中 makemigrations: 生成需要同步的数据
-                python manage.py makemigrations
+            ******   python manage.py makemigrations
             同步表结构至数据库 写入数据库存储 表名叫app01_userinfo migrate: 同步数据
-                python manage.py migrate
+            ******    python manage.py migrate
 
        1.4 增
             1. 第一种方式
@@ -373,3 +373,49 @@ POST 提交数据
        2.0 获取查询结果的sql语句
             whereSelect = models.UserInfo.objects.filter(id=1)
             whereSelect.query
+
+#### Django 数据库表结构操作
+    1. 增加列时 之前数据库存储的数据需要进行处理, django在生成数据库的列时
+        默认都是不为空的 因此在同步表结构时 会提示是否设置为空 或在为空时设置默认数据
+
+    2. 在mysql中 每个表只能有一个自增列 作为主键 如果不手动设置自增+主键 django会设置一个默认的列 "id" 作为主键
+
+```
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 1. 设置一个默认值 给之前该列为空的数据
+ 2) Quit, and let me add a default in models.py
+ 2. 退出 手动设置默认值或设置默认为空
+```
+
+    2. 设置列允许为空
+        gender = models.CharField(max_length=10, null=True)  # 允许为空
+
+    3. 删除列
+        将class中对应的列删除并同步数据库即可
+
+    4. 字段类型
+        字符串
+            CharField 字符串
+            EmailField 邮箱字符串 (用于admin后台管理)
+            UrlField Url字符串 (用于admin后台管理)
+            GenericIPAddressField ipv4 ipv6 字符串
+        数字
+
+        时间
+
+        二进制
+
+
+
+        如果是用EmailField或UrlField 在管理后台添加或修改行数据 如果格式错误会进行提示
+
+        更多
+        {@link: http://www.cnblogs.com/wupeiqi/articles/5246483.html#基本结构 }
+
+
+    5. 替换默认主键
+          # 创建一个自增的列 并设置为主键 django将不再设置默认的id列
+          uid = models.AutoField(primary_key=True)
+
+          * 注意 自增必须设置为主键
