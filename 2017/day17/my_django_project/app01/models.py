@@ -20,6 +20,10 @@ class UserInfo(models.Model):
     # 设置枚举类型 即在管理后台中该项添加或修改时可以进行单选菜单选择 数据库存储的是数字 但文字存储在内存中
     user_type_id = models.IntegerField(choices=user_type_choices)
 
+    # 外键关联 参数为表名 关联的表唯一值 默认值
+    # to_field 可以不写 默认管理表的id
+    user_group = models.ForeignKey('UserGroup', to_field='gid', default=1)
+
 
 class UserGroup(models.Model):
     # 创建一个自增的列 并设置为主键 django将不再设置默认的id列

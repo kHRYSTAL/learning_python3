@@ -474,3 +474,8 @@ Please select a fix:
         obj = UserGroup.objects.filter(id=1).first()
         obj.caption = "asdf"
         obj.save()
+
+    7. 外键关联
+         # 外键关联 参数为表名 关联的表唯一值 默认值
+         # to_field 可以不写 默认管理表的id
+         user_group = models.ForeignKey('UserGroup', to_field='gid', default=1)
