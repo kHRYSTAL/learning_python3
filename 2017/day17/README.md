@@ -476,6 +476,38 @@ Please select a fix:
         obj.save()
 
     7. 外键关联
+         在表中可以设置外键:
          # 外键关联 参数为表名 关联的表唯一值 默认值
          # to_field 可以不写 默认管理表的id
+         # 写到数据库的是指定的gid, 但user_group这个属性是通过外键查询的对象 相当于left join
          user_group = models.ForeignKey('UserGroup', to_field='gid', default=1)
+
+         在查询的时候 实际上写到数据库UserInfo表中的字段为user_group_id
+
+         查询所有userinfo数据
+            user_list = models.UserInfo.objects.all()
+            for user in user_list:
+                # 打印外键字段
+                print(user.user_group_id)
+                # 打印通过外键查到的属组对象的字段
+                print(user.user_group.gid)
+                print(user.user_group.caption)
+
+         在添加数据时 有可能一个用户创建需要关联多个表 即创建一对多的关系
+         可以按照对象创建(效率低) 也可以直接通过外键创建
+
+         但通过外键创建 只能两表关联, 更多表关联 如 表1与表2关联 表2与表3关联
+         表1与表3不关联 现在想创建表1的数据 同时设置表3与表2的关联关系 是不能实现的
+
+            models.UserInfo.objects.create(
+                username='root3',
+                password='123',
+                email='adsfg',
+                admin_column='safdgsf',
+                user_type_id=1,
+                # user_group_id = 1,
+                user_group=models.UserGroup.objects.filter(gid=1).first(),
+            )
+
+
+

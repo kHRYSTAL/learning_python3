@@ -32,13 +32,27 @@ def cmdb_userinfo(request):
         # Post提交为创建用户
         u = request.POST.get('username')
         p = request.POST.get('password')
+        g = request.POST.get('group_id')
         # 创建用户
-        models.UserInfo.objects.create(username=u, password=p)
+        models.UserInfo.objects.create(
+            username=u,
+            password=p,
+            admin_column='default_value',
+            user_type_id=2,
+            user_group_id=g,
+                                       )
         # 重新以get形式跳转回当前页面 可以使用redirect 状态码为302
         return redirect(request.path_info)
     else:
         user_list = models.UserInfo.objects.all()
-        return render(request, 'cmdb_userinfo.html', {'user_list': user_list})
+        user_group = models.UserGroup.objects.all()
+        for user in user_list:
+            # 打印外键字段
+            print(user.user_group_id)
+            # 打印通过外键查到的属组对象的字段
+            print(user.user_group.gid)
+            print(user.user_group.caption)
+        return render(request, 'cmdb_userinfo.html', {'user_list': user_list, 'user_group': user_group})
 
 
 def cmdb_userdetail(request, uid):
@@ -104,5 +118,16 @@ def orm(request):
     # models.UserInfo.objects.all().delete()
     # 条件删除
     # models.UserInfo.objects.filter(id=4).delete()
+
+    # 4, 一对多
+    models.UserInfo.objects.create(
+        username='root3',
+        password='123',
+        email='adsfg',
+        admin_column='safdgsf',
+        user_type_id=1,
+        # user_group_id = 1,
+        user_group=models.UserGroup.objects.filter(gid=1).first(),
+    )
 
     return HttpResponse("orm")
