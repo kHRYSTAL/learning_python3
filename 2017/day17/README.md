@@ -510,4 +510,7 @@ Please select a fix:
             )
 
 
+[Django-ORM 进阶操作](http://www.cnblogs.com/wupeiqi/articles/5246483.html)
+
+
 
