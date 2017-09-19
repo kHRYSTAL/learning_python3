@@ -159,7 +159,7 @@
             models.User.objects.all().first() # 第一个 return User
             models.User.objects.filter(id=1).first() # 第一个 return User
 
-    6. 外键
+    6. 外键关联
 
             class UserType(models.Model):
                 # 不写主键 自动生成一个自增的主键 字段名为id
