@@ -159,6 +159,20 @@
             models.User.objects.all().first() # 第一个 return User
             models.User.objects.filter(id=1).first() # 第一个 return User
 
+    6. 外键
+
+            class UserType(models.Model):
+                # 不写主键 自动生成一个自增的主键 字段名为id
+                caption = models.CharField(max_length=32)
+                # (1, 普通用户) (2, VIP用户) (3, 游客)
+
+            class User(models.Model):
+                age = models.IntegerField()
+                name = models.CharField(max_length=10)
+                # 约束条件 user_type 获取时user_type 为UserType对象
+                # 数据库存储的列名为user_type_id 存储的是UserType的id
+                user_type = models.ForeignKey("UserType",to_field='id', default=1)
+
 
 
 #### Django ORM
