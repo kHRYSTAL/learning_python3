@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>业务线列表</h1>
+    <div>对象展示</div>
+    <ul>
+        {% for business in businesses1 %}
+            <li>{{ business.id }}-{{ business.caption }}</li>
+        {% endfor %}
+    </ul>
+    <div>字典展示</div>
+    <ul>
+        {% for business in businesses2 %}
+            <li>{{ business.id }}-{{ business.caption }}</li>
+        {% endfor %}
+    </ul>
+    <div>元组展示</div>
+    <ul>
+        {% for tuple in businesses3 %}
+            <li>{{ tuple.0 }}-{{ tuple.1 }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

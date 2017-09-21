@@ -173,7 +173,23 @@
                 # 数据库存储的列名为user_type_id 存储的是UserType的id
                 user_type = models.ForeignKey("UserType",to_field='id', default=1)
 
+    7. 只获取相关列数数据
 
+            # 获取所有业务线数据 只获取id与caption
+            # businesses = models.Business.objects.all()
+            # 没有values的情况
+            # 返回QuerySet数据 继承于列表 内部为Business对象
+            # [business(id, caption, english),..]
+
+            businesses = models.Business.objects.all().values('id', 'caption')
+            # 有values情况
+            # 返回QuerySet 字典对象列表
+            # [{id: xx, caption:xxx}, ...]
+
+            # businesses = models.Business.objects.all().values_list('id', 'caption')
+            # 有values情况
+            # 返回QuerySet 元组对象列表
+            # [(xx, xxx), ...]
 
 #### Django ORM
     一对多创建
