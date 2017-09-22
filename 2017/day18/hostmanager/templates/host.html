@@ -5,27 +5,43 @@
     <title>Host</title>
 </head>
 <body>
-    <h1>主机表</h1>
+    <h1>主机表(对象列表)</h1>
     <table border="1">
         <thead>
-            <th>主机id</th>
             <th>主机名称</th>
             <th>主机ip</th>
             <th>主机端口</th>
-            <th>业务线id</th>
             <th>业务线名称</th>
-            <th>业务线英文</th>
         </thead>
         <tbody>
-            {% for host in hosts %}
-                <tr>
-                    <td>{{ host.nid }}</td>
+            {% for host in hosts1 %}
+                <!-- 自定义属性 用于js通过nid进行相关处理 -->
+                <tr host-id="{{host.nid}}" buniness-id="{{host.business.id}}">
                     <td>{{ host.hostname }}</td>
                     <td>{{ host.ip }}</td>
                     <td>{{ host.port }}</td>
-                    <td>{{ host.business.id }}</td>
                     <td>{{ host.business.caption }}</td>
-                    <td>{{ host.business.english }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>主机表(字典列表)</h1>
+    <table border="1">
+        <thead>
+            <th>主机名称</th>
+            <th>主机ip</th>
+            <th>主机端口</th>
+            <th>业务线名称</th>
+        </thead>
+        <tbody>
+            {% for host in hosts2 %}
+                <!-- 自定义属性 用于js通过nid进行相关处理 -->
+                <tr host-id="{{host.nid}}" buniness-id="{{host.business_id}}">
+                    <td>{{ host.hostname }}</td>
+                    <td>{{ host.ip }}</td>
+                    <td>{{ host.port }}</td>
+                    <td>{{ host.business__caption }}</td>
                 </tr>
             {% endfor %}
         </tbody>

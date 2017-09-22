@@ -198,6 +198,16 @@
             # 获取id为1的列表中的第一个对象, 如果不存在则为空
             business = models.Business.objects.filter(id=1).first()
 
+    9. 跨表多数据查询
+
+            # 查询nid > 0 的host表的nid, hostname, bussiness_id, business_id对应business表的caption
+            datas = models.Host.objects.filter(nid__gt=0)
+                .values('nid', 'hostname', 'business_id', 'business__caption')
+
+            # 双下划线代表跨表查询字段
+
+            # django会通过双下划线进行split 然后去查询business表的caption字段
+
 
 #### Django ORM
     一对多创建

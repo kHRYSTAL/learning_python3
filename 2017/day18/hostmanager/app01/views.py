@@ -27,7 +27,11 @@ def business(request):
 
 
 def host(request):
-    hosts = models.Host.objects.all()
+    hosts1 = models.Host.objects.all()
     # 获取nid > 0 的主机列表
     # hosts = models.Host.objects.filter(nid__gt=0)
-    return render(request, 'host.html', {'hosts': hosts})
+
+    # 获取对应字段列表, 内部对象为字典
+    hosts2 = models.Host.objects.filter(nid__gt=0).values('nid', 'ip', 'hostname', 'port', 'business_id',
+                                                          'business__caption')
+    return render(request, 'host.html', {'hosts1': hosts1, 'hosts2': hosts2})
