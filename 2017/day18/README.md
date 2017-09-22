@@ -173,7 +173,7 @@
                 # 数据库存储的列名为user_type_id 存储的是UserType的id
                 user_type = models.ForeignKey("UserType",to_field='id', default=1)
 
-    7. 只获取相关列数数据
+    7. 从数据库获取列表数据三种方式
 
             # 获取所有业务线数据 只获取id与caption
             # businesses = models.Business.objects.all()
@@ -190,6 +190,14 @@
             # 有values情况
             # 返回QuerySet 元组对象列表
             # [(xx, xxx), ...]
+
+    8. 获取单个数据
+
+            # 获取id为1的单个对象, 如果不存在抛出异常
+            business = models.Business.objects.get(id=1)
+            # 获取id为1的列表中的第一个对象, 如果不存在则为空
+            business = models.Business.objects.filter(id=1).first()
+
 
 #### Django ORM
     一对多创建

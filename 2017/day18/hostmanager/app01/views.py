@@ -24,3 +24,10 @@ def business(request):
     print(businesses3)
     return render(request, 'business.html',
                   {'businesses1': businesses1, 'businesses2': businesses2, 'businesses3': businesses3})
+
+
+def host(request):
+    hosts = models.Host.objects.all()
+    # 获取nid > 0 的主机列表
+    # hosts = models.Host.objects.filter(nid__gt=0)
+    return render(request, 'host.html', {'hosts': hosts})

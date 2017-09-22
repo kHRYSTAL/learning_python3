@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Host</title>
+</head>
+<body>
+    <h1>主机表</h1>
+    <table border="1">
+        <thead>
+            <th>主机id</th>
+            <th>主机名称</th>
+            <th>主机ip</th>
+            <th>主机端口</th>
+            <th>业务线id</th>
+            <th>业务线名称</th>
+            <th>业务线英文</th>
+        </thead>
+        <tbody>
+            {% for host in hosts %}
+                <tr>
+                    <td>{{ host.nid }}</td>
+                    <td>{{ host.hostname }}</td>
+                    <td>{{ host.ip }}</td>
+                    <td>{{ host.port }}</td>
+                    <td>{{ host.business.id }}</td>
+                    <td>{{ host.business.caption }}</td>
+                    <td>{{ host.business.english }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
