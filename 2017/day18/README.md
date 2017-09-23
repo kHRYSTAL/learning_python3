@@ -209,5 +209,4 @@
             # django会通过双下划线进行split 然后去查询business表的caption字段
 
 
-#### Django ORM
-    一对多创建
+#### AJAX
