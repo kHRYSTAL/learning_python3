@@ -207,6 +207,21 @@
             # 双下划线代表跨表查询字段
 
             # django会通过双下划线进行split 然后去查询business表的caption字段
+    10. html 循环中的属性
 
+            <!--for循环的次数-->
+            <td>{{ forloop.counter }}</td>
+            <!--从0开始的for循环序号-->
+            <td>{{ forloop.counter0 }}</td>
+            <!--倒序 序号-->
+            <td>{{ forloop.revcounter }}</td>
+            <!--倒序 从0开始序号-->
+            <td>{{ forloop.revcounter0 }}</td>
+            <!--嵌套循环是 当前循环的父循环对象 包含上述所有信息-->
+            <td> {{ forloop.parentloop }}</td>
+            <!--最后一个-->
+            <td> {{ forloop.last }}</td>
+            <!--第一个-->
+            <td> {{ forloop.first }}</td>
 
 #### AJAX

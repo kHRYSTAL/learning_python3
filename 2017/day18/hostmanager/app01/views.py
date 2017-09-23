@@ -27,11 +27,26 @@ def business(request):
 
 
 def host(request):
-    hosts1 = models.Host.objects.all()
-    # 获取nid > 0 的主机列表
-    # hosts = models.Host.objects.filter(nid__gt=0)
+    if request.method == 'GET':
+        hosts1 = models.Host.objects.all()
+        # 获取nid > 0 的主机列表
+        # hosts = models.Host.objects.filter(nid__gt=0)
 
-    # 获取对应字段列表, 内部对象为字典
-    hosts2 = models.Host.objects.filter(nid__gt=0).values('nid', 'ip', 'hostname', 'port', 'business_id',
-                                                          'business__caption')
-    return render(request, 'host.html', {'hosts1': hosts1, 'hosts2': hosts2})
+        # 获取对应字段列表, 内部对象为字典
+        hosts2 = models.Host.objects.filter(nid__gt=0).values('nid', 'ip', 'hostname', 'port', 'business_id',
+                                                              'business__caption')
+
+        businesses1 = models.Business.objects.all()
+        return render(request, 'host.html', {'hosts1': hosts1, 'hosts2': hosts2, 'businesses': businesses1})
+    elif request.method == 'POST':
+        hostname = request.POST.get('hostname')
+        ip = request.POST.get('ip')
+        port = request.POST.get('port')
+        business_id = request.POST.get('business_id')
+        models.Host.objects.create(
+            hostname=hostname,
+            ip=ip,
+            port=port,
+            business_id=business_id,
+        )
+        return redirect('/host')

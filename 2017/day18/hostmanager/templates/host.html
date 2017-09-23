@@ -3,32 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Host</title>
+    <style>
+        .shade{
+            z-index: 9;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: black;
+            opacity: 0.6;
+            ;
+        }
+        .add-model{
+            z-index: 10;
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+            margin-top: -150px;
+            background: white;
+            border: 1px solid red;
+
+        }
+        .hide{
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <div>
+        <input id="add-host" type="button" value="添加">
+    </div>
     <h1>主机表(对象列表)</h1>
     <table border="1">
         <thead>
+            <th>序号</th>
+            <!--<th>序号0开始</th>-->
+            <!--<th>序号倒序</th>-->
+            <!--<th>序号倒序0开始</th>-->
+            <!--<th>父循环对象</th>-->
+            <!--<th>是否是最后一个</th>-->
+            <!--<th>是否是第一个</th>-->
             <th>主机名称</th>
             <th>主机ip</th>
             <th>主机端口</th>
             <th>业务线名称</th>
         </thead>
         <tbody>
-            {% for host in hosts1 %}
-                <!-- 自定义属性 用于js通过nid进行相关处理 -->
-                <tr host-id="{{host.nid}}" buniness-id="{{host.business.id}}">
-                    <td>{{ host.hostname }}</td>
-                    <td>{{ host.ip }}</td>
-                    <td>{{ host.port }}</td>
-                    <td>{{ host.business.caption }}</td>
-                </tr>
-            {% endfor %}
+
+                {% for host in hosts1 %}
+                    <!-- 自定义属性 用于js通过nid进行相关处理 -->
+                    <tr host-id="{{host.nid}}" buniness-id="{{host.business.id}}">
+                        <!--for循环的次数-->
+                        <td>{{ forloop.counter }}</td>
+                        <!--&lt;!&ndash;从0开始的for循环序号&ndash;&gt;-->
+                        <!--<td>{{ forloop.counter0 }}</td>-->
+                        <!--&lt;!&ndash;倒序 序号&ndash;&gt;-->
+                        <!--<td>{{ forloop.revcounter }}</td>-->
+                        <!--&lt;!&ndash;倒序 从0开始序号&ndash;&gt;-->
+                        <!--<td>{{ forloop.revcounter0 }}</td>-->
+                        <!--&lt;!&ndash;嵌套循环是 当前循环的父循环对象 包含上述所有信息&ndash;&gt;-->
+                        <!--<td> {{ forloop.parentloop }}</td>-->
+                        <!--&lt;!&ndash;最后一个&ndash;&gt;-->
+                        <!--<td> {{ forloop.last }}</td>-->
+                        <!--&lt;!&ndash;第一个&ndash;&gt;-->
+                        <!--<td> {{ forloop.first }}</td>-->
+                        <td>{{ host.hostname }}</td>
+                        <td>{{ host.ip }}</td>
+                        <td>{{ host.port }}</td>
+                        <td>{{ host.business.caption }}</td>
+                    </tr>
+                {% endfor %}
         </tbody>
     </table>
 
     <h1>主机表(字典列表)</h1>
     <table border="1">
         <thead>
+            <th>序号</th>
             <th>主机名称</th>
             <th>主机ip</th>
             <th>主机端口</th>
@@ -38,6 +93,7 @@
             {% for host in hosts2 %}
                 <!-- 自定义属性 用于js通过nid进行相关处理 -->
                 <tr host-id="{{host.nid}}" buniness-id="{{host.business_id}}">
+                    <td>{{ forloop.counter }}</td>
                     <td>{{ host.hostname }}</td>
                     <td>{{ host.ip }}</td>
                     <td>{{ host.port }}</td>
@@ -46,5 +102,49 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- 遮罩层 -->
+    <div class="shade hide"></div>
+    <div class="add-model hide">
+        <form action="{{ request.path_info }}" method="post">
+            <div class="group">
+                <input type="text" placeholder="主机名" name="hostname"/>
+            </div>
+             <div class="group">
+                <input type="text" placeholder="ip" name="ip"/>
+            </div>
+            <div class="group">
+                <input type="text" placeholder="端口" name="port"/>
+            </div>
+             <div class="group">
+                 <select name="business_id">
+                 {% for business in businesses%}
+                     <option value="{{business.id}}">{{ business.caption }}</option>
+                 {% endfor %}
+                 </select>
+            </div>
+            <input type="submit" value="提交">
+            <input id="cancel" type="button" value="取消">
+        </form>
+    </div>
+
+    <!-- 配置静态js文件 -->
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script>
+        // 相当于document.ready(function(){})
+        $(function () {
+
+            $('#add-host').click(function () {
+                $('.shade, .add-model').removeClass('hide')
+            });
+
+            $('#cancel').click(function () {
+               if (!$('.shade, .add-model').hasClass('hide')) {
+                   $('.shade, .add-model').addClass('hide')
+               }
+            });
+
+        });
+    </script>
 </body>
 </html>
