@@ -50,3 +50,22 @@ def host(request):
             business_id=business_id,
         )
         return redirect('/host')
+
+
+def test_ajax(request):
+    hostname = request.POST.get('hostname')
+    ip = request.POST.get('ip')
+    port = request.POST.get('port')
+    business_id = request.POST.get('business_id')
+    print(hostname, len(hostname))
+    if hostname and len(hostname) > 5:
+        models.Host.objects.create(
+            hostname=hostname,
+            ip=ip,
+            port=port,
+            business_id=business_id,
+        )
+        return HttpResponse('OK')
+    else:
+        return HttpResponse("太短了")
+

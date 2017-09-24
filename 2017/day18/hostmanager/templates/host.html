@@ -108,22 +108,23 @@
     <div class="add-model hide">
         <form action="{{ request.path_info }}" method="post">
             <div class="group">
-                <input type="text" placeholder="主机名" name="hostname"/>
+                <input id="hostname" type="text" placeholder="主机名" name="hostname"/>
             </div>
              <div class="group">
-                <input type="text" placeholder="ip" name="ip"/>
+                <input id="ip" type="text" placeholder="ip" name="ip"/>
             </div>
             <div class="group">
-                <input type="text" placeholder="端口" name="port"/>
+                <input id="port" type="text" placeholder="端口" name="port"/>
             </div>
              <div class="group">
-                 <select name="business_id">
+                 <select id="business_id" name="business_id">
                  {% for business in businesses%}
                      <option value="{{business.id}}">{{ business.caption }}</option>
                  {% endfor %}
                  </select>
             </div>
             <input type="submit" value="提交">
+            <a id="ajax_submit" style="display: inline-block; padding: 5px; background-color: blue; color: white">悄悄提交</a>
             <input id="cancel" type="button" value="取消">
         </form>
     </div>
@@ -142,6 +143,27 @@
                if (!$('.shade, .add-model').hasClass('hide')) {
                    $('.shade, .add-model').addClass('hide')
                }
+             });
+
+            $('#ajax_submit').click(function () {
+               $.ajax({
+                   url: '/test_ajax',
+                   type: 'POST',
+                   data: {
+                       'hostname': $('#hostname').val(),
+                       'ip': $('#ip').val(),
+                       'port': $('#port').val(),
+                       'business_id': $('#business_id').val()
+                   },
+                   success: function (data) {
+                       if (data === 'OK') {
+                           location.reload();
+                       } else {
+                           alert(data);
+                       }
+
+                   }
+               })
             });
 
         });
