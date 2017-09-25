@@ -296,7 +296,7 @@
 
 
 
-    9. 事件执行顺序
+    9. ***事件执行顺序
         在DOM中
             <a onclick="clickOn();" href="http://www.baidu.com"></a>
 

@@ -15,7 +15,7 @@
             opacity: 0.6;
             ;
         }
-        .add-model{
+        .add-model, .edit-model{
             z-index: 10;
             position: fixed;
             height: 300px;
@@ -51,6 +51,7 @@
             <th>主机ip</th>
             <th>主机端口</th>
             <th>业务线名称</th>
+            <th>操作</th>
         </thead>
         <tbody>
 
@@ -75,6 +76,7 @@
                         <td>{{ host.ip }}</td>
                         <td>{{ host.port }}</td>
                         <td>{{ host.business.caption }}</td>
+                        <td><a class="edit" href="#">编辑</a>|<a class="delete">删除</a></td>
                     </tr>
                 {% endfor %}
         </tbody>
@@ -130,22 +132,39 @@
         </form>
     </div>
 
+    <div class="edit-model hide">
+        <form id="edit_form" action="{{ request.path_info }}" method="post">
+             <input type="text" placeholder="id" name="nid" style="display: none"/>
+             <input type="text" placeholder="主机名" name="hostname"/>
+             <input type="text" placeholder="ip" name="ip"/>
+             <input type="text" placeholder="端口" name="port"/>
+             <select name="business_id">
+                 {% for business in businesses%}
+                     <option value="{{business.id}}">{{ business.caption }}</option>
+                 {% endfor %}
+             </select>
+            <a id="ajax_submit_edit" style="display: inline-block">确认编辑</a>
+        </form>
+    </div>
+
     <!-- 配置静态js文件 -->
     <script src="/static/jquery-1.12.4.js"></script>
     <script>
         // 相当于document.ready(function(){})
         $(function () {
-
+            // 点击添加弹窗
             $('#add-host').click(function () {
                 $('.shade, .add-model').removeClass('hide')
             });
 
+            // 添加弹窗点击取消
             $('#cancel').click(function () {
                if (!$('.shade, .add-model').hasClass('hide')) {
                    $('.shade, .add-model').addClass('hide')
                }
              });
 
+            // 点击添加弹窗的悄悄提交 发起ajax请求 成功则刷新 失败则显示错误提示
             $('#ajax_submit').click(function () {
                $.ajax({
                    url: '/test_ajax',
@@ -168,6 +187,42 @@
                        }
                    }
                })
+            });
+
+            // 点击编辑弹窗 select标签设置默认值
+            $('.edit').click(function () {
+                $('.shade, .edit-model').removeClass('hide');
+                // 找到点击的tr 中的business_id的value
+                var business_id = $(this).parent().parent().attr('buniness-id');
+                console.log(business_id);
+                var host_id = $(this).parent().parent().attr('host-id');
+                console.log(host_id);
+
+                // 设置默认值
+
+                // 找到form下的select标签 设置默认值
+                $('#edit_form').find('select').val(business_id);
+                // 设置hostid
+                $('#edit_form').find("input[name='nid']").val(host_id);
+                //...
+            });
+
+            // 点击编辑弹窗确认编辑 发起ajax请求
+            $('#ajax_submit_edit').click(function () {
+                // 修改操作
+                $.ajax({
+                    url: '/test_ajax_edit',
+                    type: 'POST',
+                    data: $('#edit_form').serialize(), // 将form下所有值打包成json发到后台
+                    success: function (data) {
+                        var ret = JSON.parse(data);
+                        if (ret.status === true) {
+                            window.location.reload();
+                        } else {
+                            alert(ret.error);
+                        }
+                    }
+                });
             });
 
         });

@@ -282,6 +282,9 @@
     建议: 永远让服务器返回一个字典
     return HttpResponse(json.dump(dictObj))
 
+    注意 其实可以是发render的 但是返回的数据为整个html, 因为render返回的数据为html + 数据的渲染
+        redirect其实也可以发 但是客户端不会有反应
+
 #### js中json与对象的转换
        // 对象转换为字符串
        JSON.stringify(obj)
