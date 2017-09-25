@@ -237,6 +237,8 @@
 
 ##### 使用jquery 实现ajax
 
+    注意ajax 请求 django需要返回HttpResponse
+
     $.ajax({
         url: '/host',
         type: "POST",
@@ -269,3 +271,26 @@
                    }
                })
             });
+
+
+    以下三个方法实际上都是调用了$.ajax, 只是把type改成了get,post
+    $.get(url='xxx', data={}, success=function(data){});
+    $.getJson...
+    $.post...
+
+
+    建议: 永远让服务器返回一个字典
+    return HttpResponse(json.dump(dictObj))
+
+#### js中json与对象的转换
+       // 对象转换为字符串
+       JSON.stringify(obj)
+       // JSON解析为对象
+       var ret = JSON.parse(data)
+
+#### py中json与对象的转换
+       import json
+       // 对象序列化(释放)为字符串
+       json.dump(obj)
+       // JSON反序列化解析为对象
+       ret = json.load(str)

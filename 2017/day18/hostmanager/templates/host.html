@@ -126,6 +126,7 @@
             <input type="submit" value="提交">
             <a id="ajax_submit" style="display: inline-block; padding: 5px; background-color: blue; color: white">悄悄提交</a>
             <input id="cancel" type="button" value="取消">
+            <span id="error_msg"></span>
         </form>
     </div>
 
@@ -156,12 +157,15 @@
                        'business_id': $('#business_id').val()
                    },
                    success: function (data) {
-                       if (data === 'OK') {
-                           location.reload();
+                       // 对象转json
+                       //  JSON.stringify(obj)
+                       // JSON转对象
+                       var ret = JSON.parse(data)
+                       if (ret.status === true) {
+                           window.location.reload()
                        } else {
-                           alert(data);
+                           $('#error_msg').text(ret.error);
                        }
-
                    }
                })
             });
