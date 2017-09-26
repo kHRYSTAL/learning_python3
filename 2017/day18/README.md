@@ -280,6 +280,8 @@
 
 
     建议: 永远让服务器返回一个字典
+    dictObj = {'status': True, 'error': None, 'data': None}
+    # ...
     return HttpResponse(json.dump(dictObj))
 
     注意 其实可以是发render的 但是返回的数据为整个html, 因为render返回的数据为html + 数据的渲染
@@ -297,3 +299,7 @@
        json.dump(obj)
        // JSON反序列化解析为对象
        ret = json.load(str)
+
+#### 标签内容 序列化
+
+       $('#edit_form').serialize(), // 将form下所有值打包成json发到后台
