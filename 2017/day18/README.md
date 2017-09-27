@@ -303,3 +303,33 @@
 #### 标签内容 序列化
 
        $('#edit_form').serialize(), // 将form下所有值打包成json发到后台
+
+
+#### 表与表的多对多关系
+
+    两张表存在多对多关系 需要第三张表去维护这两张表的关系
+    如一个Host中可以有多个Application
+    一个Application中可以有多个Host
+    如果需要查询host中的app 或app所在的host 则需要第三张表去关联这两张表的关系
+
+    1. 方式一 自定义关系表: 建立一个关系表 持有另外需要建立两个关系的外键
+        class HostToApp(models.Model):
+            """Host 与 Application 关系表"""
+            # host表主键 host_id
+            host = models.ForeignKey(to='Host', to_field='nid')
+            # application表主键 app_id
+            app = models.ForeignKey(to='Application', to_field='id')
+
+    2. 方式二 Django自动创建第三张表
+        class Application(models.Model):
+            """应用表"""
+            name = models.CharField(max_length=32)
+            # django自动创建多对多关系表HostToApp
+            relation = models.ManyToManyField('Host')
+
+
+        表中存在三个字段 id, application_id, host_id 表名为 app01_relation
+
+
+    建议: 两种方式结合使用 如果关系表中字段只存在 id 和另外两个表的主键 建议使用第二种方式
+          如果有更多的字段 则自定义创建 扩展性比较高

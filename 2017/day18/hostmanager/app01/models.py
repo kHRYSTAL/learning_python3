@@ -30,3 +30,18 @@ class Host(models.Model):
     port = models.IntegerField()
     # 外键关联 to指代关联的表名 to_field 指代关联的列名
     business = models.ForeignKey(to='Business', to_field='id')
+
+
+class Application(models.Model):
+    """应用表"""
+    name = models.CharField(max_length=32)
+    # django自动创建多对多关系表HostToApp
+    relation = models.ManyToManyField('Host')
+
+
+# class HostToApp(models.Model):
+#     """Host 与 Application 关系表"""
+#     # host表主键 host_id
+#     host = models.ForeignKey(to='Host', to_field='nid')
+#     # application表主键 app_id
+#     app = models.ForeignKey(to='Application', to_field='id')
