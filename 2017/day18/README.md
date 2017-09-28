@@ -320,6 +320,10 @@
             # application表主键 app_id
             app = models.ForeignKey(to='Application', to_field='id')
 
+        建立host与app关系:
+
+            models.HostToApp.objects.create(host_id=1, app_id=2)
+
     2. 方式二 Django自动创建第三张表
         class Application(models.Model):
             """应用表"""
@@ -330,6 +334,37 @@
 
         表中存在三个字段 id, application_id, host_id 表名为 app01_relation
 
+        对第三张表进行操作
 
-    建议: 两种方式结合使用 如果关系表中字段只存在 id 和另外两个表的主键 建议使用第二种方式
+            1. 添加
+                建立host与app关系: 无法直接对第三张表进行操作 可以间接操作
+                app = models.Application.objects.filter(id=1).first()
+
+                # 在第三张表中使id=1的app与 host表id=2的行建立关系
+                app.relation.add(2)
+
+                # 同时建立多个关系 在第三张表中使id=1的app与host表id=2,3,4,5的行建立关系
+                app.relation.add(*[2, 3, 4, 5])
+                app.relation.add(2, 3, 4, 5)
+
+            2. 删除
+                app = models.Application.objects.filter(id=1).first()
+                app.relation.remove(2)
+                app.relation.remove(2, 3, 4, 5)
+                app.relation.remove(*[2, 3, 4, 5])
+
+               清空与当前app与所有host的关联关系
+                app.relation.clear()
+
+            3. 修改关联关系
+                app.relation.set([3, 5, 7])
+                set操作相当于clear后重新add
+
+
+
+
+
+
+
+    建议: 两种方式结合使用 如果关系表中字段只存在 id 和另外两个表的主键 建议使用第二种方式 即自动创建只能生成3列字段
           如果有更多的字段 则自定义创建 扩展性比较高

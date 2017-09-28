@@ -109,3 +109,6 @@ def test_ajax_edit(request):
         # 序列化为字符串传给客户端
         return HttpResponse(json.dumps(ret))
 
+
+def app(request):
+    return render(request, 'app.html')
