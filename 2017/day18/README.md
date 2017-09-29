@@ -300,6 +300,30 @@
        // JSON反序列化解析为对象
        ret = json.load(str)
 
+#### ajax 请求传递列表
+
+    $('#add_ajax_submit').click(function () {
+                $.ajax({
+                    url: '/app_ajax_add',
+                    type: 'POST',
+                    data: $('#add_app_form').serialize(), // 将form下所有值打包成json发到后台
+                    dataType: 'JSON', // 接收到的数据用json解析
+                    // 传递数组的traditional参数传递必须true 因为列表key是相同的, fasle会以key=[]传递 true会以key=value&key=value传递
+                    traditional: true,
+                    success: function (data) {
+                        // var ret = JSON.parse(data);
+                        if (ret.status === true) {
+                            window.location.reload();
+                        } else {
+                            alert(ret.error);
+                        }
+                    },
+                    error: function () {
+                        // 发生未知错误时执行 如500, 404, 返回数据类型与dataType不符合等
+                    }
+                })
+            })
+
 #### 标签内容 序列化
 
        $('#edit_form').serialize(), // 将form下所有值打包成json发到后台

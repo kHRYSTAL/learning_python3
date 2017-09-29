@@ -111,7 +111,38 @@ def test_ajax_edit(request):
 
 
 def app(request):
-    appList = models.Application.objects.all()
-    for app in appList:
-        print(app.name, app.relation.all())
-    return render(request, 'app.html', {'appList': appList})
+    if request.method == 'GET':
+        appList = models.Application.objects.all()
+        # for app in appList:
+        #     print(app.name, app.relation.all())
+        hosts = models.Host.objects.all()
+        return render(request, 'app.html', {'appList': appList, 'hosts': hosts})
+    elif request.method == 'POST':
+        appname = request.POST.get('appname')
+        # 多选需要使用getlist
+        host_list = request.POST.getlist('host_list')
+        print(host_list)
+        create_app = models.Application.objects.create(name=appname)
+        # 添加关联关系 *args 相当于把列表的每一项当作参数传递 **kwargs相当于把字典的每一项当作参数传递
+        create_app.relation.add(*host_list)
+        return redirect('/app')
+
+
+def app_ajax(request):
+    if request.method == 'POST':
+        # ajax 方式提交
+        ret = {'status': True, 'error': None, 'data': None}
+        try:
+            appname = request.POST.get('appname')
+            # 多选需要使用getlist
+            host_list = request.POST.getlist('host_list')
+            create_app = models.Application.objects.create(name=appname)
+            # 添加关联关系 *args 相当于把列表的每一项当作参数传递 **kwargs相当于把字典的每一项当作参数传递
+            create_app.relation.add(*host_list)
+            ret['status'] = True
+        except Exception as e:
+            ret['status'] = False
+            ret['error'] = 'PUT方式出错'
+        finally:
+            import json
+            return HttpResponse(json.dumps(ret))

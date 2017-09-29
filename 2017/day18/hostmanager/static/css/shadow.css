@@ -1,0 +1,28 @@
+.shade {
+    z-index: 9;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0.6;;
+}
+
+.add-model, .edit-model {
+    z-index: 10;
+    position: fixed;
+    height: 300px;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -150px;
+    background: white;
+    border: 1px solid red;
+
+}
+
+.hide {
+    display: none;
+}

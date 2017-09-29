@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Application</title>
+    <!-- 导入静态css-->
+    <link rel="stylesheet" type="text/css" href="/static/css/shadow.css"/>
     <style>
         .host-tag{
             display: inline-block;
@@ -15,6 +17,7 @@
 </head>
 <body>
     <h1>应用列表</h1>
+    <input id="add-app" type="button" value="添加">
     <table border="1">
         <thead>
             <tr>
@@ -38,5 +41,68 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <!-- 遮罩层 -->
+    <div class="shade hide"></div>
+    <div class="add-model hide">
+        <form id="add_app_form" action="{{ request.path_info }}" method="post">
+            <div class="group">
+                <input id="appname" type="text" placeholder="应用名称" name="appname"/>
+            </div>
+            <div class="group">
+                 <!--支持多选-->
+                 <select id="host_list" name="host_list" multiple>
+                 {% for host in hosts %}
+                     <option value="{{host.nid}}">{{ host.hostname }}</option>
+                 {% endfor %}
+                 </select>
+            </div>
+            <input type="submit" value="提交">
+            <input id="cancel" type="button" value="取消">
+            <br/>
+            <input id="add_ajax_submit" type="button" value="ajax提交">
+        </form>
+    </div>
+
+     <!-- 配置静态js文件 -->
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script>
+        // 相当于document.ready(function(){})
+        $(function () {
+            // 点击添加弹窗
+            $('#add-app').click(function () {
+                $('.shade, .add-model').removeClass('hide')
+            });
+
+            // 添加弹窗点击取消
+            $('#cancel').click(function () {
+                if (!$('.shade, .add-model').hasClass('hide')) {
+                    $('.shade, .add-model').addClass('hide')
+                }
+            });
+
+            //ajax提交
+            $('#add_ajax_submit').click(function () {
+                $.ajax({
+                    url: '/app_ajax_add',
+                    type: 'POST',
+                    data: $('#add_app_form').serialize(), // 将form下所有值打包成json发到后台
+                    dataType: 'JSON', // 接收到的数据用json解析
+                    traditional: true, // 传递数组的traditional参数传递必须true 因为列表key是相同的
+                    success: function (data) {
+                        // var ret = JSON.parse(data);
+                        if (ret.status === true) {
+                            window.location.reload();
+                        } else {
+                            alert(ret.error);
+                        }
+                    },
+                    error: function () {
+                        // 发生未知错误时执行 如500, 404, 返回数据类型与dataType不符合等
+                    }
+                })
+            })
+        });
+    </script>
 </body>
 </html>
