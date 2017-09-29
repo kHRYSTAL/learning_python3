@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Application</title>
+    <style>
+        .host-tag{
+            display: inline-block;
+            padding: 3px;
+            border: 1px solid red;
+            background-color: pink;
+
+        }
+    </style>
 </head>
 <body>
-
+    <h1>应用列表</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>应用名称</td>
+                <td>应用所在主机列表</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in appList %}
+                <tr>
+                    <td>{{ app.name }}</td>
+                    <!--all在html不加括号-->
+                    <!--<td>{{ app.relation.all }}</td>-->
+                    <td>
+                        <!--内层for循环 获取主机名称-->
+                        {% for host in app.relation.all %}
+                            <span class="host-tag">{{ host.hostname }} </span>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

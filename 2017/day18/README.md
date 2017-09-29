@@ -360,6 +360,10 @@
                 app.relation.set([3, 5, 7])
                 set操作相当于clear后重新add
 
+            4. 查询
+                查询所有与app关联的host all实际上是先查询第三个表的host_id 然后通过host_id得到host
+                app.relation.all()
+
 
 
 

@@ -111,4 +111,7 @@ def test_ajax_edit(request):
 
 
 def app(request):
-    return render(request, 'app.html')
+    appList = models.Application.objects.all()
+    for app in appList:
+        print(app.name, app.relation.all())
+    return render(request, 'app.html', {'appList': appList})
