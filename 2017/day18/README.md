@@ -380,7 +380,7 @@
                清空与当前app与所有host的关联关系
                 app.relation.clear()
 
-            3. 修改关联关系
+            3. 修改关联关系 注意set不需要加*
                 app.relation.set([3, 5, 7])
                 set操作相当于clear后重新add
 

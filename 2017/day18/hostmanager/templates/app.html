@@ -28,14 +28,17 @@
         <tbody>
             {% for app in appList %}
                 <tr>
-                    <td>{{ app.name }}</td>
+                    <td appid="{{ app.id }}">{{ app.name }}</td>
                     <!--all在html不加括号-->
                     <!--<td>{{ app.relation.all }}</td>-->
                     <td>
                         <!--内层for循环 获取主机名称-->
                         {% for host in app.relation.all %}
-                            <span class="host-tag">{{ host.hostname }} </span>
+                            <span class="host-tag" hid="{{host.nid}}">{{ host.hostname }} </span>
                         {% endfor %}
+                    </td>
+                    <td>
+                        <a class="edit">编辑</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -64,6 +67,28 @@
         </form>
     </div>
 
+    <div class="edit-model hide">
+        <form id="edit_app_form" action="{{ request.path_info }}" method="post">
+            <div class="group">
+                <!-- 主机nid -->
+                <input type="text" name="appid" style="display: none" class="edit_appid"/>
+                <input type="text" placeholder="应用名称" name="appname" class="edit_appname"/>
+            </div>
+            <div class="group">
+                 <!--支持多选-->
+                 <select name="host_list" multiple>
+                 {% for host in hosts %}
+                     <option value="{{host.nid}}">{{ host.hostname }}</option>
+                 {% endfor %}
+                 </select>
+            </div>
+            <input type="submit" value="提交" disabled>
+            <input type="button" value="取消" disabled>
+            <br/>
+            <input id="edit_ajax_submit" type="button" value="ajax提交">
+        </form>
+    </div>
+
      <!-- 配置静态js文件 -->
     <script src="/static/jquery-1.12.4.js"></script>
     <script>
@@ -89,7 +114,7 @@
                     data: $('#add_app_form').serialize(), // 将form下所有值打包成json发到后台
                     dataType: 'JSON', // 接收到的数据用json解析
                     traditional: true, // 传递数组的traditional参数传递必须true 因为列表key是相同的
-                    success: function (data) {
+                    success: function (ret) {
                         // var ret = JSON.parse(data);
                         if (ret.status === true) {
                             window.location.reload();
@@ -100,8 +125,57 @@
                     error: function () {
                         // 发生未知错误时执行 如500, 404, 返回数据类型与dataType不符合等
                     }
-                })
-            })
+                });
+            });
+
+            // 点击编辑
+            $('.edit').click(function () {
+                // 弹出编辑框
+                $('.edit-model, .shade').removeClass('hide');
+
+                // 设置appid
+                var appid = $(this).parent().prev().prev().attr('appid')
+                console.log('appid', appid);
+                $('.edit_appid').val(appid);
+
+                // 设置默认文字
+                var appname = $(this).parent().prev().prev().text();
+                console.log('appname', appname);
+                $('.edit_appname').val(appname);
+
+                 // 设置多选框默认选中
+                var hid_list = [];
+                // 找到当前行host下所有span的内容
+                $(this).parent().prev().children().each(function () {
+                    // 这里的this是span
+                    var hid = $(this).attr('hid');
+                    hid_list.push(hid);
+                });
+                console.log("点击编辑框获取host列表:", hid_list);
+                $('#edit_app_form').find('select').val(hid_list);
+            });
+
+            // 编辑框点击提交
+            $('#edit_ajax_submit').click(function () {
+                $.ajax({
+                    url: '/app_ajax_edit',
+                    type: 'POST',
+                    data: $('#edit_app_form').serialize(), // 将form下所有值打包成json发到后台
+                    dataType: 'JSON', // 接收到的数据用json解析
+                    traditional: true, // 传递数组的traditional参数传递必须true 因为列表key是相同的
+                    success: function (ret) {
+                        // var ret = JSON.parse(data);
+                        if (ret.status === true) {
+                            window.location.reload();
+                        } else {
+                            alert(ret.error);
+                        }
+                    },
+                    error: function () {
+                        // 发生未知错误时执行 如500, 404, 返回数据类型与dataType不符合等
+                    }
+                });
+            });
         });
     </script>
 </body>

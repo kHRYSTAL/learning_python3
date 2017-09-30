@@ -76,8 +76,8 @@ def test_ajax(request):
             ret['status'] = False
             ret['error'] = '太短了'
     except Exception as e:
-            ret['status'] = False
-            ret['error'] = '服务器出错了'
+        ret['status'] = False
+        ret['error'] = '服务器出错了'
     finally:
         import json
         # 序列化为字符串传给客户端
@@ -112,12 +112,14 @@ def test_ajax_edit(request):
 
 def app(request):
     if request.method == 'GET':
+        """ 展示app页面 """
         appList = models.Application.objects.all()
         # for app in appList:
         #     print(app.name, app.relation.all())
         hosts = models.Host.objects.all()
         return render(request, 'app.html', {'appList': appList, 'hosts': hosts})
     elif request.method == 'POST':
+        """ 传统方式新增app """
         appname = request.POST.get('appname')
         # 多选需要使用getlist
         host_list = request.POST.getlist('host_list')
@@ -128,7 +130,8 @@ def app(request):
         return redirect('/app')
 
 
-def app_ajax(request):
+def app_ajax_add(request):
+    """ ajax方式新增app """
     if request.method == 'POST':
         # ajax 方式提交
         ret = {'status': True, 'error': None, 'data': None}
@@ -143,6 +146,33 @@ def app_ajax(request):
         except Exception as e:
             ret['status'] = False
             ret['error'] = 'PUT方式出错'
+        finally:
+            import json
+            return HttpResponse(json.dumps(ret))
+
+
+def app_ajax_edit(request):
+    """ ajax方式修改app """
+    if request.method == 'POST':
+        # ajax 方式提交
+        ret = {'status': True, 'error': None, 'data': None}
+        try:
+            appid = request.POST.get('appid')
+            appname = request.POST.get('appname')
+            # 多选需要使用getlist
+            host_list = request.POST.getlist('host_list')
+            print(host_list)
+            # 修改应用名称
+            update_app = models.Application.objects.filter(id=appid).first()
+            update_app.name = appname
+            # 修改关联主机
+            update_app.relation.set(host_list)
+            update_app.save()
+            ret['status'] = True
+        except Exception as e:
+            ret['status'] = False
+            ret['error'] = '修改出错!'
+            print(e)
         finally:
             import json
             return HttpResponse(json.dumps(ret))
