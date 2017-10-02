@@ -1,5 +1,34 @@
 ##### 知识概要
 
+* 路由系统 url映射
+    1. 固定url 与 func 或 class.as_view()对应
+    2. 正则表达式, 设置接受参数名称(?P<nid>\d+)
+    3. 设置别名 name="xxx" 模版中通过 {% url "xxx" %} 获取url
+       获取当前页面url {{ request.path_info }}
+    4. 命名空间 app中添加urls.py, project设置根路径 include("app.urls")
+
+        注意 支持多个前缀对应同一个py文件
+        如 admin/app, crm/app
+        可以对应同一个app.urls
+        url(r'^admin/', include("app.urls"))
+        url(r'^crm/', include("app.urls"))
+        这样就导致了多个url指向同一个函数 可以使用 命名空间去区分到底是哪个url触发了函数
+        include("app.urls", namespace='admin-name' )
+        include("app.urls", namespace='crm-name' )
+
+    5. 默认值 可以在url映射中填写默认值 如url(r'^root/', views.root, {'web': 'root'}),
+       在views.python中需要增加形參去接收这个默认值 def root(request, web)
+
+    6. 通过别名获取url reverse()
+        project.url.py:
+            url(r'^a/', include("app01.urls", namespace='crm-name' ))
+        app01.url.py:
+            url(r^(?P<pk>\d+)/$, views.detail, name='detail')
+        app01.views.py:
+            v = reverse('crm-name:detail', kwargs={'pk':123,}) 获取url为 a/123
+        html
+            {% url 'crm-name:detail' pk=123 %}
+
 * Views
     - 请求的其他信息: 请求头
     - CBV
