@@ -1,0 +1,8 @@
+body{
+    margin: 0;
+}
+.pg-header{
+    height: 48px;
+    background-color: #eeeeee;
+    color: green;
+}

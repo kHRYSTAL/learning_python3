@@ -1,0 +1,21 @@
+{%extends 'master.html'%}
+{%block childcss%}
+    <style>
+        .title{
+            background-color: red;
+        }
+    </style>
+{% endblock %}
+{%block title%}
+    tpl1
+{% endblock %}
+{% block content %}
+    <h1 class="title">用户管理</h1>
+    <ul>
+    {% for i in u %}
+        <li>{{i}}</li>
+    {% endfor %}
+    </ul>
+
+    <script src="/static/jquery-1.12.4.js"></script>
+{% endblock %}

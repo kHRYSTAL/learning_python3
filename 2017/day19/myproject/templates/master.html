@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--tpl1 tpl2 tpl3 的母版-->
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/static/commons.css">
+    {% block childcss %}
+    {% endblock %}
+</head>
+<body>
+    <div class="pg-header">
+        {%block title%}{% endblock %}
+    </div>
+    <!-- 将block命名为content 声明content为子类使用的块 -->
+    {% block content %}
+    {% endblock %}
+
+    <script src="/static/jquery-1.12.4.js"></script>
+    {% block childscrpt %}
+    {% endblock %}
+</body>
+</html>
