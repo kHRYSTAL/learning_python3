@@ -30,3 +30,11 @@ def tpl3(request):
     status = '已经删除'
     return render(request, 'tpl3.html', {'status': status})
 # endregion
+
+
+def tpl4(request):
+    """ 自定义模版函数 """
+    msg = '自定义模版函数'
+
+    return render(request, 'tpl4.html', {'msg': msg, 'val1': 3, 'val2': 4, 'val3': 5, 'id': 'id_username', 'class': 'hide'})
+

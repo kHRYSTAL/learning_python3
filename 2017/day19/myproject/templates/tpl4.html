@@ -1,0 +1,11 @@
+{%extends 'master.html'%}
+{% load custom_tpl_func %}
+{%block title%}
+    tpl4
+{% endblock %}
+{% block content %}
+    <h3>{{msg}}</h3>
+    <p>通过自定义模版函数获得value{% my_simple_time val1 val2 val3 %}</p>
+    <p>通过自定义模版函数创建标签</p>
+    {% my_input id class %}
+{% endblock %}

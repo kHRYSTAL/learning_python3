@@ -70,6 +70,46 @@
             参考tag.html, tp1.html
             可以在组件html中直接写变量和函数, django支持将数据渲染至页面组件中
 
+    - 自定义模版函数
+
+            1.django提供函数: simplefilter 实际上是python函数
+
+                {{ item.event_start|date:"Y-m-d H:i:s"}}
+                {{ bio|truncatewords:"30" }}
+                {{ my_list|first|upper }}
+                {{ name|lower }}
+
+            2.自定义模板函数
+
+                a、在app中创建 templatetags 模块
+
+                b、创建任意 .py 文件，如：xx.py
+
+                    #!/usr/bin/env python
+                    #coding:utf-8
+                    from django import template
+                    from django.utils.safestring import mark_safe
+
+                    register = template.Library()
+
+                    @register.simple_tag
+                    def my_simple_time(v1,v2,v3):
+                        return  v1 + v2 + v3
+
+                    @register.simple_tag
+                    def my_input(id,arg):
+                        result = "<input type='text' id='%s' class='%s' />" %(id,arg,)
+                        return mark_safe(result)
+
+                c、在使用自定义simple_tag的html文件中导入之前创建的 xx.py 文件名
+
+                    {% load xx %}
+
+                d、使用simple_tag
+
+                    {% my_simple_time 1 2 3%}
+                    {% my_input 'id_username' 'hide'%}
+
 * cookie & session
     views装饰器处理: 如 用户认证
            登录的用户才能看 否则提示登录或返回主页
