@@ -55,12 +55,20 @@
                 {%block 变量名%}{% endblock %}
 
             在子类中:
-                {%extends 'master.html'%}
-                {%block 变量名%}需要填充的内容{% endblock %}
+                {%extends 'master.html'%} // 继承母版
+                {%block 变量名%}需要填充的内容{% endblock %} // 实现母版中需要替换的内容
             这样在views渲染html的时候就能够替换成对应的html
-            可以多继承
+            参考 master.html tp1, tp2, tp3
 
     - 在html中自定义函数
+
+    - 模版导入
+        一个html页面只能继承一个母版 不能继承多个母版
+        但模板支持导入的功能 可以将页面抽离成组件 进行组件化构建页面
+
+            {% include 'tag.html'%}
+            参考tag.html, tp1.html
+            可以在组件html中直接写变量和函数, django支持将数据渲染至页面组件中
 
 * cookie & session
     views装饰器处理: 如 用户认证
