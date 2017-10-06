@@ -1,5 +1,6 @@
 {%extends 'master.html'%}
 {% load custom_tpl_func %}
+{% load custom_tpl_filter %}
 {%block title%}
     tpl4
 {% endblock %}
@@ -8,4 +9,7 @@
     <p>通过自定义模版函数获得value{% my_simple_time val1 val2 val3 %}</p>
     <p>通过自定义模版函数创建标签</p>
     {% my_input id class %}
+
+    <p>自定义filter</p>
+    {{ "first str"|combine_str:" second str"}}
 {% endblock %}

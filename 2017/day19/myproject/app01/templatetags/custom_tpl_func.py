@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # @version: ??
-# @usage: 
+# @usage: 自定义模版函数
 # @author: kHRYSTAL
 # @license: Apache Licence 
 # @contact: khrystal0918@gmail.com

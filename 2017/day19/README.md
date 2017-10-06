@@ -70,16 +70,31 @@
             参考tag.html, tp1.html
             可以在组件html中直接写变量和函数, django支持将数据渲染至页面组件中
 
-    - 自定义模版函数
+    - 自定义模版函数与filter
 
-            1.django提供函数: simplefilter 实际上是python函数
+            1.django提供filter: simplefilter 实际上是python函数
 
                 {{ item.event_start|date:"Y-m-d H:i:s"}}
                 {{ bio|truncatewords:"30" }}
                 {{ my_list|first|upper }}
                 {{ name|lower }}
 
-            2.自定义模板函数
+            2.自定义filter
+                1. 编写py文件 最多只能支持两个参数
+                    @register.filter
+                    def combine_str(str1, str2):
+                        return str1 + str2
+
+                2. 在html中引入
+                    {% load custom_tpl_filter %}
+
+                3. 调用filter
+                     {{ "first str"|combine_str:" second str"}}
+
+                   输出first str second str
+                   参考tpl4.html
+
+            3.自定义模板函数
 
                 a、在app中创建 templatetags 模块
 
@@ -109,6 +124,19 @@
 
                     {% my_simple_time 1 2 3%}
                     {% my_input 'id_username' 'hide'%}
+
+                    参考tpl4.html
+
+            两种方式的用途
+                1.自定义filter可以用于条件判断 也可以用于处理显示内容 但只支持最多两个参数
+                    优点 可以作为if条件
+                    缺点 参数有限制
+                    {{ 参数1|函数名:参数2 }}
+                    {% if "first str"|combine_str:" second str"%}
+                    {%end if%}
+                2.自定义函数可以用于页面内容的赋值计算和添加标签
+                    优点 参数任意 空格区分
+                    缺点 不能作为if条件判断
 
 * cookie & session
     views装饰器处理: 如 用户认证
