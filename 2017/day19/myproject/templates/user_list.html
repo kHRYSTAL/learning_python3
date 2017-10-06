@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试分页</title>
+    <style>
+        .page_indicator .page{
+            display: inline-block;
+            padding: 5px;
+            background-color: cyan;
+            margin: 5px;
+        }
+        /*不加空格表示同级class*/
+        .page_indicator .page.active{
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        {% for item in user_list %}
+           {% include 'list_item.html' %}
+        {% endfor %}
+    </ul>
+    <div class="page_indicator">
+       {{ page_str }}
+    </div>
+</body>
+</html>

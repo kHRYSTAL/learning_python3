@@ -138,15 +138,68 @@
                     优点 参数任意 空格区分
                     缺点 不能作为if条件判断
 
+* 分页加载
+    - Django分页加载 (只能用于django)
+    - 自定义分页加载 (适用于所有python-web框架)
+
+        防止XSS攻击:
+            在分页处理中, 显示的分页按钮标签都应该在后台配置处理
+            防止前端页面被注入js或html导致XSS攻击 因此提供两种处理方式:
+
+            1.前端处理方式
+                向django表明这段字符串是安全的 可以直接当作html语言使用
+                {{str|safe}}
+
+            2.后端处理方式
+
+                from django.utils.safestring import mark_safe
+                 str = """
+                        <a href="/user_list?p=1">1</a>
+                        <a href="/user_list?p=2">2</a>
+                        <a href="/user_list?p=3">3</a>
+                       """
+                str = mark_safe(str)
+                return render(request, 'user_list.html', {'user_list': li, 'str': str})
+
+        分页处理
+
+            # 测试数据 全局变量
+            LIST = []
+            for i in range(109):
+                LIST.append(i)
+
+
+            def user_list(request):
+                """ 分页测试 """
+                current_page = request.GET.get('p', 1)
+                current_page = int(current_page)
+                start = (current_page - 1) * 10
+                end = current_page * 10
+                # 获取应当给前端显示的item列表
+                li = LIST[start: end]
+                # 每页10条 求总页数和余数 如果余数大于0 则总页数需要加1
+                page_count, remainder = divmod(len(LIST), 10)  # 求商和余数
+
+                if remainder:
+                    page_count += 1
+
+                # 计算输出给前端的标签字符串
+                page_str = ""
+                for i in range(1, page_count+1):
+                    page_str += '<a href="/user_list?p=%s">%s</a>\n' % (i, i)
+
+                # 向django表明这段注入的标签字符串是安全的 可以正常显示
+                from django.utils.safestring import mark_safe
+                str = mark_safe(page_str)
+                return render(request, 'user_list.html', {'user_list': li, 'page_str': page_str})
+
+
+
 * cookie & session
     views装饰器处理: 如 用户认证
            登录的用户才能看 否则提示登录或返回主页
     用户认证 保存用户状态
     request.COOKIES
-
-* 分页加载
-    - Django分页加载 (只能用于django)
-    - 自定义分页加载 (适用于所有python-web框架)
 
 * Form验证 html验证与server验证
 
