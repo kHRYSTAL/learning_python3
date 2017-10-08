@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, HttpResponse
 
 
 # Create your views here.
+from utils.pagination import Page
+
 
 def index(request):
     # 封装所有用户请求信息
@@ -52,22 +54,11 @@ def user_list(request):
     """ 分页测试 """
     current_page = request.GET.get('p', 1)
     current_page = int(current_page)
-    start = (current_page - 1) * 10
-    end = current_page * 10
+
+    page_obj = Page(current_page, len(LIST), 5, 11)
+
     # 获取应当给前端显示的item列表
-    li = LIST[start: end]
-    # 每页10条 求总页数和余数 如果余数大于0 则总页数需要加1
-    page_count, remainder = divmod(len(LIST), 10)  # 求商和余数
+    li = LIST[page_obj.start: page_obj.end]
 
-    if remainder:
-        page_count += 1
-
-    # 计算输出给前端的标签字符串
-    page_str = ""
-    for i in range(1, page_count+1):
-        page_str += '<a class="page %s" href="/user_list?p=%s">%s</a>' % ("active" if i == current_page else "", i, i)
-
-    # 向django表明这段注入的标签字符串是安全的 可以正常显示
-    from django.utils.safestring import mark_safe
-    page_str = mark_safe(page_str)
+    page_str = page_obj.generate_page_str('/user_list?p=')
     return render(request, 'user_list.html', {'user_list': li, 'page_str': page_str})
