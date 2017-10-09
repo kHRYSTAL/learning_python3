@@ -26,4 +26,7 @@ urlpatterns = [
     url(r'^tpl3/$', views.tpl3),
     url(r'^tpl4/$', views.tpl4),
     url(r'^user_list/$', views.user_list),
+    url(r'^login/$', views.login),
+    url(r'^after_login/$', views.after_login),
 ]
+

@@ -201,6 +201,25 @@
     用户认证 保存用户状态
     request.COOKIES
 
+    cookies:
+
+        是客户端浏览器上的一个文件 用键值对存储 用于存储一些用户的状态和token
+        如登录之后 服务端会下发一个token给浏览器存储 之后客户端的每次请求 都会携带这个token
+        客户端通过token去验证用户, 这样就不需要进行重复登录操作
+
+        设置cookies 至 客户端
+            res = redirect('/after_login/')
+            res.set_cookie('cookies_username', u)
+
+        删除cookies 常用于登出操作
+            res.delete_cookie('cookies_username')
+
+        服务器获取客户端的cookies
+            value = request.COOKIES.get('cookies_username')
+
+        参考 views.py
+
+
 * Form验证 html验证与server验证
 
 
