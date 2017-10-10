@@ -261,7 +261,17 @@
                         // 使用jquery设置cookie 用于后端读取
                         $.cookie('page_of_count', v);
                     }
+
+                    $(function(){
+                        // 获取cookies里选中的值
+                        var select_val = $.cookie('page_of_count', {'path': '/user_list/'});
+                        if (select_val) {
+                            $('#sel').val(select_val);
+                        }
+                    });
                 </script>
+
+
 
 
         带签名的cookie (加盐加密签名): 加盐要一一对应
