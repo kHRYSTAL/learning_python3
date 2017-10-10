@@ -23,8 +23,38 @@
            {% include 'list_item.html' %}
         {% endfor %}
     </ul>
+    <div>
+        <select id="sel" onchange="changePageSize(this);" >
+            <option value="10">10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </div>
     <div class="page_indicator">
        {{ page_str }}
     </div>
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script>
+        function changePageSize(ths) {
+            // 获取当前用户选择的值
+            var v = $(ths).val();
+            // 使用jquery设置cookie 用于后端读取
+            $.cookie('page_of_count', v, {'path': '/user_list/'});
+            // 保存cookies后刷新当前页面
+            window.location.reload();
+        }
+
+        // document.ready()
+        $(function(){
+            // 获取cookies里选中的值
+            var select_val = $.cookie('page_of_count', {'path': '/user_list/'});
+            if (select_val) {
+                $('#sel').val(select_val);
+            }
+        });
+    </script>
+
 </body>
 </html>

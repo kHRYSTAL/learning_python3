@@ -196,12 +196,9 @@
 
 
 * cookie & session
-    views装饰器处理: 如 用户认证
-           登录的用户才能看 否则提示登录或返回主页
-    用户认证 保存用户状态
-    request.COOKIES
 
     cookies:
+        request.COOKIES
 
         是客户端浏览器上的一个文件 用键值对存储 用于存储一些用户的状态和token
         如登录之后 服务端会下发一个token给浏览器存储 之后客户端的每次请求 都会携带这个token
@@ -209,17 +206,133 @@
 
         设置cookies 至 客户端
             res = redirect('/after_login/')
+            # 如果不设置除k-v之外的其他参数 关闭浏览器后就失效 浏览器清空cookies
             res.set_cookie('cookies_username', u)
+
+            rep.set_signed_cookie(key,value,salt='加密盐',...)
+            参数：
+                key,              键
+                value='',         值
+                max_age=None,     超时时间
+                expires=None,     超时时间(IE requires expires, so set it if hasn't been already.)
+                                      max_age 与expires 属性都是指定失效时间 max_age已经代替expires
+                                      Expires指定一个绝对的过期时间 指从指定时间到1970.1.1的秒数
+                                      max-age 指定的是从文档被访问后的存活时间，这个时间是个相对值 也是秒数
+                                      为了兼容性 两个属性都需要设置
+
+                path='/',         Cookie生效的路径，/ 表示根路径，特殊的：跟路径的cookie可以被任何url的页面访问
+                domain=None,      Cookie生效的域名
+                secure=False,     https传输
+                httponly=False    只能http协议传输，无法被JavaScript获取（不是绝对，底层抓包可以获取到也可以被覆盖）
+                                    但在document.cookie中是获取不到的 但并不代表安全 只是建议使用
+
+
+            # 设置超时时间为100秒后
+            response.set_cookie('key', 'value', max_age=100)  # 最大有效期为100秒 cookies被浏览器访问后触发计时
+            response.set_cookie('key', 'value', expires=current_date)  # 失效日期为指定日期到1970.1.1的秒数
 
         删除cookies 常用于登出操作
             res.delete_cookie('cookies_username')
 
         服务器获取客户端的cookies
             value = request.COOKIES.get('cookies_username')
+            value = request.COOKIES['cookies_username']
 
-        参考 views.py
+            request.get_signed_cookie(key, default=RAISE_ERROR, salt='', max_age=None)
+            参数：
+                default: 默认值
+                   salt: 加密盐
+                max_age: 后台控制过期时间
+
+                参考 views.py
+
+        由于cookie保存在客户端的电脑上，所以，JavaScript和jquery也可以操作cookie。
+            <script src='/static/js/jquery.cookie.js'></script>
+            $.cookie("list_pager_num", 30,{ path: '/' });
+
+        cookie 前后端都能设置与修改 因此可以在前端修改 后台读取 进行页面控制
+            参考user_list.html
+
+                <script src="/static/jquery.cookie.js"></script>
+                <script>
+                    function changePageSize(ths) {
+                        // 获取当前用户选择的值
+                        var v = $(ths).val();
+                        // 使用jquery设置cookie 用于后端读取
+                        $.cookie('page_of_count', v);
+                    }
+                </script>
+
+
+        带签名的cookie (加盐加密签名): 加盐要一一对应
+            # 设置加盐加密签名
+            response.set_signed_cookie('key', 'value', 'salt')
+            # 获取加盐加密签名
+            request.get_signed_cookie('key', 'salt')
+
+    views装饰器处理: 如 用户认证
+
+           登录的用户才能看 否则提示登录或返回主页
+           用户认证 保存用户状态
+
+           基于CBV / FBV 的用户认证装饰器
+
+           装饰器:
+                def auth(func):
+                    def wrapper(request, *args, **kwargs):
+                        username = request.COOKIES.get('cookies_username')
+                        if not username:
+                            # 如果cookie中没有用户名 说明未登录 跳转到登录
+                            return redirect('/login/')
+                        # 执行被装饰的函数 跳转页面由func自己处理 最后通过wrapper返回
+                        return func(request, *args, **kwargs)
+
+                     return wrapper
+
+           FBV:
+                @auth
+                def after_login(request):
+                    # 获取当前已登录用户名
+                    # value = request.COOKIES.get('cookies_username')
+                    #
+                    # if not value:
+                    #     # 如果用户名为空 则跳转到登录页面重新登录
+                    #     return redirect('/login/')
+                    # 如果加了装饰器 以上代码都不需要写
+                    return HttpResponse("Login OK")
+
+
+           CBV:
+                # 可以直接在类上加装饰器 指明哪个请求方式需要加验证 可以直接加到dispatch上 表明所有请求方式都需要验证
+                #@method_decorator(auth, name='dispatch')
+                class Order(views.View):
+                    """ CBV 用户认证 """
+                    # @method_decorator(auth)
+                    # def dispatch(self, request, *args, **kwargs):
+                    #     """如果全部请求都需要认证 那么直接加到dispatch上就可以"""
+                    #     return super().dispatch(request, *args, **kwargs)
+
+                    @method_decorator(auth)
+                    def get(self, request):
+                        username = request.COOKIES.get('cookies_username')
+                        # if not username:
+                        #     # 如果cookie中没有用户名 说明未登录 跳转到登录
+                        #     return redirect('/login/')
+                        # 如果加了装饰器 以上代码都不需要写
+                        return render(request, 'order.html', {'current_user': username})
+
+                    @method_decorator(auth)
+                    def post(self, request):
+                        username = request.COOKIES.get('cookies_username')
+                        # if not username:
+                        #     # 如果cookie中没有用户名 说明未登录 跳转到登录
+                        #     return redirect('/login/')
+                        return render(request, 'order.html', {'current_user': username})
+
+
 
 
 * Form验证 html验证与server验证
+    ?
 
 

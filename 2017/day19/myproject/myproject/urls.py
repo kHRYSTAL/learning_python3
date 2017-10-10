@@ -27,6 +27,6 @@ urlpatterns = [
     url(r'^tpl4/$', views.tpl4),
     url(r'^user_list/$', views.user_list),
     url(r'^login/$', views.login),
-    url(r'^after_login/$', views.after_login),
+    url(r'^after_login/$', views.after_login),  # FBV 用户认证
+    url(r'^order/$', views.Order.as_view()),  # CBV 用户认证
 ]
-
