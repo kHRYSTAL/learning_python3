@@ -70,13 +70,27 @@
             def get(self, request, *args, **kwargs):
                 pass
 
-    获取请求的数据
+    获取请求的数据 REST
 
         request.POST.get("xxx")
         request.GET.get("xxx")
         request.POST.getlist("xxx")
         request.GET.getlist("xxx")
         request.FILES.get("xxx") # 获取 enctype="multipart/form-data"表单上传的文件
+        request.body
+
+            注:POST/FILES 实际都是从request.body中提取的数据, post请求,django会做一步处理把字符串转为字典
+               request.POST 实际上全写为
+                    request.POST(request.body).get(key)
+                    request.FILES(request.body).get(key)
+
+            注: django中并没有 DELETE 和 PUT 因此需要通过 request.body拿到原生的数据
+                put = QueryDict(request.body)
+                key = put.get('key')
+                field = put.get('field')
+                field_value = put.get('field-value')
+
+                因此 DELETE 建议不传递body 通过url判断 因为在FBV区分起来比较困难
 
         获取上传的文件 保存在服务器
         import os

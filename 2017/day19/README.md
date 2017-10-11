@@ -33,7 +33,7 @@
 * Views
     - 请求的其他信息: 请求头
 
-        服务端接受请求时 实际上接受的参数为 environ, 表示请求的所有环境变量, 包含所有请求的相关信息
+        服务端接受请求时 实际上接受的参数为 environ, 表示请求的所有环境变量, 也包含所有请求的相关信息
 
             def index(request):
                 # 封装所有用户请求信息
@@ -41,6 +41,9 @@
                 for k, v in request.environ.items():
                     print(k, v)
                 return HttpResponse('OK')
+
+        获取请求头数据
+            request.Meta('key')
 
     - CBV
     - FBV
