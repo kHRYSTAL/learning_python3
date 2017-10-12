@@ -194,6 +194,9 @@
             models.User.objects.all().first() # 第一个 return User
             models.User.objects.filter(id=1).first() # 第一个 return User
 
+            查询切片
+            models.User.objects.all()[5:7]
+
     6. 外键关联
 
             class UserType(models.Model):
