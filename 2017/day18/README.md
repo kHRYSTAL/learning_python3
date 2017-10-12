@@ -183,6 +183,7 @@
             models.User.objects.filter(id__gte=1) # >= return QuerySet
             models.User.objects.filter(id__lt=1) # < return QuertSet
             models.User.objects.filter(id__lte=1) # <= return QuertSet
+            models.User.objects.filter(id__range=[2, 6]) # <= return QuertSet start index is 2 end index is 6
 
 
             dict = {'name': 'xxx', 'age__lte': 13}
