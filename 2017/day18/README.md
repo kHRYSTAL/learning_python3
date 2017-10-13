@@ -435,3 +435,27 @@
 
     建议: 两种方式结合使用 如果关系表中字段只存在 id 和另外两个表的主键 建议使用第二种方式 即自动创建只能生成3列字段
           如果有更多的字段 则自定义创建 扩展性比较高
+
+
+    跨表查询与反查
+
+        class A(models.Model):
+            caption = models.CharField(max_length=32)
+
+        class B(models.Model):
+            name = models.CharField(max_length=32)
+            a = models.ForeignKey("A",to_field='id', default=1)
+
+        跨表查询:
+            在B表中 实际存储的时a_id, 在内存中获取的a为A对象
+
+        跨表反查: 从a对象反查到关联的b对象
+            todo
+
+            class A(models.Model):
+                caption = models.CharField(max_length=32)
+                # 通过b_set 反查到把当表类设置为外键的表的对象
+                b_set
+
+
+
