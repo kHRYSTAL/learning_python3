@@ -8,6 +8,8 @@
     <form method="post" action="{{ request.path_info }}">
         <input type="text" name="user"/>
         <input type="password" name="pwd"/>
+        <!--默认选中-->
+        <input type="checkbox" name="remember" value="1"/> 10分钟自动登录
         <input type="submit" value="提交"/>
     </form>
 </body>

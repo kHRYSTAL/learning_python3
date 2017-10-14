@@ -124,3 +124,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# 是否每次请求都保存Session，每次修改后失效时间重新计算 默认为False
+SESSION_SAVE_EVERY_REQUEST = True

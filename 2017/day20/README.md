@@ -16,6 +16,8 @@
         因为cookie的特性 前端可以查看与修改 这样是非常不安全的
         因此 如果要做敏感信息存储 且不需要频繁查询数据库的话 应当使用Session
 
+
+
         1. 原理
             cookie是保存在用户浏览器端的键值对
             session是保存在服务器端的键值对
@@ -64,7 +66,12 @@
 
 
         3. 实现两周内自动登录
-            - request.session.set_expiry(60 * 10)
+
+            在Django中 Session默认的超时时间是2周
+            即表中超时时间默认为2周 cookie设置默认也为2周
+            可通过配置文件修改默认配置 参考[4.所有操作]
+
+            - request.session.set_expiry(60 * 10) # 修改为超时时间为600秒
             - SESSION_SAVE_EVERY_REQUEST = True
 
 

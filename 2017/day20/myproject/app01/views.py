@@ -9,6 +9,8 @@ def login(request):
     elif request.method == 'POST':
         user = request.POST.get('user')
         pwd = request.POST.get('pwd')
+        # 是否勾选自动登录
+        remember = request.POST.get('remember', None)
         if user == 'root' and pwd == '123':
             # 生成随机字符串
             # 写到用户浏览器cookie
@@ -16,6 +18,9 @@ def login(request):
             # django 会自动执行以上所有操作 只需要一行代码
             request.session['username'] = user
             request.session['is_login'] = True
+            # 判断是否勾选自动登录 单位为秒
+            if remember:
+                request.session.set_expiry(60 * 10)
             return redirect('/index/')
         else:
             print('用户名密码不正确')
