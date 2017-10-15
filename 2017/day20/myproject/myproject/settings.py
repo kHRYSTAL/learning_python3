@@ -127,3 +127,10 @@ STATICFILES_DIRS = (
 
 # 是否每次请求都保存Session，每次修改后失效时间重新计算 默认为False
 SESSION_SAVE_EVERY_REQUEST = True
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
