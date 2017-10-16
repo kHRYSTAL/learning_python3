@@ -267,4 +267,35 @@
                 @csrf_exempt，取消当前函数防跨站请求伪造功能，即便settings中设置了全局中间件。
                 注：from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
+3. 中间件(MiddleWare)
+
+        客户端请求至服务器views前 服务器的中间件能够拦截到客户端的请求 进行处理
+        在settings.py中 Django默认提供了一些中间件
+        我们也可以自定义中间件 实现 process_request方法即可
+
+        class RowOne(MiddlewareMixin):
+            def process_request(self, request):
+                print("RowOne MiddleWare")
+
+        request中间件流向按照settings中Middleware列表的顺序执行
+
+        同时也可以拦截响应 实现 process_response方法即可
+            def process_response(self, request, response):
+                print("RowOne MiddleWare response")
+                return response
+
+        response中间件流向按照Middleware列表的逆序执行
+
+
+        拦截请求示例:
+             def process_request(self, request):
+                if request.method == 'POST':
+                    if int(request.POST.get('money', 0)) == 0:
+                        return HttpResponse('滚')
+
+             中间件可以实现黑名单过滤 或者 校验操作 日志操作等等
+
+
+
+
 

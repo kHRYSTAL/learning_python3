@@ -47,6 +47,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 自定义中间件
+    "middleware.m1.RowOne",
+    "middleware.m1.RowTwo",
+    "middleware.m1.RowThree",
 ]
 
 ROOT_URLCONF = 'myproject.urls'

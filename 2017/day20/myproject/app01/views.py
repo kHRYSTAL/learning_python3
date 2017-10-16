@@ -43,3 +43,10 @@ def index(request):
 def logout(request):
     request.session.clear()
     return redirect('/login/')
+
+
+def test_middleware(request):
+    """ 测试自定义中间件 """
+    print("test_middleware")
+    return HttpResponse("test_middleware")
+
