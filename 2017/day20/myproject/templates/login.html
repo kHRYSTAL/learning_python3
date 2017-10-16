@@ -25,14 +25,22 @@
 //            var obj = XMLHttpRequest();
 //            obj.open();
 //            obj.send();
+
+            function csrfSafeMethod(method) {
+                // 这些 HTTP methods 不会设置csrftoken
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
             // 通用配置设置 所有ajax请求都会先执行这个函数
             $.ajaxSetup({
                 beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                 // 如果提交方式不是GET等请求 且没设置csrfdomain
+                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                     xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                 }
                 }
             });
 
-            var csrftoken = $.cookie('csrftoken');
+//            var csrftoken = $.cookie('csrftoken');
             $('#btn').click(function () {
                $.ajax({
                    url:'/login/',

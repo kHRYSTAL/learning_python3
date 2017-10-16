@@ -239,10 +239,32 @@
              </script>
 
              也可以进行通用配置设置CSRF, 该页面的所有ajax请求都会先执行这个函数
+                  function csrfSafeMethod(method) {
+                        // 这些 HTTP methods 不会设置csrftoken
+                        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                  }
+                  // 通用配置设置 所有ajax请求都会先执行这个函数
                   $.ajaxSetup({
                         beforeSend: function (xhr, settings) {
-                            xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                         // 如果提交方式不是GET等请求 且没设置csrfdomain
+                         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                             xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                         }
                         }
                   });
+    * 注意
+
+             只要使用django.middleware.csrf.CsrfViewMiddleware这个全局配置
+             所有post请求都需要加csrftoken, 这样是明显不合适的
+             因此可以使用局部装饰器配置
+                全局：
+
+                　　中间件 django.middleware.csrf.CsrfViewMiddleware
+
+                局部：
+
+                @csrf_protect，为当前函数强制设置防跨站请求伪造功能，即便settings中没有设置全局中间件。
+                @csrf_exempt，取消当前函数防跨站请求伪造功能，即便settings中设置了全局中间件。
+                注：from django.views.decorators.csrf import csrf_exempt,csrf_protect
 
 
