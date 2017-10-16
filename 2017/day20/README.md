@@ -195,3 +195,54 @@
                         * 如果value是0,用户关闭浏览器session就会失效。
                         * 如果value是None,session会依赖全局session失效策略。
 
+
+2. CSRF
+
+    * CSRF 原理
+
+            防止跨站请求伪造原理 第一次请求时(GET) 会返回数据和一个加密的字符串 这个加密字符串只有自己能反解
+            下次请求(POST)的时候 需要携带这个字符串 如果字符串不正确 则会返回403forbidden
+            在settings.py中, 中间件'django.middleware.csrf.CsrfViewMiddleware' 就是做了一层防止CSRF的防护
+            在post提交时 需要携带csrf_token 经过CsrfViewMiddleware 的校验 才能到达Views中
+            Django会自动将这段随机字符串放到cookie(key: csrftoken)中, 供表单提交和ajax提交使用
+
+    * 无CSRF时存在的隐患
+
+            XSS攻击 脚本注入后拿走当前用户的cookie 通过你的cookie去登录
+            CSRF就是防止跨站请求伪造
+
+    * Form 提交(CSRF)
+
+            html获取显示: {{ csrf_token }}
+                    表单中使用 csrf_token: {% csrf_token %}
+                      会自动生成一个隐藏的input标签:
+                      <input type="hidden" name="csrfmiddlewaretoken" value="7wvtmpp6PNnKSFqCa2344wAmUCwLBoYLZyM4zzRURe33KAI8XM4hSQP0oL2P1o4M">
+
+    * Ajax 提交 (CSRF) CSRF请求头 X-CSRFToken
+
+             <script>
+                $(function () {
+                    var csrftoken = $.cookie('csrftoken');
+                    $('#btn').click(function () {
+                       $.ajax({
+                           url:'/login/',
+                           type:'POST',
+                           data: {'user': 'root', 'pwd': '123'},
+                           headers: {'x-csrftoken': csrftoken},
+                           success: function (arg) {
+                                window.location.href = '/index/'
+                           }
+
+                       });
+                    });
+                });
+             </script>
+
+             也可以进行通用配置设置CSRF, 该页面的所有ajax请求都会先执行这个函数
+                  $.ajaxSetup({
+                        beforeSend: function (xhr, settings) {
+                            xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                        }
+                  });
+
+

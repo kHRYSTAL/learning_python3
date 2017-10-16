@@ -4,6 +4,12 @@ from django.shortcuts import render, redirect, HttpResponse
 
 
 def login(request):
+    # from django.conf import settings
+    # django自带的csrftoken别名
+    # print(settings.CSRF_HEADER_NAME)
+    # # HTTP_X_CSRFTOKEN
+    # # X-CSRFtoken
+
     if request.method == 'GET':
         return render(request, 'login.html')
     elif request.method == 'POST':

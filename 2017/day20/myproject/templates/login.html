@@ -6,11 +6,47 @@
 </head>
 <body>
     <form method="post" action="{{ request.path_info }}">
+        {% csrf_token %}
         <input type="text" name="user"/>
         <input type="password" name="pwd"/>
         <!--默认选中-->
         <input type="checkbox" name="remember" value="1"/> 10分钟自动登录
         <input type="submit" value="提交"/>
+        <input id="btn" type="button" value="ajax提交"/>
     </form>
+
+    <script src="/static/jquery-1.12.4.js"></script>
+    <script src="/static/jquery.cookie.js"></script>
+    <script>
+
+
+        $(function () {
+            // xhr : XmlHttpRequest对象 所有的ajax请求实际上都调用了该对象
+//            var obj = XMLHttpRequest();
+//            obj.open();
+//            obj.send();
+            // 通用配置设置 所有ajax请求都会先执行这个函数
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('X-CSRFtoken', $.cookie('csrftoken'))
+                }
+            });
+
+            var csrftoken = $.cookie('csrftoken');
+            $('#btn').click(function () {
+               $.ajax({
+                   url:'/login/',
+                   type:'POST',
+                   data: {'user': 'root', 'pwd': '123'},
+                   // 请求头不能出现下划线(由于使用了ajaxSetup 不再需要单独设置)
+//                   headers: {'X-CSRFtoken': csrftoken},
+                   success: function (arg) {
+                        window.location.href = '/index/';
+                   }
+
+               });
+            });
+        });
+    </script>
 </body>
 </html>
