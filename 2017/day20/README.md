@@ -295,6 +295,32 @@
 
              中间件可以实现黑名单过滤 或者 校验操作 日志操作等等
 
+        process_view: 拦截 view处理 正序执行
+
+            def process_view(self, request, view_func, view_func_args, view_func_kwargs):
+                print("RowOne Middleware process view")
+
+                参数:
+                    view_func views中请求对应的函数
+                    view_func_args 函数的可变长度参数
+                    view_func_kwargs 函数的关键字参数
+
+        process_exception : 拦截 异常处理 逆序执行 如果被处理 不会再向上执行 直接抛给逆序的process_response
+
+            def process_exception(self, request, exception):
+                print("RowOne MiddleWare handle exception")
+
+
+        process_template_response: views中的函数返回的对象中具有render方法 会触发这个函数
+                即Middleware如果检索到对象内部包含函数名为render 就会触发这个函数 参考 views.py#Foo
+
+            def process_template_response(self, request, response):
+                # 这个函数会自动将对象的response从render函数中解析出来
+                print("RowOne Middle handle template response")
+
+        拦截流程 process_request -> process_view -> views -> (process_exception) -> process_template_response -> process_response
+            如果views抛出异常 且 中间件进行了异常拦截 则会进行中间件异常处理
+
 
 
 

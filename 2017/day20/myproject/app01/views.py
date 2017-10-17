@@ -45,8 +45,17 @@ def logout(request):
     return redirect('/login/')
 
 
+class Foo:
+    """ 测试middleware process_template_response是否执行 """
+    def __init__(self):
+        super().__init__()
+
+    def render(self):
+        return HttpResponse('test_middleware')
+
+
 def test_middleware(request):
     """ 测试自定义中间件 """
     print("test_middleware")
-    return HttpResponse("test_middleware")
+    return Foo()
 
