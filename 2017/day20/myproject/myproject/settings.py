@@ -51,9 +51,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 自定义中间件
-    "middleware.m1.RowOne",
-    "middleware.m1.RowTwo",
-    "middleware.m1.RowThree",
+    # "middleware.m1.RowOne",
+    # "middleware.m1.RowTwo",
+    # "middleware.m1.RowThree",
     # 全局获取缓存中间件
     # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]

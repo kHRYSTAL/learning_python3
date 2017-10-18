@@ -32,8 +32,9 @@ from django.db.backends.signals import connection_created
 # region 注册方式1
 # 接受信号函数
 def callback(sender, **kwargs):
-    print("pre_init_callback")
-    print(sender, kwargs)
+    # print("pre_init_callback")
+    # print(sender, kwargs)
+    pass
 
 # 注册接受数据库对象构造函数触发信号
 pre_init.connect(callback)
@@ -44,7 +45,8 @@ from django.core.signals import request_finished
 from django.dispatch import receiver
 @receiver(request_finished)
 def my_callback(sender, **kwargs):
-    print("Request finished!")
+    # print("Request finished!")
+    pass
 # endregion
 
 
@@ -55,8 +57,9 @@ pizza_done = django.dispatch.Signal(providing_args=["toppings", "size"])
 
 
 def pizza_done_callback(sender, **kwargs):
-    print("pizza_done_callback")
-    print(sender, kwargs)
+    # print("pizza_done_callback")
+    # print(sender, kwargs)
+    pass
 
 pizza_done.connect(callback)
 # endregion

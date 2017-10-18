@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^test_cache/', views.cache),
     url(r'^test_signal/', views.signal),
     url(r'^test_custom_signal/', views.custom_signal),
+    url(r'^test_form/', views.test_form),
 ]

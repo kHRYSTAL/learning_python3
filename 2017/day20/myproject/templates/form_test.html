@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Test</title>
+</head>
+<body>
+    <form action="{{request.path_info}}" method="post">
+        {% csrf_token %}
+        账  号:  <input type="text" name="user" placeholder="用户名"/><br/>
+        密  码:  <input type="text" name="pwd" placeholder="密码长度必须大于10"/> <br/>
+        邮  箱:  <input type="text" name="email" placeholder="邮箱"/> <br/>
+        <input type="submit" value="提交"/><br/>
+    </form>
+</body>
+</html>

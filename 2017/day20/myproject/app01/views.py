@@ -99,3 +99,33 @@ def custom_signal(request):
     # khrystal {'signal': <django.dispatch.dispatcher.Signal object at 0x1017ce7f0>, 'toppings': 123, 'size': 456}
     return HttpResponse("测试自定义信号")
 # endregion
+
+
+# region 表单验证
+from django import forms
+
+
+class MyForm(forms.Form):
+    """ 指定客户端发送的表单提取的字段 表单的name必须与变量名相同"""
+    user = forms.CharField()
+    pwd = forms.CharField()
+    email = forms.EmailField()
+
+
+def test_form(request):
+    if request.method == 'GET':
+        return render(request, "form_test.html")
+    elif request.method == 'POST':
+        # 获取用户所有的数据
+        form = MyForm(request.POST)
+        # 每条数据请求的验证是否通过 res为boolean
+        res = form.is_valid()
+        print(res)
+        if res:
+            # 验证成功 获取所有的正确信息
+            print(form.cleaned_data)
+        else:
+            # 验证失败 显示错误信息
+            print(form.errors.as_json())
+        return redirect('/test_form/')
+# endregion

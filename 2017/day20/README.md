@@ -629,8 +629,11 @@
 
             参考views.custom_signal
 
+6. 表单验证(ModelForm):
 
+        使用Django的Form组件 在表单验证时避免写复杂的正则表达式进行校验
 
+        可以利用Form创建一系列的规则 使接受到的表单数据与规则进行匹配
 
 
 
