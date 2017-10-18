@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load cache %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Cache</title>
+</head>
+<body>
+
+    <h1>{{ ctime }}</h1>
+    <h1>{{ ctime }}</h1>
+
+    <!-- 缓存失效5000秒 -->
+    {% cache 5000 ctime_key %}
+    <h1>{{ ctime }}</h1>
+    {% endcache %}
+</body>
+</html>

@@ -321,6 +321,322 @@
         拦截流程 process_request -> process_view -> views -> (process_exception) -> process_template_response -> process_response
             如果views抛出异常 且 中间件进行了异常拦截 则会进行中间件异常处理
 
+4. 缓存
+
+        只有Django支持缓存功能
+
+        Django中提供了6种缓存方式：
+
+            开发调试
+            内存
+            文件
+            数据库
+            Memcache缓存（python-memcached模块）
+            Memcache缓存（pylibmc模块）
+
+    a. 开发调试
+
+            # 此为开始调试用，实际内部不做任何操作
+            # 配置：
+                CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',     # 引擎
+                        'TIMEOUT': 300,                                               # 缓存超时时间（默认300，None表示永不过期，0表示立即过期）
+                        'OPTIONS':{
+                            'MAX_ENTRIES': 300,                                       # 最大缓存个数（默认300）
+                            'CULL_FREQUENCY': 3,                                      # 缓存到达最大个数之后，剔除缓存个数的比例，即：1/CULL_FREQUENCY（默认3）
+                        },
+                        'KEY_PREFIX': '',                                             # 缓存key的前缀（默认空）
+                        'VERSION': 1,                                                 # 缓存key的版本（默认1）
+                        'KEY_FUNCTION' 函数名                                          # 生成key的函数（默认函数会生成为：【前缀:版本:key】）
+                    }
+                }
+
+
+            # 自定义key
+            def default_key_func(key, key_prefix, version):
+                """
+                Default function to generate keys.
+
+                Constructs the key used by all other methods. By default it prepends
+                the `key_prefix'. KEY_FUNCTION can be used to specify an alternate
+                function with custom key making behavior.
+                """
+                return '%s:%s:%s' % (key_prefix, version, key)
+
+            def get_key_func(key_func):
+                """
+                Function to decide which key function to use.
+
+                Defaults to ``default_key_func``.
+                """
+                if key_func is not None:
+                    if callable(key_func):
+                        return key_func
+                    else:
+                        return import_string(key_func)
+                return default_key_func
+
+    b. 内存
+
+            # 此缓存将内容保存至内存的变量中
+            # 配置：
+                CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                        'LOCATION': 'unique-snowflake',
+                    }
+                }
+
+            # 注：其他配置同开发调试版本
+
+    c. 文件
+
+            # 此缓存将内容保存至文件
+            # 配置：
+
+                CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+                        'LOCATION': '/var/tmp/django_cache',
+                    }
+                }
+            # 注：其他配置同开发调试版本
+
+    d. 数据库
+
+            # 此缓存将内容保存至数据库
+            # 配置：
+                CACHES = {
+                    'default': {
+                        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+                        'LOCATION': 'my_cache_table', # 数据库表
+                    }
+                }
+
+            # 注：执行创建表命令 python manage.py createcachetable
+
+    e. Memcache缓存（python-memcached模块）
+
+            # 此缓存使用python-memcached模块连接memcache
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': '127.0.0.1:11211',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': 'unix:/tmp/memcached.sock',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                    'LOCATION': [
+                        '172.19.26.240:11211',
+                        '172.19.26.242:11211',
+                    ]
+                }
+            }
+
+    f. Memcache缓存（pylibmc模块）
+
+            # 此缓存使用pylibmc模块连接memcache
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                    'LOCATION': '127.0.0.1:11211',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                    'LOCATION': '/tmp/memcached.sock',
+                }
+            }
+
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                    'LOCATION': [
+                        '172.19.26.240:11211',
+                        '172.19.26.242:11211',
+                    ]
+                }
+            }
+
+    使用缓存功能:
+
+           Django提供了三个级别的缓存存储
+
+           1. 针对单独的views函数进行缓存, 针对整个页面级别的缓存
+
+                方式一：
+                    from django.views.decorators.cache import cache_page
+
+                    @cache_page(60 * 15)
+                    def my_view(request):
+                        ...
+
+                方式二：
+                    from django.views.decorators.cache import cache_page
+
+                    urlpatterns = [
+                        url(r'^foo/([0-9]{1,2})/$', cache_page(60 * 15)(my_view)),
+                    ]
+
+           2. 针对页面局部标签缓存
+
+                a. 引入TemplateTag
+
+                    {% load cache %}
+
+                b. 使用缓存 单位为秒
+
+                    {% cache 5000 缓存key %}
+                        缓存内容
+                    {% endcache %}
+
+           3. 全站使用缓存(使用中间件)
+
+                 使用中间件，经过一系列的认证等操作，如果内容在缓存中存在，则使用FetchFromCacheMiddleware获取内容并返回给用户 不经过views
+                 因此应把 FetchFromCacheMiddleware 写到最后
+                 ，当返回给用户之前，判断缓存中是否已经存在，如果不存在则UpdateCacheMiddleware会将缓存保存至缓存 response之前的最后一个middleware，
+                 因此应把 UpdateCacheMiddleware 写到最前
+                 从而实现全站缓存
+
+                    MIDDLEWARE = [
+                        'django.middleware.cache.UpdateCacheMiddleware',
+                        # 其他中间件...
+                        'django.middleware.cache.FetchFromCacheMiddleware',
+                    ]
+
+                    CACHE_MIDDLEWARE_ALIAS = ""
+                    CACHE_MIDDLEWARE_SECONDS = ""
+                    CACHE_MIDDLEWARE_KEY_PREFIX = ""
+
+           缓存的优先级:
+
+                根据生命周期 全站缓存>views缓存>标签缓存
+                因为标签缓存在view函数内部执行 view函数在中间件内部执行
+                所以设置缓存根据生命周期UpdateCacheMiddleware最后执行
+                获取缓存FetchFromCacheMiddleware最后执行
+
+
+5. 信号
+
+        def signal(request):
+            """ 需求: 在每次save时记录数据库操作日志 """
+            from app01 import models
+            # 1
+            obj = models.UserInfo(user='root')
+            # 2
+            # 3
+            obj.save()
+            # 4
+
+            obj = models.UserInfo(user='root')
+            obj.save()
+
+            obj = models.UserInfo(user='root')
+            obj.save()
+
+        在Django中 余留了一些钩子用于通知外部创建了对象, 保存了数据库等操作
+        (钩子余留位置如上方函数数字所示)
+        在编写代码时 可以设置接受这些信号(钩子)的函数 进行记录操作或其他处理
+        因此不需要重写save函数 不需要修改Django本身封装的一些数据库操作api
+
+    Django中提供了“信号调度”，用于在框架执行操作时解耦。通俗来讲，就是一些动作发生的时候，信号允许特定的发送者去提醒一些接受者。
+
+        Model signals
+            pre_init                    # django的modal执行其构造方法前，自动触发
+            post_init                   # django的modal执行其构造方法后，自动触发
+            pre_save                    # django的modal对象保存前，自动触发
+            post_save                   # django的modal对象保存后，自动触发
+            pre_delete                  # django的modal对象删除前，自动触发
+            post_delete                 # django的modal对象删除后，自动触发
+            m2m_changed                 # django的modal中使用m2m字段操作第三张表（add,remove,clear）前后，自动触发
+            class_prepared              # 程序启动时，检测已注册的app中modal类，对于每一个类，自动触发
+        Management signals
+            pre_migrate                 # 执行migrate命令前，自动触发
+            post_migrate                # 执行migrate命令后，自动触发
+        Request/response signals
+            request_started             # 请求到来前，自动触发
+            request_finished            # 请求结束后，自动触发
+            got_request_exception       # 请求异常后，自动触发
+        Test signals
+            setting_changed             # 使用test测试修改配置文件时，自动触发
+            template_rendered           # 使用test测试渲染模板时，自动触发
+        Database Wrappers
+            connection_created          # 创建数据库连接时，自动触发
+
+    注册接受信号函数
+
+        应同pymysql相同 在项目启动时就应该注册, 因此写到项目的__init__.py中
+
+        1. 注册方式一: connect
+
+            from django.db.models.signals import pre_init
+
+            # 接受信号函数
+            def callback(sender, **kwargs):
+                print("pre_init_callback")
+                print(sender, kwargs)
+
+            # 注册接受数据库对象构造函数触发信号
+            pre_init.connect(callback)
+
+            参考__init__.py
+
+        2. 注册方式二: 装饰器receiver
+
+            from django.core.signals import request_finished
+            from django.dispatch import receiver
+
+            @receiver(request_finished)
+            def my_callback(sender, **kwargs):
+                print("Request finished!")
+
+    自定义信号
+
+        自定义信号不同于Django提供的内置信号 给开发者提供了更多扩展空间
+        如监控内存 流量等等到达某一个状态 可以发送信号通知 可以用于监控
+
+        a. 定义信号
+
+            import django.dispatch
+            pizza_done = django.dispatch.Signal(providing_args=["toppings", "size"])
+
+        b. 注册信号
+
+            def callback(sender, **kwargs):
+                print("callback")
+                print(sender,kwargs)
+
+            pizza_done.connect(callback)
+
+        c. 触发信号:
+            由于内置信号的触发者已经集成到Django中，所以其会自动调用，
+            而对于自定义信号则需要开发者在任意位置触发
+
+            from 路径 import pizza_done
+            pizza_done.send(sender='seven',toppings=123, size=456)
+
+            参考views.custom_signal
+
+
+
+
+
+
+
+
+
 
 
 

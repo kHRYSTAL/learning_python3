@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^index/', views.index),
     url(r'^logout/', views.logout),
     url(r'^test_middleware/', views.test_middleware),
+    url(r'^test_cache/', views.cache),
+    url(r'^test_signal/', views.signal),
+    url(r'^test_custom_signal/', views.custom_signal),
 ]

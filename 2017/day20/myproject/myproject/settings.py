@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app01',
 ]
 
 MIDDLEWARE = [
+    # 全局存储缓存中间件
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +54,8 @@ MIDDLEWARE = [
     "middleware.m1.RowOne",
     "middleware.m1.RowTwo",
     "middleware.m1.RowThree",
+    # 全局获取缓存中间件
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'
@@ -138,3 +143,11 @@ SESSION_SAVE_EVERY_REQUEST = True
 #         'LOCATION': '127.0.0.1:11211',
 #     }
 # }
+
+# 使用文件缓存
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'file_cache')  # 使用文件缓存的路径
+    }
+}
