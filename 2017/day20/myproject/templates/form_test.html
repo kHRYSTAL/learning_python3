@@ -5,11 +5,17 @@
     <title>Form Test</title>
 </head>
 <body>
+    <h3>注册 表单验证测试</h3>
     <form action="{{request.path_info}}" method="post">
         {% csrf_token %}
-        账  号:  <input type="text" name="user" placeholder="用户名"/><br/>
-        密  码:  <input type="text" name="pwd" placeholder="密码长度必须大于10"/> <br/>
-        邮  箱:  <input type="text" name="email" placeholder="邮箱"/> <br/>
+        <!--{{ form.as_p }}-->
+        <!--{{ form.as_ul }}-->
+        <!--<table>-->
+            <!--{{ form.as_table }}-->
+        <!--</table>-->
+        <p>{{ form.user }} {{ form.errors.user.0 }}</p>
+        <p>{{ form.pwd }} {{ form.errors.pwd.0 }}</p>
+        <p>{{ form.email }} {{ form.errors.email.0 }}</p>
         <input type="submit" value="提交"/><br/>
     </form>
 </body>

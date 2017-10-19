@@ -107,14 +107,21 @@ from django import forms
 
 class MyForm(forms.Form):
     """ 指定客户端发送的表单提取的字段 表单的name必须与变量名相同"""
-    user = forms.CharField()
-    pwd = forms.CharField()
-    email = forms.EmailField()
+    # 错误信息提示
+    user = forms.CharField(error_messages={'required': '用户名不能为空'})
+    pwd = forms.CharField(
+        max_length=12,
+        min_length=6,
+        error_messages={'required': '密码不能为空', 'min_length': '密码长度不能小于6', 'max_length': '密码长度不能大于12'}
+    )
+    email = forms.EmailField(error_messages={'required': '邮箱不能为空', 'invalid': '邮箱格式错误'})
 
-
+from app01 import models
 def test_form(request):
     if request.method == 'GET':
-        return render(request, "form_test.html")
+        # GET 请求 只提供表单 内部会进行require 和 长度 格式的处理
+        form = MyForm()
+        return render(request, "form_test.html", {'form': form})
     elif request.method == 'POST':
         # 获取用户所有的数据
         form = MyForm(request.POST)
@@ -123,9 +130,12 @@ def test_form(request):
         print(res)
         if res:
             # 验证成功 获取所有的正确信息
+            # {'user': 'assa', 'pwd': 'sadasd', 'email': 'sdasdsad@123.com'}
             print(form.cleaned_data)
+            models.UserInfo.objects.create(**form.cleaned_data)
+            return HttpResponse("注册成功")
         else:
             # 验证失败 显示错误信息
-            print(form.errors.as_json())
+            return render(request, "form_test.html", {'form': form})
         return redirect('/test_form/')
 # endregion
