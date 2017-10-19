@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Form Test</title>
+    <style>
+        .c1{
+            background-color: #1b6d85;
+        }
+    </style>
 </head>
 <body>
     <h3>注册 表单验证测试</h3>
@@ -13,9 +18,11 @@
         <!--<table>-->
             <!--{{ form.as_table }}-->
         <!--</table>-->
-        <p>{{ form.user }} {{ form.errors.user.0 }}</p>
-        <p>{{ form.pwd }} {{ form.errors.pwd.0 }}</p>
-        <p>{{ form.email }} {{ form.errors.email.0 }}</p>
+        <p>{{ form.user.label }} {{ form.user }} {{ form.errors.user.0 }}</p>
+        <p>{{ form.pwd.label }} {{ form.pwd }} {{ form.errors.pwd.0 }}</p>
+        <p>{{ form.email.label }} {{ form.email }} {{ form.errors.email.0 }}</p>
+        <p>{{ form.path }}</p>
+        <p>{{ form.city }}</p>
         <input type="submit" value="提交"/><br/>
     </form>
 </body>

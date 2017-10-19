@@ -666,6 +666,8 @@
                         models.UserInfo.objects.create(**form.cleaned_data)
                         return HttpResponse("注册成功")
                     else:
+                        # errors默认为html语言可转换为json
+                        print(form.errors.as_json())
                         # 验证失败 显示错误信息
                         return render(request, "form_test.html", {'form': form})
                     return redirect('/test_form/')
@@ -688,6 +690,55 @@
                 <p>{{ form.email }} {{ form.errors.email.0 }}</p>
                 <input type="submit" value="提交"/><br/>
             </form>
+
+        自定义生成标签的样式 使用widget字段
+
+            class MyForm(forms.Form):
+                """ 指定客户端发送的表单提取的字段 表单的name必须与变量名相同"""
+                user = fields.CharField(
+                    # 自定义样式 专门用于生成html 不写默认为input
+                    widget=widgets.Textarea(attrs={'class': 'c1', 'style': 'height: 40px', 'placeholder': '用户名'}),
+                    # 错误信息提示
+                    error_messages={'required': '用户名不能为空'}
+                )
+                pwd = fields.CharField(
+                    # widget=widgets.TextInput(attrs={'placeholder': '密码', 'type': 'password'}),
+                    widget=widgets.PasswordInput(attrs={'placeholder': '密码'}),
+                    max_length=12,
+                    min_length=6,
+                    error_messages={'required': '密码不能为空', 'min_length': '密码长度不能小于6', 'max_length': '密码长度不能大于12'}
+                )
+                email = fields.EmailField(
+                    widget=widgets.TextInput(attrs={'placeholder': '邮箱'}),
+                    error_messages={'required': '邮箱不能为空', 'invalid': '邮箱格式错误'}
+                )
+
+        自定义正则验证字段规则:
+                 user = fields.CharField(
+                    label='用户名',
+                    initial='初始值',
+                    # 自定义正则表达式验证
+                    # validators=[RegexValidator(r'^[0-9]+$', '请输入数字'), RegexValidator(r'^159[0-9]+$', '数字必须以159开头')],
+                    # 自定义样式 专门用于生成html 不写默认为input
+                    widget=widgets.Textarea(attrs={'class': 'c1', 'style': 'height: 40px', 'placeholder': '用户名'}),
+                    # 错误信息提示
+                    error_messages={'required': '用户名不能为空'}
+                )
+
+        初始化全局配置:
+
+                dic = {
+                    'user': 'khrystal',
+                    'pwd': '123',
+                    'email': 'khrystal0918@gmail.com',
+                    'path': 0,
+                    'city': 1,
+                }
+                form = MyForm(initial=dic)
+
+[Field更多类型与属性参考](http://www.cnblogs.com/wupeiqi/articles/6144178.html)
+
+> 表单验证可用于REST接口 post请求验证错误返回 json: form.errors.as_json()
 
 
 

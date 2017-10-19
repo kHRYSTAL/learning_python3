@@ -103,24 +103,59 @@ def custom_signal(request):
 
 # region 表单验证
 from django import forms
+from django.forms import widgets
+from django.forms import fields
 
 
 class MyForm(forms.Form):
     """ 指定客户端发送的表单提取的字段 表单的name必须与变量名相同"""
-    # 错误信息提示
-    user = forms.CharField(error_messages={'required': '用户名不能为空'})
-    pwd = forms.CharField(
+    user = fields.CharField(
+        label='用户名',
+        initial='初始值',
+        # 自定义正则表达式验证
+        # validators=[RegexValidator(r'^[0-9]+$', '请输入数字'), RegexValidator(r'^159[0-9]+$', '数字必须以159开头')],
+        # 自定义样式 专门用于生成html 不写默认为input
+        widget=widgets.Textarea(attrs={'class': 'c1', 'style': 'height: 40px', 'placeholder': '用户名'}),
+        # 错误信息提示
+        error_messages={'required': '用户名不能为空'}
+    )
+    pwd = fields.CharField(
+        label='密码',
+        # widget=widgets.TextInput(attrs={'placeholder': '密码', 'type': 'password'}),
+        widget=widgets.PasswordInput(attrs={'placeholder': '密码'}),
         max_length=12,
         min_length=6,
         error_messages={'required': '密码不能为空', 'min_length': '密码长度不能小于6', 'max_length': '密码长度不能大于12'}
     )
-    email = forms.EmailField(error_messages={'required': '邮箱不能为空', 'invalid': '邮箱格式错误'})
+    email = fields.EmailField(
+        label='邮箱',
+        widget=widgets.TextInput(attrs={'placeholder': '邮箱'}),
+        error_messages={'required': '邮箱不能为空', 'invalid': '邮箱格式错误'}
+    )
+
+    path = fields.FilePathField(path='app01')
+
+    city = fields.ChoiceField(
+        choices=[(0, '上海'), (1, '北京'), (2, '天津')]
+    )
+
 
 from app01 import models
+
+
 def test_form(request):
     if request.method == 'GET':
         # GET 请求 只提供表单 内部会进行require 和 长度 格式的处理
         form = MyForm()
+        # GET 请求设置默认值
+        # dic = {
+        #     'user': 'khrystal',
+        #     'pwd': '123',
+        #     'email': 'khrystal0918@gmail.com',
+        #     'path': 0,
+        #     'city': 1,
+        # }
+        # form = MyForm(initial=dic)
         return render(request, "form_test.html", {'form': form})
     elif request.method == 'POST':
         # 获取用户所有的数据
@@ -135,6 +170,8 @@ def test_form(request):
             models.UserInfo.objects.create(**form.cleaned_data)
             return HttpResponse("注册成功")
         else:
+            # errors默认为html语言可转换为json
+            print(form.errors.as_json())
             # 验证失败 显示错误信息
             return render(request, "form_test.html", {'form': form})
         return redirect('/test_form/')
