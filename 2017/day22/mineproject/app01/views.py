@@ -1,7 +1,3 @@
-from django.shortcuts import render, HttpResponse, redirect
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
-# Create your views here.
-
-
-def index(request):
-    return HttpResponse('index')
