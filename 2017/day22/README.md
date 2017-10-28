@@ -21,6 +21,29 @@
                 如果又有Form 又有ModelForm 二者验证正则相同 那么就会写重复代码
                 应在ModelForm中使用From中的字段
 
+            Form 继承 BaseForm 存在is_valid()
+            ModelForm 继承BaseModelForm 继承BaseForm
+            也就是说 BaseForm 中的函数 ModelForm函数也支持
+
+            models.py:
+                class UserInfo(models.Model):
+                    # verbose_name 用于后台管理和modelform的label显示
+                    username = models.CharField(verbose_name='用户名', max_length=32)
+                    email = models.EmailField()
+                    user_type = models.ForeignKey(to='UserType', to_field='id')
+
+            views.py
+
+                 class UserInfoModelForm(forms.ModelForm):
+                    class Meta:
+                        # 指定数据库的类
+                        model = models.UserInfo
+                        # 指定显示所有字段
+                        fields = '__all__'
+                        # 指定只显示username字段
+                        # fields = ['username',]
+                        # 排除, 不显示email字段
+                        exclude = ['email',]
 
 
 - Ajax

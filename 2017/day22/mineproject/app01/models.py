@@ -7,6 +7,7 @@ class UserType(models.Model):
 
 
 class UserInfo(models.Model):
-    username = models.CharField(max_length=32)
+    # verbose_name 用于后台管理和modelform的label显示
+    username = models.CharField(verbose_name='用户名', max_length=32)
     email = models.EmailField()
     user_type = models.ForeignKey(to='UserType', to_field='id')
