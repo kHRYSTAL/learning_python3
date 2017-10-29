@@ -28,6 +28,7 @@
             models.py:
                 class UserInfo(models.Model):
                     # verbose_name 用于后台管理和modelform的label显示
+                    # 也可以使用Meta的labels
                     username = models.CharField(verbose_name='用户名', max_length=32)
                     email = models.EmailField()
                     user_type = models.ForeignKey(to='UserType', to_field='id')
@@ -44,6 +45,34 @@
                         # fields = ['username',]
                         # 排除, 不显示email字段
                         exclude = ['email',]
+                        labels={'username': '用户名',},                     # 提示信息
+                        help_texts={'username': '输入的是用户名',},# 帮助提示信息 跟在input标签后面
+                        widgets= {
+                            'username': Fwidgets.Textarea(attrs={'class': 'c1'})
+                        },                    # 自定义插件 from django.forms import widgets as Fwidgets
+                        error_messages={
+
+                             '__all__': {     # 定义整体错误信息
+                                'required': '不能为空',
+                                'invalid': '格式不对'
+                             },
+                             'email': {
+                                'required': '邮箱不能为空',
+                                'invalid': '邮箱格式不对'
+                             }
+                        },             # 自定义错误信息（整体错误信息from django.core.exceptions import NON_FIELD_ERRORS）
+                        field_classes={
+                            'email': Ffield.URLField # 在前端页面正则验证时 不再是model中的邮箱格式验证 而是url格式
+                        }              # 自定义字段类型 （也可以自定义字段）
+                        localized_fields=('birth_date',) # 本地化，如：根据不同时区显示数据
+                        如：
+                            数据库中
+                                2016-12-27 04:10:57
+                            setting中的配置
+                                TIME_ZONE = 'Asia/Shanghai'
+                                USE_TZ = True
+                            则显示：
+                                2016-12-27 12:10:57
 
 
 - Ajax

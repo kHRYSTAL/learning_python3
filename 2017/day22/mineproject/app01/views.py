@@ -4,6 +4,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django import forms
 from django.forms import fields
+from django.forms import widgets as Fwidgets
 
 from app01 import models
 
@@ -48,6 +49,9 @@ def index(request):
     elif request.method == 'POST':
         form = UserInfoModelForm(request.POST)
         res = form.is_valid()
+        if res:
+            # 使用modelform可直接保存至数据库 比form获取cleaned_data再保存更简单
+            form.save()
         # if res:
         #     # 验证成功 获取所有的正确信息
         #     print(form.cleaned_data)

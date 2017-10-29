@@ -106,7 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# 改为上海时间 而不是本初子午线时间(UTC)
+TIME_ZONE = 'Asia/Shanghai'
+USE_TZ = True
 
 USE_I18N = True
 
