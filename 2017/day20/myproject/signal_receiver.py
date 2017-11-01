@@ -36,6 +36,7 @@ def callback(sender, **kwargs):
     # print(sender, kwargs)
     pass
 
+
 # 注册接受数据库对象构造函数触发信号
 pre_init.connect(callback)
 # endregion
@@ -43,10 +44,14 @@ pre_init.connect(callback)
 # region 注册方式2
 from django.core.signals import request_finished
 from django.dispatch import receiver
+
+
 @receiver(request_finished)
 def my_callback(sender, **kwargs):
     # print("Request finished!")
     pass
+
+
 # endregion
 
 
@@ -61,7 +66,6 @@ def pizza_done_callback(sender, **kwargs):
     # print(sender, kwargs)
     pass
 
+
 pizza_done.connect(callback)
 # endregion
-
-
