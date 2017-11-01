@@ -1,4 +1,44 @@
 ##### 知识点概要
+- select_related()数据库查询优化
+
+        class Person(models.Model);
+            name = models.CharField('作者姓名', max_length=10)
+            age = models.IntegerField('作者年龄')
+
+        class Book(models.Model):
+            person = models.ForeignKey(Person, related_name='person_book')
+            title = models.CharField('书籍名称', max_length=10)
+            pubtime = models.DateField('出版时间')
+
+        select_related()函数用于querySet查询结果集的优化
+            如:在外键关联表中 如果在book表查询person的name时
+            我们一般会执行
+            p = book.person
+            p.name
+            实际上就相当于通过外键person_id(Book表的实际存储字段)获取person表对象
+            再通过person对象获取name
+            这就相当于进行了两次数据库查询 效率比较低
+
+        使用select_related() 相当于对querySet结果集优化 在查询时执行了left_join|inner_join
+        即 在第一次查询的时候就进行了并联查询 通过一次查询获取到你需要的数据 而不重复操作数据库
+
+        那么 使用select_related()可以这样查询:
+        p = models.Person.objects.all().select_related(person__name)
+        p.name
+
+        也可以(慎用, 外键层级复杂会查询异常 有最大递归查询上限 超出会跳出递归)
+        models.Person.objects.all().select_related() # 一次性获取person中的所有字段, 尽可能多的获取所有外键关联和外键的表的其他外键关联的表的字段
+
+        也可以
+        models.Person.objects.all().select_related(depth=2) # 查询深度为2层 即当外键表中还有其他外键时不会再查询
+
+        参考: http://blog.jobbole.com/74881/
+
+        注意 select_related() 不支持多对多表的查询 仅支持一对多的查询
+
+
+
+
 
 - ModelForm补充
 
@@ -73,6 +113,28 @@
                                 USE_TZ = True
                             则显示：
                                 2016-12-27 12:10:57
+
+                 接受表单并进行数据库操作:
+
+                    def index(request):
+                        if request.method == 'GET':
+                            form = UserInfoModelForm()
+                            return render(request, 'index.html', {'form': form})
+
+                        elif request.method == 'POST':
+                            form = UserInfoModelForm(request.POST)
+                            res = form.is_valid() # 验证是否有效
+                            if res:
+                                # 使用modelform可直接保存至数据库 比form获取cleaned_data再保存更简单
+                                # 支持多对多的表存储 内部执行当前表-UserInfo的存储和内部的m2m多对多关系的存储
+                                form.save()
+
+                                #只进行当前表实例存储 不进行多对多存储:
+                                instance = form.save(False)
+                                instance.save()
+                                # 多对多表的存储
+                                form.save_m2m()
+                            return redirect('/index/')
 
 
 - Ajax

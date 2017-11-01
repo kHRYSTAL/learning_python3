@@ -16,6 +16,10 @@ class UserGroup(models.Model):
     """
     name = models.CharField(max_length=32)
 
+    def __str__(self):
+        # 在前端页面选择器显示的为caption 而不是usertype对象
+        return self.name
+
 
 class UserInfo(models.Model):
     # verbose_name 用于后台管理和modelform的label显示

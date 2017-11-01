@@ -51,6 +51,7 @@ def index(request):
         res = form.is_valid()
         if res:
             # 使用modelform可直接保存至数据库 比form获取cleaned_data再保存更简单
+            # 支持多对多的表存储
             form.save()
         # if res:
         #     # 验证成功 获取所有的正确信息
