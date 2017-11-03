@@ -65,3 +65,8 @@ def index(request):
         #     # 验证失败 显示错误信息
         #     return render(request, "index.html", {'form': form})
         return redirect('/index/')
+
+
+def user_list(request):
+    li = models.UserInfo.objects.select_related('user_type').all()
+    return render(request, 'user_list.html', {'li': li})

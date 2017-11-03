@@ -23,7 +23,7 @@
         即 在第一次查询的时候就进行了并联查询 通过一次查询获取到你需要的数据 而不重复操作数据库
 
         那么 使用select_related()可以这样查询:
-        p = models.Person.objects.all().select_related(person__name)
+        p = models.Person.objects.all().select_related(person)
         p.name
 
         也可以(慎用, 外键层级复杂会查询异常 有最大递归查询上限 超出会跳出递归)
@@ -32,7 +32,11 @@
         也可以
         models.Person.objects.all().select_related(depth=2) # 查询深度为2层 即当外键表中还有其他外键时不会再查询
 
+        注意 外键的外键需要使用双下划线
+
         参考: http://blog.jobbole.com/74881/
+             http://www.cnblogs.com/wt11/p/6392972.html
+
 
         注意 select_related() 不支持多对多表的查询 仅支持一对多的查询
 

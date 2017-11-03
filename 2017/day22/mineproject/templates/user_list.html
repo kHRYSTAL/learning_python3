@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserList</title>
+</head>
+<body>
+    {% for row in li%}
+        <li>{{ row.username }}-{{row.user_type.caption}}</li>
+    {% endfor %}
+</body>
+</html>
