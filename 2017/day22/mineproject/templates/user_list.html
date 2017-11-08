@@ -6,7 +6,7 @@
 </head>
 <body>
     {% for row in li%}
-        <li>{{ row.username }}-{{row.user_type.caption}}</li>
+        <li>{{ row.username }}-{{row.user_type.caption}}-<a href="/edit-{{ row.id }}">编辑</a></li>
     {% endfor %}
 </body>
 </html>

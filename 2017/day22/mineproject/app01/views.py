@@ -70,3 +70,7 @@ def index(request):
 def user_list(request):
     li = models.UserInfo.objects.select_related('user_type').all()
     return render(request, 'user_list.html', {'li': li})
+
+
+def user_edit(request, nid):
+    pass

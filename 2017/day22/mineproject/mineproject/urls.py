@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
     url(r'^user_list/$', views.user_list),
+    url(r'^edit-(\d+)/$', views.user_edit),
 ]
