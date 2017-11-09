@@ -140,6 +140,13 @@
                                 form.save_m2m()
                             return redirect('/index/')
 
+                 设置modelForm 表单的默认选中:
+                    user_obj = models.UserInfo.objects.filter(id=nid).first()
+                    # 页面显示的表单  # 将user_obj 设置为表单中的默认数据
+                    mf = UserInfoModelForm(instance=user_obj)
+
+                    return render(request, 'user_edit.html', {'mf': mf})
+
 
 - Ajax
 

@@ -68,9 +68,27 @@ def index(request):
 
 
 def user_list(request):
+    # selected_related 不支持多对多的查询优化
     li = models.UserInfo.objects.select_related('user_type').all()
     return render(request, 'user_list.html', {'li': li})
 
 
 def user_edit(request, nid):
-    pass
+    # 获取当前id对应的用户信息
+    # 显示用户已经存在的数据至input
+    if request.method == 'GET':
+        user_obj = models.UserInfo.objects.filter(id=nid).first()
+        # 页面显示的表单  # 将user_obj 设置为表单中的默认数据
+        mf = UserInfoModelForm(instance=user_obj)
+        return render(request, 'user_edit.html', {'mf': mf})
+    elif request.method == 'POST':  # 提交数据
+        user_obj = models.UserInfo.objects.filter(id=nid).first()
+        # 如果验证成功 需要update, 只使用save()是创建 因此也需要设置指定的默认数据
+        mf = UserInfoModelForm(request.POST, instance=user_obj)
+        if mf.is_valid():
+
+            mf.save()
+        else:
+            print(mf.errors.as_json())
+        return render(request, 'user_edit.html', {'mf': mf})
+
