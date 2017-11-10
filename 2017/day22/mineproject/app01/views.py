@@ -91,4 +91,3 @@ def user_edit(request, nid):
         else:
             print(mf.errors.as_json())
         return render(request, 'user_edit.html', {'mf': mf})
-
