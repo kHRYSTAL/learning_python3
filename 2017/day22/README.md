@@ -147,6 +147,34 @@
 
                     return render(request, 'user_edit.html', {'mf': mf})
 
+                 注意:
+
+                    在html表单中设置数据库表某行数据为默认数据可以使用
+                        mf = UserInfoModelForm(instance=user_obj)
+
+                    更新表数据在save时也需要指定instance
+                    user_obj = models.UserInfo.objects.filter(id=nid).first()
+                    # 如果验证成功 需要update, 只使用save()是创建 因此也需要设置指定的默认数据
+                    mf = UserInfoModelForm(request.POST, instance=user_obj)
+                    if mf.is_valid():
+                        mf.save()
+
+                 ModelFrom 记录额外字段
+
+                     class UserInfoModelForm(forms.ModelForm):
+                        # 定义额外字段 记住登录状态 与数据库表无关
+                        is_remember = fields.CharField(
+                            widget=Fwidgets.CheckboxInput()
+                            )
+
+                     mf = UserInfoModelForm(request.POST)
+                     if mf.is_valid():
+                        print(mf.cleaned_data.get('is_remember')) # 保存到session
+                        mf.save()
+
+
+
+
 
 - Ajax
 
