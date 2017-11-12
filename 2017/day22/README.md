@@ -173,6 +173,19 @@
                         mf.save()
 
 
+                 总结 ModelForm 能够帮助生成Html标签
+                    内部类class Meta 能够帮助生成各种各样的标签
+                    可以在生成html标签时设置默认值
+                    mf = xxxModelForm(instance= ModelObj)
+
+                    可以定制额外的标签 与class Meta同级
+                    通过 mf.clean_data.get(xxx) 接收
+                    验证规则使用is_valid() 通过勾子函数判断是否验证通过 勾子函数可以在Meta类中定义
+                    数据库新增和更新使用save() 在mf初始化时通过instance区分
+                    save_m2m()可以对多对多关系 进行多张表数据的存储 当表中存在多对多关系时 save() 默认为多对多存储
+                    使用save(False) 可以不对多张表进行存储 只对当前表进行存储
+
+
 
 
 
