@@ -189,9 +189,18 @@
 
 
 
-- Ajax
+- Ajax操作
 
     - 原生XmlHttpRequest
+
+            ajax是浏览器XmlHttpRequest 和 RequestObject这些原生请求对象的上层封装
+
+            参考
+                http://www.cnblogs.com/wupeiqi/articles/5703697.html
+
+            创建对象
+                var a = new XMLHttpRequest();
+
     - jQuery
     - 伪Ajax操作
 
