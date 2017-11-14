@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生Ajax操作</title>
+</head>
+<body>
+<input type="button" value="ajax1" onclick="Ajax1();"/>
+<script>
+    function Ajax1() {
+        var xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest.open("GET", '/ajax_json/', true);
+        xmlHttpRequest.send("name=root;pwd=123");
+    }
+</script>
+</body>
+</html>

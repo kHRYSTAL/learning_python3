@@ -201,6 +201,73 @@
             创建对象
                 var a = new XMLHttpRequest();
 
+                a. void open(String method,String url,Boolen async)
+                   用于创建请求
+
+                   参数：
+                       method： 请求方式（字符串类型），如：POST、GET、DELETE...
+                       url：    要请求的地址（字符串类型）
+                       async：  是否异步（布尔类型）
+
+                b. void send(String body)
+                    用于发送请求
+
+                    参数：
+                        body： 要发送的数据（字符串类型）
+
+                c. void setRequestHeader(String header,String value)
+                    用于设置请求头
+
+                    参数：
+                        header： 请求头的key（字符串类型）
+                        vlaue：  请求头的value（字符串类型）
+
+                d. String getAllResponseHeaders()
+                    获取所有响应头
+
+                    返回值：
+                        响应头数据（字符串类型）
+
+                e. String getResponseHeader(String header)
+                    获取响应头中指定header的值
+
+                    参数：
+                        header： 响应头的key（字符串类型）
+
+                    返回值：
+                        响应头中指定的header对应的值
+
+                f. void abort()
+
+                    终止请求
+
+           XMLHttpRequest 属性
+
+                a. Number readyState
+                   状态值（整数）
+
+                   详细：
+                      0-未初始化，尚未调用open()方法；
+                      1-启动，调用了open()方法，未调用send()方法；
+                      2-发送，已经调用了send()方法，未接收到响应；
+                      3-接收，已经接收到部分响应数据；
+                      4-完成，已经接收到全部响应数据；
+
+                b. Function onreadystatechange
+                   当readyState的值改变时自动触发执行其对应的函数（回调函数）
+
+                c. String responseText
+                   服务器返回的数据（字符串类型）
+
+                d. XmlDocument responseXML
+                   服务器返回的数据（Xml对象）
+
+                e. Number states
+                   状态码（整数），如：200、404...
+
+                f. String statesText
+                   状态文本（字符串），如：OK、NotFound...
+
     - jQuery
     - 伪Ajax操作
 

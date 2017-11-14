@@ -22,4 +22,7 @@ urlpatterns = [
     url(r'^index/', views.index),
     url(r'^user_list/$', views.user_list),
     url(r'^edit-(\d+)/$', views.user_edit),
+    url(r'ajax_test/$', views.ajax_test),
+    url(r'ajax_json/$', views.ajax_json),
+
 ]

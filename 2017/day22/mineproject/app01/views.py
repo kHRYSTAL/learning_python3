@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, render_to_response
 from django import forms
 from django.forms import fields
 from django.forms import widgets as Fwidgets
@@ -108,3 +108,13 @@ def user_edit(request, nid):
         else:
             print(mf.errors.as_json())
         return render(request, 'user_edit.html', {'mf': mf})
+
+
+def ajax_test(request):
+    return render(request, 'ajax_test.html')
+
+
+def ajax_json(request):
+    ret = {'status': True, 'data': None}
+    import json
+    return HttpResponse(json.dumps(ret))
