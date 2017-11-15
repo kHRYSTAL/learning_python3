@@ -5,12 +5,49 @@
     <title>原生Ajax操作</title>
 </head>
 <body>
+{{ csrf_token }}
 <input type="button" value="ajax1" onclick="Ajax1();"/>
 <script>
     function Ajax1() {
-        var xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.open("GET", '/ajax_json/', true);
+//        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlHttpRequest = new XMLHttpRequest();
+//        }
+//        else {// code for IE6, IE5
+//            xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+//        }
+        xmlHttpRequest.open("POST", '/ajax_json/', true);
+        // 设置请求头
+        csrftoken = getCookie('csrftoken');
+        xmlHttpRequest.setRequestHeader("key", "value"); // post请求时有csrf时需要设置请求头 如果django加了csrf校验 在回传给前端时会在cookies中
+//        xmlHttpRequest.setRequestHeader('X-CSRFToken', csrftoken);
+        xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // 如果为post请求需要设置请求头
+        xmlHttpRequest.onreadystatechange = function () { // 接收事件回调
+            if (xmlHttpRequest.readyState == 4) { // 4表示接收response完成 一般还需要判断状态码为200
+                console.log(xmlHttpRequest.responseText); // 输出字符串
+                console.log(xmlHttpRequest.responseXML); // 输出字符串转换的标签 XMLDocument对象
+                console.log(xmlHttpRequest.status); // 服务端返回的状态码
+                resp = JSON.parse(xmlHttpRequest.responseText);
+
+            }
+        };
         xmlHttpRequest.send("name=root;pwd=123");
+
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 </script>
 </body>

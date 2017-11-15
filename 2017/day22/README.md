@@ -193,7 +193,7 @@
 
     - 原生XmlHttpRequest
 
-            ajax是浏览器XmlHttpRequest 和 RequestObject这些原生请求对象的上层封装
+            ajax是浏览器XmlHttpRequest 和 ActiveXObject这些原生请求对象的上层封装
 
             参考
                 http://www.cnblogs.com/wupeiqi/articles/5703697.html
@@ -268,8 +268,46 @@
                 f. String statesText
                    状态文本（字符串），如：OK、NotFound...
 
+        注意:
+
+                       function Ajax1() {
+                        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                            xmlHttpRequest = new XMLHttpRequest();
+                        }
+                        else {// code for IE6, IE5
+                            xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                        xmlHttpRequest.open("POST", '/ajax_json/', true);
+                        // 设置请求头
+                        csrftoken = getCookie('csrftoken');
+                        xmlHttpRequest.setRequestHeader("key", "value");
+                        // post请求时有csrf时需要设置请求头 如果django加了csrf校验 在回传给前端时会在cookies中
+                //      xmlHttpRequest.setRequestHeader('X-CSRFToken', csrftoken);
+                        // 如果为post请求需要设置请求头
+                        xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                        xmlHttpRequest.onreadystatechange = function () { // 接收事件回调
+                            if (xmlHttpRequest.readyState == 4) { // 4表示接收response完成 一般还需要判断状态码为200
+                                console.log(xmlHttpRequest.responseText); // 输出字符串
+                                console.log(xmlHttpRequest.responseXML); // 输出字符串转换的标签 XMLDocument对象
+                                console.log(xmlHttpRequest.status); // 服务端返回的状态码
+                                resp = JSON.parse(xmlHttpRequest.responseText);
+
+                            }
+                        };
+                        xmlHttpRequest.send("name=root;pwd=123");
+
+                参考 ajax_test.html
+
     - jQuery
     - 伪Ajax操作
+
+- HttpResponse自定义状态码与Message
+
+        def ajax_json(request):
+            ret = {'status': True, 'data': None}
+            import json
+            return HttpResponse(json.dumps(ret), status=404, reason="找不到页面")  # 自定义状态码
 
 - 文件上传(预览)
 

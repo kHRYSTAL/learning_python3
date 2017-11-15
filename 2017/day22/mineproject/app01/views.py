@@ -115,6 +115,8 @@ def ajax_test(request):
 
 
 def ajax_json(request):
+    print(request.POST)
     ret = {'status': True, 'data': None}
     import json
+    # return HttpResponse(json.dumps(ret), status=404, reason="找不到页面")  # 自定义状态码
     return HttpResponse(json.dumps(ret))
