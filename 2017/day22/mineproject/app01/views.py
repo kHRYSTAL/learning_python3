@@ -16,7 +16,6 @@ from app01 import models
 # Create your views here.
 
 class UserInfoForm(forms.Form):
-
     username = fields.CharField(max_length=32)
     email = fields.EmailField()
 
@@ -47,15 +46,15 @@ class UserInfoModelForm(forms.ModelForm):
         model = models.UserInfo
         fields = '__all__'
 
-    # def clean_username(self):
-    #     """ clean_[field] """
-    #     """
-    #     username字段验证与转换
-    #     如: username中不能传递特殊字符和表情
-    #     可以在这个函数内过滤
-    #     """
-    #     old_val = self.cleaned_data['username']
-    #     return "..."
+        # def clean_username(self):
+        #     """ clean_[field] """
+        #     """
+        #     username字段验证与转换
+        #     如: username中不能传递特殊字符和表情
+        #     可以在这个函数内过滤
+        #     """
+        #     old_val = self.cleaned_data['username']
+        #     return "..."
 
 
 def index(request):
@@ -103,7 +102,7 @@ def user_edit(request, nid):
         # 如果验证成功 需要update, 只使用save()是创建 因此也需要设置指定的默认数据
         mf = UserInfoModelForm(request.POST, instance=user_obj)
         if mf.is_valid():
-            print(mf.cleaned_data.get('is_remember')) # 保存到session
+            print(mf.cleaned_data.get('is_remember'))  # 保存到session
             mf.save()
         else:
             print(mf.errors.as_json())
