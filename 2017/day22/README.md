@@ -300,7 +300,25 @@
                 参考 ajax_test.html
 
     - jQuery
-    - 伪Ajax操作
+
+                jQuery的ajax
+
+                $.ajax({
+                    url: '/host',
+                    type: "POST",
+                    data: {'k1': 123, 'k2': root},
+                    success : function(result,status,xhr) {
+                        // 如果不想使用ajax封装好的result, 可以直接使用第三个参数xhr
+                        // xhr就是XMLHttpResponse对象 可以进行原生ajax操作
+                    }
+                });
+
+    - 伪Ajax操作 :
+
+            iframe 在页面中包含独立的一块页面 通过url 可以显示不同的网页,
+            iframe页面是独立于整个页面的 因此也是局部刷新
+
+
 
 - HttpResponse自定义状态码与Message
 

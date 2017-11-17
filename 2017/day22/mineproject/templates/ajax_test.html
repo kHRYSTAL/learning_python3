@@ -5,12 +5,39 @@
     <title>原生Ajax操作</title>
 </head>
 <body>
-{{ csrf_token }}
+<input type="text" value="{{ csrf_token }}" hidden/>
+ajax提交测试
 <input type="button" value="ajax1" onclick="Ajax1();"/>
+
+
+<div>
+    <input id="website" type="text"/>
+    <input type="button" value="发送iframe请求" onclick="iframeOnRequest();"/>
+
+</div>
+<div>
+    <iframe id="ifm" src="http://www.baidu.com"></iframe>
+</div>
+
+<div>
+    <form action="/ajax_json" method="GET" target="ifm1">
+        <iframe name="ifm1"></iframe>
+        <div>
+            <input type="text" name="username"/>
+            <input type="text" name="email"/>
+            <input type="submit" value="Form提交"/>
+
+        </div>
+
+    </form>
+</div>
+
+<script src="/static/jquery-1.12.4.js"></script>
+<script src="/static/jquery.cookie.js"></script>
 <script>
     function Ajax1() {
 //        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlHttpRequest = new XMLHttpRequest();
+        xmlHttpRequest = new XMLHttpRequest();
 //        }
 //        else {// code for IE6, IE5
 //            xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
@@ -48,6 +75,26 @@
             }
         }
         return cookieValue;
+    }
+
+    //    function goToUrl() {
+    //        var website = document.getElementById('website').value;
+    //        if(website.indexOf('http') == -1) {
+    //            website = "http://" + website;
+    //        }
+    //        console.log(website)
+    //    }
+    // 提前绑定函数 document.onReady 执行
+    $(function () {
+    });
+
+    function iframeOnRequest() {
+        var url = $("#website").val();
+        if (url.indexOf('http') == -1) {
+            url = "http://" + url;
+        }
+
+        $("#ifm").attr('src', url);
     }
 </script>
 </body>
