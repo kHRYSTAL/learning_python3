@@ -5,11 +5,11 @@
     <title>Index</title>
 </head>
 <body>
-    <form action="{{ request.path_info }}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="提交">
-    </form>
+<form action="{{ request.path_info }}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="提交">
+</form>
 
 </body>
 </html>
