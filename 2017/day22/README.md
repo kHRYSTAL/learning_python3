@@ -318,6 +318,14 @@
             iframe 在页面中包含独立的一块页面 通过url 可以显示不同的网页,
             iframe页面是独立于整个页面的 因此也是局部刷新
 
+    - 使用上述Ajax操作的时机
+
+            纯字符串或Json操作 如果允许使用JQuery, 否则使用XMLHttpResponse 最次是iframe
+
+            url, 上传文件
+
+
+
 
 
 - HttpResponse自定义状态码与Message

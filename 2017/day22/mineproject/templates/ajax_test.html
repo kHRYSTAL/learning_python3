@@ -21,11 +21,11 @@ ajax提交测试
 
 <div>
     <form action="/ajax_json" method="GET" target="ifm1">
-        <iframe name="ifm1"></iframe>
+        <iframe id="ifm1" name="ifm1"></iframe>
         <div>
             <input type="text" name="username"/>
             <input type="text" name="email"/>
-            <input type="submit" value="Form提交"/>
+            <input type="submit" onclick="submitForm();" value="Form提交"/>
 
         </div>
 
@@ -95,6 +95,16 @@ ajax提交测试
         }
 
         $("#ifm").attr('src', url);
+    }
+    
+    function submitForm() {
+        $('#ifm1').load(function () {
+            console.log("iframe onLoad exec");
+            // 加载成功时获取iframe中的内容
+            var text = $('#ifm1').contents().find('body').text();
+            var obj = JSON.parse(text);
+            console.log(obj);
+        })
     }
 </script>
 </body>

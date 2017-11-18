@@ -114,6 +114,8 @@ def ajax_test(request):
 
 
 def ajax_json(request):
+    import time
+    time.sleep(3)
     print(request.POST)
     ret = {'status': True, 'data': None}
     import json
