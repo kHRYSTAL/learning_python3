@@ -24,5 +24,7 @@ urlpatterns = [
     url(r'^edit-(\d+)/$', views.user_edit),
     url(r'ajax_test/$', views.ajax_test),
     url(r'ajax_json/$', views.ajax_json),
+    url(r'upload/$', views.upload),
+    url(r'upload_file/$', views.upload_file),
 
 ]

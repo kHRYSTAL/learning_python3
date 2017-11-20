@@ -121,3 +121,22 @@ def ajax_json(request):
     import json
     # return HttpResponse(json.dumps(ret), status=404, reason="找不到页面")  # 自定义状态码
     return HttpResponse(json.dumps(ret))
+
+
+def upload(request):
+    return render(request, 'upload.html')
+
+
+def upload_file(request):
+    """ 用于接收上传的值和文件 """
+    username = request.POST.get('username')
+    file = request.FILES.get('file')
+    print(username, file)
+
+    with open(file.name, 'wb') as f:
+        for item in file.chunks():
+            f.write(item)
+
+    ret = {'status': True, 'data': username}
+    import json
+    return HttpResponse(json.dumps(ret))

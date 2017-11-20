@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <style>
+        .upload-btn {
+            display: inline-block;
+            padding: 10px;
+            background-color: brown;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: 90;
+        }
+
+        .file {
+            opacity: 0;
+            width: 100px;
+            height: 50px;
+            display: inline-block;
+            background-color: brown;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+<div style="position: relative; width: 100px; height: 50px">
+    <input class="file" type="file" id="upload" name="upload_file"/>
+    <a class="upload-btn">上传</a>
+</div>
+<div>
+    <input type="button" value="提交XHR" onclick="xhrSubmit();"/>
+</div>
+<div>
+    <input type="button" value="提交jQuery" onclick="jQSubmit();">
+</div>
+
+<p>iframe方式提交</p>
+<form action="/upload_file/" method="POST" style="display: none;" enctype="multipart/form-data" target="ifm1">
+    <iframe id="ifm1" name="ifm1"></iframe>
+    <input type="file" name="file"/>
+    <input type="text" name="username"/>
+    <input type="submit" onclick="iframeSubmit();" value="Form提交"/>
+
+</form>
+
+<script src="/static/jquery-1.12.4.js"></script>
+<script src="/static/jquery.cookie.js"></script>
+
+<script>
+
+    function xhrSubmit() {
+        // 获取 需要上传的文件对象
+        var fileObj = document.getElementById('upload').files[0];
+        var xmlHttpRequest = new XMLHttpRequest();
+
+        var formData = new FormData();
+        formData.append('username', 'root'); // key-value;
+        formData.append('file', fileObj);
+        xmlHttpRequest.open("POST", '/upload_file/', true);
+        xmlHttpRequest.onreadystatechange = function () { // 接收事件回调
+            if (xmlHttpRequest.readyState == 4) { // 4表示接收response完成 一般还需要判断状态码为200
+                console.log(xmlHttpRequest.responseText); // 输出字符串
+                console.log(xmlHttpRequest.responseXML); // 输出字符串转换的标签 XMLDocument对象
+                console.log(xmlHttpRequest.status); // 服务端返回的状态码
+                resp = JSON.parse(xmlHttpRequest.responseText);
+
+            }
+        };
+        xmlHttpRequest.send(formData);
+    }
+
+    function jQSubmit() {
+        var fileObj = document.getElementById('upload').files[0];
+        var formData = new FormData();
+        formData.append('username', 'root'); // key-value;
+        formData.append('file', fileObj);
+
+        $.ajax({
+            url: '/upload_file/',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (arg, a1, a2) {
+                console.log(arg);
+                console.log(a1);
+                console.log(a2);
+            }
+        });
+    }
+
+    function iframeSubmit() {
+        // 提交成功后在onLoad时触发
+        $('#ifm1').load(function () {
+            var text = $('#ifm1').contents().find('body').text();
+            var obj = JSON.parse(text);
+            console.log(obj);
+        });
+    }
+</script>
+</body>
+</html>
