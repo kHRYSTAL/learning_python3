@@ -318,11 +318,66 @@
             iframe 在页面中包含独立的一块页面 通过url 可以显示不同的网页,
             iframe页面是独立于整个页面的 因此也是局部刷新
 
-    - 使用上述Ajax操作的时机
+    - 上传文件三种方式:
+
+            function xhrSubmit() {
+                // 获取 需要上传的文件对象
+                var fileObj = document.getElementById('upload').files[0];
+                var xmlHttpRequest = new XMLHttpRequest();
+
+                var formData = new FormData();
+                formData.append('username', 'root'); // key-value;
+                formData.append('file', fileObj);
+                xmlHttpRequest.open("POST", '/upload_file/', true);
+                xmlHttpRequest.onreadystatechange = function () { // 接收事件回调
+                    if (xmlHttpRequest.readyState == 4) { // 4表示接收response完成 一般还需要判断状态码为200
+                        console.log(xmlHttpRequest.responseText); // 输出字符串
+                        console.log(xmlHttpRequest.responseXML); // 输出字符串转换的标签 XMLDocument对象
+                        console.log(xmlHttpRequest.status); // 服务端返回的状态码
+                        resp = JSON.parse(xmlHttpRequest.responseText);
+
+                    }
+                };
+                xmlHttpRequest.send(formData);
+            }
+
+            function jQSubmit() {
+                var fileObj = document.getElementById('upload').files[0];
+                var formData = new FormData();
+                formData.append('username', 'root'); // key-value;
+                formData.append('file', fileObj);
+
+                $.ajax({
+                    url: '/upload_file/',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (arg, a1, a2) {
+                        console.log(arg);
+                        console.log(a1);
+                        console.log(a2);
+                    }
+                });
+            }
+
+            function iframeSubmit() {
+                // 提交成功后在onLoad时触发
+                $('#ifm1').load(function () {
+                    var text = $('#ifm1').contents().find('body').text();
+                    var obj = JSON.parse(text);
+                    console.log(obj);
+                });
+            }
+
+            参考 upload.html
+
+    - 使用上述Ajax操作的时机与选择
 
             纯字符串或Json操作 如果允许使用JQuery, 否则使用XMLHttpResponse 最次是iframe
 
-            url, 上传文件
+            url, 上传文件, 优先选择iframe 因为jQuery 与 XMLHttpResponse 依赖form标签 同时需要自己封装预览效果
+
 
 
 

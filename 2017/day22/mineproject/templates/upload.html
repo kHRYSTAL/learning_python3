@@ -44,18 +44,34 @@
 </div>
 
 <p>iframe方式提交</p>
-<form action="/upload_file/" method="POST" style="display: none;" enctype="multipart/form-data" target="ifm1">
+<form id="fm1" action="/upload_file/" method="POST" enctype="multipart/form-data" target="ifm1">
     <iframe id="ifm1" name="ifm1"></iframe>
-    <input type="file" name="file"/>
+    <input type="file" name="file" onchange="changeUpload();"/>
     <input type="text" name="username"/>
-    <input type="submit" onclick="iframeSubmit();" value="Form提交"/>
-
+    <!--<input type="submit" onclick="iframeSubmit();" value="Form提交"/>-->
 </form>
+
+<div id="preview"></div>
 
 <script src="/static/jquery-1.12.4.js"></script>
 <script src="/static/jquery.cookie.js"></script>
 
 <script>
+
+    function changeUpload() {
+        // 注册load事件
+        $('#ifm1').load(function () {
+            var text = $('#ifm1').contents().find('body').text();
+            var obj = JSON.parse(text);
+            console.log(obj);
+            $('#preview').empty(); // 清空
+            var imgTag = document.createElement('img');
+            imgTag.src = "/" + obj.data;
+            $('#preview').append(imgTag); // 添加标签
+        });
+
+         $('#fm1').submit(); // input输入框change 直接提交表单
+    }
 
     function xhrSubmit() {
         // 获取 需要上传的文件对象
@@ -104,6 +120,10 @@
             var text = $('#ifm1').contents().find('body').text();
             var obj = JSON.parse(text);
             console.log(obj);
+            $('#preview').empty(); // 清空
+            var imgTag = document.createElement('img');
+            imgTag.src = "/" + obj.data;
+            $('#preview').append(imgTag); // 添加标签
         });
     }
 </script>
