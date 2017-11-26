@@ -398,7 +398,22 @@
 
 - 图片验证码(PIL模块) + Session(不能使用cookie)
 
-    TODO
+        图形验证码一般是通过session存储的 在用户get请求至页面时 通过pil生成图形验证吗 并把验证码字符串存储到session中
+        用户提交post请求时 获取用户发送的验证码 与 seesion中的验证码进行对比
+
+        在服务器的session中 每个用户一块存储空间
+
+        流程
+            1 用户GET访问/login/
+                - 创建一个验证码图片(PIL)
+                - Session存放图片上的验证码
+                - 返回给用户
+
+            2 用户POST提交数据至/login/
+                - 将验证码与Session存放的数据进行校验
+
+
+
 
 - 富文本编辑框(加粗等)
 
