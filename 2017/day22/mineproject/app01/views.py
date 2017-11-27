@@ -5,8 +5,10 @@ from django.shortcuts import render, HttpResponse, redirect, render_to_response
 from django import forms
 from django.forms import fields
 from django.forms import widgets as Fwidgets
+from io import BytesIO
 
 from app01 import models
+from utils.check_code import create_validate_code
 
 """
 备份文件 使用form做验证功能
@@ -143,3 +145,52 @@ def upload_file(request):
     ret = {'status': True, 'data': img_path}
     import json
     return HttpResponse(json.dumps(ret))
+
+
+def check_code(request):
+    """
+    验证码
+    :param request:
+    :return:
+    """
+    # stream = BytesIO()
+    # img, code = create_validate_code()
+    # img.save(stream, 'PNG')
+    # request.session['CheckCode'] = code
+    # return HttpResponse(stream.getvalue())
+
+    # data = open('static/imgs/avatar/20130809170025.png','rb').read()
+    # return HttpResponse(data)
+
+    # 1. 创建一张图片 pip3 install Pillow
+    # 2. 在图片中写入随机字符串
+    # obj = object()
+    # 3. 将图片写入到制定文件
+    # 4. 打开制定目录文件，读取内容
+    # 5. HttpResponse(data)
+
+    stream = BytesIO()
+    img, code = create_validate_code()
+    img.save(stream, 'PNG')
+    request.session['CheckCode'] = code
+    return HttpResponse(stream.getvalue())
+
+
+def image_code(request):
+    """
+    登陆
+    :param request:
+    :return:
+    """
+    # if request.method == "POST":
+    #     if request.session['CheckCode'].upper() == request.POST.get('check_code').upper():
+    #         pass
+    #     else:
+    #         print('验证码错误')
+    if request.method == 'POST':
+        code = request.POST.get('check_code')
+        if code.upper() == request.session['CheckCode'].upper():
+            print('验证码正确')
+        else:
+            print('验证码错误')
+    return render(request, 'image_code.html')
