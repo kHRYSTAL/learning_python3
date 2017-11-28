@@ -194,3 +194,7 @@ def image_code(request):
         else:
             print('验证码错误')
     return render(request, 'image_code.html')
+
+
+def kind(request):
+    return render(request, 'kind.html')

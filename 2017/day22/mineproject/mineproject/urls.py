@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'upload/$', views.upload),
     url(r'upload_file/$', views.upload_file),
     url(r'image_code/$', views.image_code),
-    url(r'check_code/$', views.check_code), # 生成验证码图片url
+    url(r'check_code/$', views.check_code),  # 生成验证码图片url
+    url(r'kind/$', views.kind),
 
 ]

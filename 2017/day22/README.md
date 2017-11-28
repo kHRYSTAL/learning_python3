@@ -436,4 +436,22 @@
         - 文件上传/多文件上传/文件空间管理
         - 防止 XSS 攻击(接受客户端请求字符串中的指定字符, 过滤函数和标签)
         - [下载地址](http://kindeditor.net/down.php)
+        - [详细参数](http://kindeditor.net/docs/option.html)
+
+        ```
+        创建KindEditor
+         $(function () {
+            // 创建富文本编辑框
+            KindEditor.create('#content', {
+                width: '100%',       // 文本框宽度(可以百分比或像素)
+                height: '300px',     // 文本框高度(只能像素)
+                minWidth: 200,       // 最小宽度（数字）
+                minHeight: 400      // 最小高度（数字）
+            });
+        });
+        ```
+
+
+
+
 

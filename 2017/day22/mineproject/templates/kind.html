@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kind Editor</title>
+</head>
+<body>
+<div style="width: 500px; margin: 0 auto;">
+    <textarea id="content"></textarea>
+</div>
+
+<script src="/static/jquery-1.12.4.js"></script>
+<script src="/static/jquery.cookie.js"></script>
+<script src="/static/kindeditor/kindeditor-all.js"></script>
+<script>
+    $(function () {
+        // 创建富文本编辑框
+        KindEditor.create('#content', {
+            width: '100%',       // 文本框宽度(可以百分比或像素)
+            height: '300px',     // 文本框高度(只能像素)
+            minWidth: 200,       // 最小宽度（数字）
+            minHeight: 400      // 最小高度（数字）
+        });
+    })
+</script>
+</body>
+</html>
