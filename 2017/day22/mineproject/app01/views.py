@@ -198,3 +198,23 @@ def image_code(request):
 
 def kind(request):
     return render(request, 'kind.html')
+
+
+def kind_upload_img(request):
+    file = request.FILES.get('file')
+
+    import os, datetime
+    filename = str(datetime.datetime.now()) + '.jpg'
+    img_path = os.path.join('static/image', filename)
+
+    with open(img_path, 'wb') as f:
+        for item in file.chunks():
+            f.write(item)
+
+    import json
+    dic = {
+        'error': 0,
+        'url': "/" + img_path,
+        'message': "success"
+    }
+    return HttpResponse(json.dumps(dic))
