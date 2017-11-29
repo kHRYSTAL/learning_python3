@@ -201,10 +201,9 @@ def kind(request):
 
 
 def kind_upload_img(request):
-    file = request.FILES.get('file')
-
+    file = request.FILES.get('imgFile')
     import os, datetime
-    filename = str(datetime.datetime.now()) + '.jpg'
+    filename = str(datetime.datetime.now().microsecond) + '.jpg'
     img_path = os.path.join('static/image', filename)
 
     with open(img_path, 'wb') as f:
