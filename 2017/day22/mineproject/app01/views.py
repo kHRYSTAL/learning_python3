@@ -201,9 +201,12 @@ def kind(request):
 
 
 def kind_upload_img(request):
+    dir = request.GET.get('dir')
+    if (dir == 'image'):
+        pass
     file = request.FILES.get('imgFile')
     import os, datetime
-    filename = str(datetime.datetime.now().microsecond) + '.jpg'
+    filename = str(datetime.datetime.now().timestamp()) + '.jpg'
     img_path = os.path.join('static/image', filename)
 
     with open(img_path, 'wb') as f:
@@ -212,7 +215,7 @@ def kind_upload_img(request):
 
     import json
     dic = {
-        'error': 0,
+        'error': 0,  # 0代表正确 1代表错误
         'url': "/" + img_path,
         'message': "success"
     }

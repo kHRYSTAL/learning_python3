@@ -14,7 +14,7 @@
 <script src="/static/kindeditor/kindeditor-all.js"></script>
 <script>
     $(function () {
-        // 创建富文本编辑框
+        // 创建富文本编辑框, 上传通过 iframe + form 封装
         KindEditor.create('#content', {
             width: '100%',       // 文本框宽度(可以百分比或像素)
             height: '300px',     // 文本框高度(只能像素)
@@ -24,8 +24,16 @@
 //            noDisableItems: ['source', 'fullscreen'], // 除了源码与全屏 其他不可点击 依赖designMode
 //            designMode: false // 不可点击
 
-            uploadJson: '/kind_upload_img/' // 上传图片地址
+            uploadJson: '/kind_upload_img/', // 上传图片地址
+            allowImageUpload: true, // 是否允许图片上传 默认为true
+            allowImageRemote: false, // 是否允许远程图片上传, 默认为true
 
+            autoHeightMode: true, // 输入框高度是否随内容自动增加 默认为false
+
+            fileManagerJson: 'kind_upload_file/', // 文件上传路径
+            allowFileManager: true, // 默认为false 如果为true 在上传图层显示图片空间, 视频空间, 文件空间
+            // 注意 所有的上传实际上走的都是uploadJson指定的url路径 因此 需要在kind_upload_img的views中做判断区分
+            // 通过上传时的dir="?"
 
         }
         );
