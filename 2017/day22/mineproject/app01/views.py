@@ -201,11 +201,12 @@ def kind(request):
 
 
 def kind_upload_img(request):
-    dir = request.GET.get('dir')
-    if (dir == 'image'):
-        pass
+    file_dir = request.GET.get('dir')
+    if file_dir == 'image':
+        print("dir is:", file_dir)
     file = request.FILES.get('imgFile')
-    import os, datetime
+    import os
+    import datetime
     filename = str(datetime.datetime.now().timestamp()) + '.jpg'
     img_path = os.path.join('static/image', filename)
 
@@ -219,4 +220,83 @@ def kind_upload_img(request):
         'url': "/" + img_path,
         'message': "success"
     }
+    return HttpResponse(json.dumps(dic))
+
+
+import os
+import json
+import time
+
+
+def file_manager(request):
+    """
+    文件管理
+    :param request:
+    :return:
+    kind 文件空间需要的格式
+    {
+        moveup_dir_path: 上一级文件夹路径
+        current_dir_path: 当前文件夹路径
+        current_url: 图片或其他可预览文件的前缀 在settings.py 配置 这里设置的是/static/
+        当前文件夹下的内容 默认每一个文件都是一个字典
+        file_list:[
+            {
+                'is_dir': // 是否为文件夹
+                'has_file': // 里面是否有文件,
+                'filesize': // 文件大小 文件夹可以设置为0 也可以设置内部文件大小
+                'dir_path': // 路径
+                'is_photo': // 是否是图片
+                'filetype': // 文件类型
+                'filename': // 文件名
+                'datetime': // 创建时间
+            }
+        ]
+    }
+    """
+    dic = {}
+    root_path = '/Users/kHRYSTAL/PycharmProjects/learning_python3/2017/day22/mineproject/static/' # 用户可以查看文件路径的根
+    static_root_path = '/static/'
+    request_path = request.GET.get('path')
+    if request_path:
+        abs_current_dir_path = os.path.join(root_path, request_path)
+        move_up_dir_path = os.path.dirname(request_path.rstrip('/'))
+        dic['moveup_dir_path'] = move_up_dir_path + '/' if move_up_dir_path else move_up_dir_path
+
+    else:
+        abs_current_dir_path = root_path
+        dic['moveup_dir_path'] = ''
+
+    dic['current_dir_path'] = request_path
+    dic['current_url'] = os.path.join(static_root_path, request_path)
+
+    file_list = []
+    for item in os.listdir(abs_current_dir_path):
+        abs_item_path = os.path.join(abs_current_dir_path, item)
+        a, exts = os.path.splitext(item)
+        is_dir = os.path.isdir(abs_item_path)
+        if is_dir:
+            temp = {
+                'is_dir': True,
+                'has_file': True,
+                'filesize': 0,
+                'dir_path': '',
+                'is_photo': False,
+                'filetype': '',
+                'filename': item,
+                'datetime': time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(os.path.getctime(abs_item_path)))
+            }
+        else:
+            temp = {
+                'is_dir': False,
+                'has_file': False,
+                'filesize': os.stat(abs_item_path).st_size,
+                'dir_path': '',
+                'is_photo': True if exts.lower() in ['.jpg', '.png', '.jpeg'] else False,
+                'filetype': exts.lower().strip('.'),
+                'filename': item,
+                'datetime': time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(os.path.getctime(abs_item_path)))
+            }
+
+        file_list.append(temp)
+    dic['file_list'] = file_list
     return HttpResponse(json.dumps(dic))
