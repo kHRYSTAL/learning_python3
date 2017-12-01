@@ -452,7 +452,7 @@
         ```
         - 基本配置 参考kind.html
         - 用户-文件空间管理 参考 views.py#file_manager
-        - XSS 过滤特殊字符, 如标签过滤:
+        - XSS 过滤特殊字符, 如标签过滤: 参考util/xssfilter.py
 
 
 
