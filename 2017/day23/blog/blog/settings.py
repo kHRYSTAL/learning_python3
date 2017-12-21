@@ -24,7 +24,9 @@ SECRET_KEY = '$mgbzj5)-oa$dbhx=in9djvh+q$q0i19zzit#r$!myu(!e2z)h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'khrystal.tunnel.echomod.cn',
+]
 
 # Application definition
 

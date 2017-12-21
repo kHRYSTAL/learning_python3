@@ -5,3 +5,7 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'index.html')
+
+
+def startWechat(request):
+    return render(request, 'redirect.html')
