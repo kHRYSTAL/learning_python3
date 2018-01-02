@@ -18,5 +18,5 @@ from app import views
 urlpatterns = [
     url(r'^index/', views.index),
     url(r'^startWechat/', views.startWechat),
-    url(r'^article/', views.article)
+    url(r'^article-(?P<article_type_id>\d+)-(?P<category_id>\d+).html', views.article)
 ]
