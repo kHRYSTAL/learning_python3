@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /* a 标签为内连标签 padding 属性不管用 因此需要改为inline-block 使其具有block属性*/
+        .condition a{
+            display: inline-block;
+            padding: 3px 5px;
+            border: 1px solid #DDDDDD;
+            margin: 5px 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>过滤条件</h1>
+        <div class="condition">
+            <a>全部</a>
+            {% for row in article_type_list %}
+            <a>{{row.caption}}</a>
+            {%endfor%}
+        </div>
+
+         <div class="condition">
+            <a>全部</a>
+            {% for row in category_list %}
+            <a>{{row.caption}}</a>
+            {%endfor%}
+        </div>
+
+    <h1>查询结果</h1>
+    <ul>
+        {% for row in article_list %}
+            <li>{{row.id}} - {{row.title}}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
