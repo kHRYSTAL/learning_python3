@@ -64,18 +64,19 @@ def filter_other(arg_dict, list_arr, types):
     {%endfor%}
     """
     ret = ""
-    if types == 0:
+    if types == 0:  # 元组[(id, article_type),(id, article_type),(id, article_type)]
         for row in list_arr:
-            if row.id == arg_dict['article_type_id']:
+            print("---->", row)
+            if row[0] == arg_dict['article_type_id']:
                 ret += '<a class="active" href="/article-%s-%s.html">%s</a>' % (
-                row.id, arg_dict['category_id'], row.caption)
+                    row[0], arg_dict['category_id'], row[1])
             else:
-                ret += '<a href="/article-%s-%s.html">%s</a>' % (row.id, arg_dict['category_id'], row.caption)
+                ret += '<a href="/article-%s-%s.html">%s</a>' % (row[0], arg_dict['category_id'], row[1])
     elif types == 1:
         for row in list_arr:
             if row.id == arg_dict['category_id']:
                 ret += '<a class="active" href="/article-%s-%s.html">%s</a>' % (
-                arg_dict['article_type_id'], row.id, row.caption)
+                    arg_dict['article_type_id'], row.id, row.caption)
             else:
                 ret += '<a href="/article-%s-%s.html">%s</a>' % (arg_dict['article_type_id'], row.id, row.caption)
     return mark_safe(ret)

@@ -35,7 +35,8 @@ def article(request, *args, **kwargs):
         else:
             condition[k] = v
 
-    article_type_list = models.ArticleType.objects.all()
+    # article_type_list = models.ArticleType.objects.all()
+    article_type_list = models.Article.type_choice
     category_list = models.Category.objects.all()
     # 字典解包,当作参数传递
     article_list = models.Article.objects.filter(**condition)
@@ -45,3 +46,6 @@ def article(request, *args, **kwargs):
         'article_list': article_list,
         'arg_dict': kwargs
     })
+
+def jsonp(request):
+    return render(request, 'jsonp.html')
