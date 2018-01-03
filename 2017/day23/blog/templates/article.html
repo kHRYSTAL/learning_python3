@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load custom_tpl_func %}
 <head>
     <meta charset="UTF-8">
     <style>
@@ -10,22 +11,48 @@
             border: 1px solid #DDDDDD;
             margin: 5px 5px;
         }
+
+        .condition a.active{
+            background-color: #1c5a9c;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <h1>过滤条件</h1>
         <div class="condition">
-            <a>全部</a>
-            {% for row in article_type_list %}
-            <a>{{row.caption}}</a>
-            {%endfor%}
+            {% filter_all arg_dict 0%}
+            {% filter_other arg_dict article_type_list 0%}
+            <!--{% if arg_dict.article_type_id == 0 %}-->
+                <!--<a class="active" href="/article-0-{{arg_dict.category_id}}.html">全部</a>-->
+            <!--{% else %}-->
+                <!--<a href="/article-0-{{arg_dict.category_id}}.html">全部</a>-->
+            <!--{% endif %}-->
+
+            <!--{% for row in article_type_list %}-->
+                <!--{% if row.id == arg_dict.article_type_id %}-->
+                <!--<a class="active" href="/article-{{row.id}}-{{arg_dict.category_id}}.html">{{row.caption}}</a>-->
+                <!--{% else %}-->
+                <!--<a href="/article-{{row.id}}-{{arg_dict.category_id}}.html">{{row.caption}}</a>-->
+                <!--{% endif %}-->
+            <!--{%endfor%}-->
         </div>
 
          <div class="condition">
-            <a>全部</a>
-            {% for row in category_list %}
-            <a>{{row.caption}}</a>
-            {%endfor%}
+             {% filter_all arg_dict 1%}
+             {% filter_other arg_dict category_list 1%}
+             <!--{% if arg_dict.category_id == 0 %}-->
+                <!--<a class="active" href="/article-{{arg_dict.article_type_id}}-0.html">全部</a>-->
+             <!--{% else %}-->
+                <!--<a href="/article-{{arg_dict.article_type_id}}-0.html">全部</a>-->
+             <!--{% endif %}-->
+             <!--{% for row in category_list %}-->
+                <!--{% if row.id == arg_dict.category_id %}-->
+                <!--<a class="active" href="/article-{{arg_dict.article_type_id}}-{{row.id}}.html">{{row.caption}}</a>-->
+                <!--{% else %}-->
+                <!--<a href="/article-{{arg_dict.article_type_id}}-{{row.id}}.html">{{row.caption}}</a>-->
+                <!--{% endif %}-->
+            <!--{%endfor%}-->
         </div>
 
     <h1>查询结果</h1>
