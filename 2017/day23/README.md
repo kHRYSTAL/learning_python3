@@ -126,4 +126,41 @@
                             Poo.instance = object.__new__(cls, *args, **kwargs)
                             return Poo.instance
 
+- 数据库的事务操作, 事务中, 所有操作执行完 统一提交给数据库
+
+            from django.db import transaction
+            with transaction.atomic():
+                # 进行事务的数据库操作
+                tags = form.cleaned_data.pop('tags')
+                content = form.cleaned_data.pop('content')
+                print(content)
+                content = XSSFilter().process(content)
+                form.cleaned_data['blog_id'] = request.session['user_info']['blog__nid']
+                obj = models.Article.objects.create(**form.cleaned_data)
+                models.ArticleDetail.objects.create(content=content, article=obj)
+                tag_list = []
+                for tag_id in tags:
+                    tag_id = int(tag_id)
+                    tag_list.append(models.Article2Tag(article_id=obj.nid, tag_id=tag_id))
+                models.Article2Tag.objects.bulk_create(tag_list)
+
+- 筛选条件: 利用数据库内置函数实现筛选
+    * 文章分类
+    * 标签分类
+    * 日期区间 需要将数据库中的毫秒数格式化为年月 进行分类
+        models.Article.objects.raw("原生sql语句")
+
+            date_list = models.Article.objects.raw('select nid, count(nid) as num,strftime("%Y-%m",create_time)
+                as ctime from repository_article group by strftime("%Y-%m",create_time)')
+
+            查询nid 数量 格式化为年月的时间, 以 时间为分组
+
+        在django中 如果where语句需要使用原生sql语句
+        需要在where后紧跟 extra 在extra中写原生where的sql
+
+            article_list = models.Article.objects.filter(blog=blog).extra(
+                where=['strftime("%%Y-%%m",create_time)=%s'], params=[val, ]).all()
+
+
+
 
