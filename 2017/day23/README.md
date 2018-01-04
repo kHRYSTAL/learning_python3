@@ -51,6 +51,13 @@
 
 - JSONP 跨域请求的 jQuery 实现
 
+        由于浏览器具有同源策略导致
+        解决方式
+            - 创建script标签
+            - src = 远程地址
+            - 返回的数据必须是js格式
+        缺陷: 只能发GET请求
+
         Ajax直接请求普通文件存在跨域无权限访问的问题(浏览器会拦截你的请求 防止恶意代码)，甭管你是静态页面、动态网页、web服务、WCF，只要是跨域请求，一律不准；
         不过我们又发现，Web页面上调用js文件时则不受是否跨域的影响（不仅如此，我们还发现凡是拥有"src"这个属性的标签都拥有跨域的能力，比如<script>、<img>、<iframe>）；
 
@@ -67,7 +74,7 @@
 
         参考jsonp.html
 
-- XSS 过滤
+- XSS过滤KindEditor传入的html
 
         1.使用BeautifulSoup 进行标签隐藏和标签内容过滤
 
@@ -76,5 +83,47 @@
         2. 注意 在列表遍历时 是不能进行插入删除操作的 会直接报错, 因为会影响到计算结果
             因此 在遍历时 应该把列表转换为迭代器,再进行操作 因为迭代器不会计算长度 每次next只会获取下一项
             实际上相当于拷贝了一份列表 然后对原始列表进行操作
+
+        3. 单例模式避免重复请求时重复创建对象处理
+                通用操作封装在对象中, 占用的内存大 应该使用单例模式
+
+            第一种方式: 通过getInstance获取单例对象
+                class Boo(object):
+                    # 静态字段 只属于类 且只存在一份
+                    instance = None
+
+                    """ 第一种单例模式 """
+                    def __init__(self):
+                        pass
+
+                    @classmethod
+                    def get_instance(self):
+                        """ 类方法 不需要实例化 """
+                        if Boo.instance:
+                            return Boo.instance
+                        else:
+                            Boo.instance = Boo()
+                            return Boo.instance
+
+                    def process(self):
+                        return '123'
+
+            第二种方式: 基于__new__方法 不会改变开发习惯
+
+                class Poo(object):
+                    instance = None
+
+                    def __init__(self):
+                        pass
+
+                    def __new__(cls, *args, **kwargs):
+                        # # 默认实现方法 内部会执行Poo.__init__
+                        # obj = object.__new__(cls, *args, **kwargs)
+                        # return obj
+                        if Poo.instance:
+                            return Poo.instance
+                        else:
+                            Poo.instance = object.__new__(cls, *args, **kwargs)
+                            return Poo.instance
 
 
