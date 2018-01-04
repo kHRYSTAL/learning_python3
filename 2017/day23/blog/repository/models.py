@@ -3,7 +3,8 @@ from django.db import models
 
 # Create your models here.
 
-
+# related_name 能够进行反向查询
+# http://blog.csdn.net/lanyang123456/article/details/68962515
 class UserInfo(models.Model):
     """
     用户表
@@ -39,7 +40,7 @@ class UserFans(models.Model):
     """
     互粉关系表
     """
-    user = models.ForeignKey(verbose_name='博主', to='UserInfo', to_field='nid', related_name='users')
+    user = models.ForeignKey(verbose_name='博主', to='UserInfo', to_field='nid', related_name='users')  #
     follower = models.ForeignKey(verbose_name='粉丝', to='UserInfo', to_field='nid', related_name='followers')
 
     class Meta:
