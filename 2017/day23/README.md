@@ -1,8 +1,36 @@
 - 博客系统
 - CMDB 资产管理系统 如何去实现
-    * 资产采集 放到资产数据库
-    * 将采集的数据通过api放到数据库, 认证
-    * 统计图, 可视化管理
+
+>CMDB 即资产数据库
+
+* 资产采集 放到资产数据库
+* 将采集的数据通过api放到数据库, 认证
+* 统计图, 可视化管理
+
+        1. 需要完成资产的自动搜集, 且变更时有记录可寻
+        2. 提供API URL (返回json, 支持jsonp)
+
+        1. 资产自动收集
+            - paramiko ansible fabric api与服务器之间通过paramiko的中控服务器交互
+                通过API获取主机名, 利用paramiko链接服务获取数据, 解析成字典
+                原理 ssh
+                优点: 无依赖
+                缺点: 慢
+
+            - saltstack api与服务器之间通过saltstack master中转
+                cmd: salt [hostname] cmd.   run [cmd]
+                cmd: salt * cmd.run [cmd]
+                原理 zeromq
+                优点: 无依赖
+                缺点: 相对ssh快 相对agent慢
+
+            - puppet(主流)
+                优点: 简单 且不需要定时任务 原生支持report报表
+                缺点: ruby代码实现
+                知识概要:
+                    master: 直接安装 中控
+                    slave: 服务器客户端 存在唯一标识 certname
+                    配置文件: 编写模版 放置到master上 通知服务器客户端批量执行
 
 - 组合搜索组件
 
@@ -162,5 +190,9 @@
                 where=['strftime("%%Y-%%m",create_time)=%s'], params=[val, ]).all()
 
 
+- CMDB开发 (ITIL构建基础服务)
+    TIL即IT基础架构庫(Information Technology Infrastructure Library, ITIL, 信息基础架构庫)
+
+![](https://images2015.cnblogs.com/blog/425762/201702/425762-20170217211746050-1719289549.jpg)
 
 
