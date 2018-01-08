@@ -31,6 +31,219 @@
                     master: 直接安装 中控
                     slave: 服务器客户端 存在唯一标识 certname
                     配置文件: 编写模版 放置到master上 通知服务器客户端批量执行
+                        如果不写命令修改时间, 默认每30分钟执行一次 master和slave进行一次连接
+
+                    - report报表 每30分钟交互一次(包含许多获取远程机器基本信息的命令) 会生成一个yml文件 保存远程机器的基本信息
+                        配置文件 report: cmdb.rb # 每30分钟交互时, 会执行指定目录下的cmdb.rb文件中的process函数
+
+                        puppet中默认自带了5个report，放置在【/usr/lib/ruby/site_ruby/1.8/puppet/reports/】路径下。如果需要执行某个report，那么就在puppet的master的配置文件中做如下配置：
+
+                            ######################## on master ###################
+                            /etc/puppet/puppet.conf
+                            [main]
+                            reports = store #默认
+                            #report = true #默认
+                            #pluginsync ＝ true #默认
+
+
+                            ####################### on client #####################
+
+                            /etc/puppet/puppet.conf
+                            [main]
+                            #report = true #默认
+
+                            [agent]
+                            runinterval = 10
+                            server = master.puppet.com
+                            certname = c1.puppet.com
+
+                            如上述设置之后，每次执行client和master同步，就会在master服务器的 【/var/lib/puppet/reports】路径下创建一个文件，主动执行：puppet agent  --test
+
+
+                        - 在 /etc/puppet/modules 目录下创建如下文件结构：
+
+                            modules
+                            └── cmdb
+                                ├── lib
+                                │   └── puppet
+                                │       └── reports
+                                │           └── cmdb.rb
+                                └── manifests
+                                    └── init.pp
+
+                            ################ cmdb.rb ################
+                            # cmdb.rb
+                            require 'puppet'
+                            require 'fileutils'
+                            require 'puppet/util'
+
+                            SEPARATOR = [Regexp.escape(File::SEPARATOR.to_s), Regexp.escape(File::ALT_SEPARATOR.to_s)].join
+
+                            Puppet::Reports.register_report(:cmdb) do
+                              desc "Store server info
+                                These files collect quickly -- one every half hour -- so it is a good idea
+                                to perform some maintenance on them if you use this report (it's the only
+                                default report)."
+
+                              def process
+                                certname = self.name
+                                now = Time.now.gmtime
+                                File.open("/tmp/cmdb.json",'a') do |f|
+                                  f.write(certname)
+                                  f.write(' | ')
+                                  f.write(now)
+                                  f.write("\r\n")
+                                end
+
+                              end
+                            end
+
+
+                            ################ 配置 ################
+                            /etc/puppet/puppet.conf
+                            [main]
+                            reports = cmdb
+                            #report = true #默认
+                            #pluginsync ＝ true #默认
+
+
+
+                    - cmdb.rb实例 获取远程机器内存信息
+
+                            $LOAD_PATH.unshift(File.dirname(__FILE__)) unless $LOAD_PATH.include?(File.dirname(__FILE__))
+                            require "rubygems"
+                            require 'pp'
+                            require 'json'
+                            require 'utils'
+
+                            def dmi_get_ram(cmd)
+
+                                ram_slot = []
+
+                                key_map = {
+                                    'Size' => 'capacity',
+                                    'Serial Number' => 'sn',
+                                    'Type' => 'model',
+                                    'Manufacturer' => 'manufactory',
+                                    'Locator' => 'slot',
+                                }
+
+                                output = Utils.facter_exec(cmd)
+                                devices = output.split('Memory Device')
+
+                                devices.each do |d|
+                                  next if d.strip.empty?
+                                  segment = {}
+                                  d.strip.split("\n\t").each do |line|
+                                    key, value = line.strip.split(":")
+                                    if key_map.has_key?(key.strip)
+                                      if key.strip == 'Size'
+                                        segment[key_map['Size']] = value.chomp("MB").strip.to_i / 1024.0 # unit GB
+                                      else
+                                        segment[key_map[key.strip]] =  value ? value.strip : ''
+                                      end
+                                    end
+                                  end
+
+                                  ram_slot.push(segment) unless segment.empty?
+                                end
+
+                                return ram_slot
+
+                            end
+
+                            Facter.add("ram") do
+                              confine :kernel => "Linux"
+                              setcode do
+
+                                ram_slot = []
+                                cmd = "dmidecode -q -t 17 2>/dev/null"
+                                ram_slot = dmi_get_ram(cmd)
+
+                                JSON.dump(ram_slot)
+
+                              end
+                            end
+
+
+                            Facter.add("ram") do
+                              confine :kernel => 'windows'
+                              setcode do
+
+                                ram_slot = []
+
+                                if Facter.value(:manufacturer)  =~ /.*HP.*/i
+                                  cli = 'C:\cmdb_report\dmidecode.exe'
+                                  cmd = "#{cli} -q -t 17"
+                                  ram_slot = dmi_get_ram(cmd) if File.exist?(cli)
+
+                                else
+
+                                  require 'facter/util/wmi'
+                                  Facter::Util::WMI.execquery("select * from Win32_PhysicalMemory").each do | item |
+
+                                    if item.DeviceLocator
+                                      slot = item.DeviceLocator.strip
+                                    else
+                                      slot = ''
+                                    end
+
+                                    if item.PartNumber
+                                      model = item.PartNumber.strip
+                                    else
+                                      model = ''
+                                    end
+
+                                    if item.SerialNumber
+                                      sn = item.SerialNumber.strip
+                                    else
+                                      sn = ''
+                                    end
+
+                                    if item.Manufacturer
+                                      manufactory = item.Manufacturer.strip
+                                    else
+                                      manufactory = ''
+                                    end
+
+                                    ram_slot.push({
+                                     'capacity' => item.Capacity.to_i / (1024**3), # unit GB
+                                     'slot' => slot,
+                                     'model' => model,
+                                     'sn' => sn,
+                                     'manufactory' => manufactory,
+                                   })
+
+                                  end
+                                end
+
+                                JSON.dump(ram_slot)
+
+                              end
+                            end
+
+            - 基于Agent自己实现CMDB
+                    实际上就是在master上 subprocess.getoutput('cmd')# 执行命令获取返回结果 通知远程机器执行cmd
+                    缺点: 每台机器都需要部署Agent
+                    优点: 快
+
+
+
+        =================================================================================
+        所有CMDB的本质都是远程机器执行命令获取结果发送到master服务器
+        不论原理是ssh, agent(subprocess), zeromq
+        =================================================================================
+        ===========================执行shell命令获取返回结果================================
+        网卡, 硬盘, CPU...
+
+        注意: sn号可以用于作为远程机器的唯一标识, 但是虚拟机的sn号有可能是重复的,
+        因此需要改为其他方式作为唯一标识
+        =================================================================================
+
+
+
+
+
 
 - 组合搜索组件
 
