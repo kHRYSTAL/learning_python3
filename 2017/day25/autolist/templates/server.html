@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server</title>
+</head>
+<body>
+    <table border="1">
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script src="/static/js/jquery-1.12.4.js"></script>
+    <script>
+//        document.ready()
+        $(function () {
+            init();
+        });
+        function init() {
+            // 获取要显示的列
+            // 获取数据
+            $.ajax({
+                url: '/server-json.html',
+                type: 'GET',
+                dataType: 'JSON',
+                success: function (arg) {
+                    if (arg.status) {
+                        // 创建表格标题
+                        console.log("获取表格标题成功");
+                        createTableHead(arg.data.table_config)
+                    } else {
+                        alert(arg.message);
+                    }
+                },
+                 error: function (e) {
+                        // 发生未知错误时执行 如500, 404, 返回数据类型与dataType不符合等
+                 }
+            });
+
+            function createTableHead(config) {
+                /**
+                 * [
+                    {
+                        'title': '主机名',
+                        'display': 1
+
+                    },
+                    {
+                        'title': '端口',
+                        'display': 1
+                    }
+                    ]
+                 */
+                var tr = document.createElement('tr');
+                $.each(config, function (k, v) {
+                    // k 为 序号, v 为item对象
+                    if (v.display) {
+                        var th = document.createElement('td');
+                        th.innerHTML = v.title;
+                        $(tr).append(th);
+                    }
+                });
+
+                $('#thead').append(tr);
+            }
+        }
+    </script>
+</body>
+</html>
