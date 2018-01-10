@@ -25,7 +25,9 @@
 
         标配: 配置 + 数据库操作
 
-* 前端插件定制表头
+* 前端插件定制表结构
+
+        参考 app01/views.py ServerView, ServerJsonView
 
 
 ### Base Algorithm
