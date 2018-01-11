@@ -36,6 +36,16 @@ class ServerJsonView(View):
                     'display': 1
                 },
                 {
+                    'q': 'business_unit_id',
+                    'title': '业务线ID',
+                    'display': 1
+                },
+                {
+                    'q': 'business_unit__name',  # 双下划线为跨表查询
+                    'title': '业务线名称',
+                    'display': 1
+                },
+                {
                     'q': None,
                     'title': '操作',
                     'display': 1
