@@ -27,6 +27,8 @@
 
 * 前端插件定制表结构
 
+        定制td内容以及属性
+
         参考 app01/views.py ServerView, ServerJsonView
 
 

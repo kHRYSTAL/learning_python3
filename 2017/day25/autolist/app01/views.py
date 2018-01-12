@@ -25,30 +25,40 @@ class ServerJsonView(View):
             # 获取要显示的列的头
             table_config = [
                 {
+                    'q': 'id',
+                    'title': None,
+                    'display': 0,
+                    'text': {}
+                },
+                {
                     'q': 'hostname',
                     'title': '主机名',
-                    'display': 1
-
+                    'display': 1,
+                    'text': {'content': '{m}', 'kwargs': {'m': '@hostname'}}
                 },
                 {
                     'q': 'port',
                     'title': '端口',
-                    'display': 1
+                    'display': 1,
+                    'text': {'content': '{m}', 'kwargs': {'m': '@port'}}
                 },
                 {
                     'q': 'business_unit_id',
                     'title': '业务线ID',
-                    'display': 1
+                    'display': 1,
+                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit_id'}}
                 },
                 {
                     'q': 'business_unit__name',  # 双下划线为跨表查询
                     'title': '业务线名称',
-                    'display': 1
+                    'display': 1,
+                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit__name'}}
                 },
                 {
                     'q': None,
                     'title': '操作',
-                    'display': 1
+                    'display': 1,
+                    'text': {'content': '<a href="/server-detail-{m}.html">查看详细</a>', 'kwargs': {'m': "@id"}}
                 }
             ]
             # 获取列对应的值
