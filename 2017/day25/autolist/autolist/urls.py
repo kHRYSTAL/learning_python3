@@ -21,5 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^server.html/', views.ServerView.as_view()),
     url(r'^server-json.html/', views.ServerJsonView.as_view()),
+    url(r'^business.html/', views.BusinessView.as_view()),
+    url(r'^business-json.html/', views.BusinessJsonView.as_view()),
 
 ]
