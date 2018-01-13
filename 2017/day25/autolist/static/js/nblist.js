@@ -62,7 +62,7 @@
     }
 
     function createTableBody(tableConfig, dataList) {
-        // 遍历行
+        // 遍历行每行的每一个字段通过列的格式和属性进行操作操作
         $.each(dataList, function (k, row) {
             var tr = document.createElement('tr');
             // 遍历列判断每行的每个字段是否显示等状态
@@ -70,6 +70,8 @@
                 if (column.display) {
                     var td = document.createElement('td');
                     var kwargs = {};
+
+                    //region 处理内容显示
                     // 遍历kwargs参数, 用于格式化需要显示的字符串
                     $.each(column.text.kwargs, function (key, value) {
                         if (value.startsWith('@')) {
@@ -81,7 +83,13 @@
                     });
                     // 赋值给td 可以是html也可以是字符串
                     td.innerHTML = column.text.content.format(kwargs);
-                    console.log(td.innerHTML);
+                    //endregion
+
+                    //region 处理标签属性
+                    $.each(column.attr, function (attr_key, attr_value) {
+                        td.setAttribute(attr_key, attr_value);
+                    });
+                    //endregion
                     $(tr).append(td);
                 }
             });

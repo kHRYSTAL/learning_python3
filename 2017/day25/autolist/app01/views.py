@@ -34,31 +34,37 @@ class ServerJsonView(View):
                     'q': 'hostname',
                     'title': '主机名',
                     'display': 1,
-                    'text': {'content': '{m}', 'kwargs': {'m': '@hostname'}}
+                    'text': {'content': '{m}', 'kwargs': {'m': '@hostname'}},  # 自定义显示内容
+                    'attr': {'k1': 'v1', 'k2': 'v2'}   # 自定义html属性
                 },
                 {
                     'q': 'port',
                     'title': '端口',
                     'display': 1,
-                    'text': {'content': '{m}', 'kwargs': {'m': '@port'}}
+                    'text': {'content': '{m}', 'kwargs': {'m': '@port'}},
+                    'attr': {'k1': 'v1', 'k2': 'v2'}
                 },
                 {
                     'q': 'business_unit_id',
                     'title': '业务线ID',
                     'display': 1,
-                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit_id'}}
+                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit_id'}},
+                    'attr': {'k1': 'v1', 'k2': 'v2'}
                 },
                 {
                     'q': 'business_unit__name',  # 双下划线为跨表查询
                     'title': '业务线名称',
                     'display': 1,
-                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit__name'}}
+                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit__name'}},
+                    'attr': {'k1': 'v1', 'k2': 'v2'}
                 },
                 {
                     'q': None,
                     'title': '操作',
                     'display': 1,
-                    'text': {'content': '<a href="/server-detail-{m}.html">查看详细</a>', 'kwargs': {'m': "@id"}}
+                    'text': {'content': '<a href="/server-detail-{m}.html">查看详细</a>', 'kwargs': {'m': "@id"}},
+                    'attr': {'k1': 'v1', 'k2': 'v2'}
+
                 }
             ]
             # 获取列对应的值

@@ -31,6 +31,13 @@
 
         参考 app01/views.py ServerView, ServerJsonView
 
+* Django 静态资源浏览器缓存与服务器端不一致问题
+
+        1. 在url后面加问号 可以在url相同的情况下对资源进行刷新请求,从而更新浏览器缓存的静态资源
+        2. 加?time=时间戳
+        3. 使用md5维护服务器静态资源:
+            参考:http://blog.thehumangeo.com/2013/05/01/dynamically-cache-static-files-using-django-and-nginx/
+
 
 ### Base Algorithm
 
