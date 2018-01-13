@@ -87,7 +87,13 @@
 
                     //region 处理标签属性
                     $.each(column.attr, function (attr_key, attr_value) {
-                        td.setAttribute(attr_key, attr_value);
+                        if (attr_value.startsWith('@')) {
+                            var temp = attr_value.substring(1, attr_value.length);
+                            td.setAttribute(attr_key, temp);
+                        } else {
+                            td.setAttribute(attr_key, attr_value);
+                        }
+
                     });
                     //endregion
                     $(tr).append(td);

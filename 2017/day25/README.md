@@ -37,6 +37,7 @@
         2. 加?time=时间戳
         3. 使用md5维护服务器静态资源:
             参考:http://blog.thehumangeo.com/2013/05/01/dynamically-cache-static-files-using-django-and-nginx/
+                https://www.zhihu.com/question/20790576
 
 
 ### Base Algorithm

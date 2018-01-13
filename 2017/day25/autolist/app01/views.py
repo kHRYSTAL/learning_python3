@@ -35,35 +35,35 @@ class ServerJsonView(View):
                     'title': '主机名',
                     'display': 1,
                     'text': {'content': '{m}', 'kwargs': {'m': '@hostname'}},  # 自定义显示内容
-                    'attr': {'k1': 'v1', 'k2': 'v2'}   # 自定义html属性
+                    'attr': {'k1': '@hostname', 'k2': 'v2'}   # 自定义html属性
                 },
                 {
                     'q': 'port',
                     'title': '端口',
                     'display': 1,
                     'text': {'content': '{m}', 'kwargs': {'m': '@port'}},
-                    'attr': {'k1': 'v1', 'k2': 'v2'}
+                    'attr': {'k1': '@port', 'k2': 'v2'}
                 },
                 {
                     'q': 'business_unit_id',
                     'title': '业务线ID',
                     'display': 1,
                     'text': {'content': '{m}', 'kwargs': {'m': '@business_unit_id'}},
-                    'attr': {'k1': 'v1', 'k2': 'v2'}
+                    'attr': {'k1': '@business_unit_id', 'k2': 'v2'}
                 },
                 {
                     'q': 'business_unit__name',  # 双下划线为跨表查询
                     'title': '业务线名称',
                     'display': 1,
                     'text': {'content': '{m}', 'kwargs': {'m': '@business_unit__name'}},
-                    'attr': {'k1': 'v1', 'k2': 'v2'}
+                    'attr': {'k1': '@business_unit__name', 'k2': 'v2'}
                 },
                 {
                     'q': None,
                     'title': '操作',
                     'display': 1,
                     'text': {'content': '<a href="/server-detail-{m}.html">查看详细</a>', 'kwargs': {'m': "@id"}},
-                    'attr': {'k1': 'v1', 'k2': 'v2'}
+                    'attr': {'k1': '@id', 'k2': 'v2'}
 
                 }
             ]
