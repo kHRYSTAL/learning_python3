@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server</title>
+</head>
+<body>
+    <table border="1">
+        <thead id="thead"></thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script src="/static/js/jquery-1.12.4.js?"></script>
+    <script src="/static/js/nblist.js?"></script>
+    <script>
+//        document.ready()
+        $(function () {
+            $.initNBList('/idc-json.html');
+        });
+    </script>
+</body>
+</html>

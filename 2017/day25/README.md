@@ -31,6 +31,13 @@
 
         参考 app01/views.py ServerView, ServerJsonView
 
+        前端插件开发流程:
+            1. 开发表格配置文件, 基类
+                   table_config 表格配置
+                   condition_config 条件配置
+            2. 拷贝html页面
+
+
 * Django 静态资源浏览器缓存与服务器端不一致问题
 
         1. 在url后面加问号 可以在url相同的情况下对资源进行刷新请求,从而更新浏览器缓存的静态资源
@@ -38,6 +45,7 @@
         3. 使用md5维护服务器静态资源:
             参考:http://blog.thehumangeo.com/2013/05/01/dynamically-cache-static-files-using-django-and-nginx/
                 https://www.zhihu.com/question/20790576
+
 
 
 ### Base Algorithm

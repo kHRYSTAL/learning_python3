@@ -35,7 +35,7 @@ class ServerJsonView(View):
                     'title': '主机名',
                     'display': 1,
                     'text': {'content': '{m}', 'kwargs': {'m': '@hostname'}},  # 自定义显示内容
-                    'attr': {'k1': '@hostname', 'k2': 'v2'}   # 自定义html属性
+                    'attr': {'k1': '@hostname', 'k2': 'v2'}  # 自定义html属性
                 },
                 {
                     'q': 'port',
@@ -48,7 +48,16 @@ class ServerJsonView(View):
                     'q': 'business_unit_id',
                     'title': '业务线ID',
                     'display': 1,
-                    'text': {'content': '{m}', 'kwargs': {'m': '@business_unit_id'}},
+                    # 如果为双@符号 应去全局变量
+                    # business_unit_list = [
+                    #   {id:1, name:'WEB'},
+                    #   {id:2, name:'存储'},
+                    #   {id:3, name:'商城'},
+                    # ]
+                    # 获取 通过id找name
+                    # @@ 代指全局变量的名称
+                    # 'text': {'content': '{m}', 'kwargs': {'m': '@@business_unit_list'}},
+                    'text': {'content': '{m}', 'kwagrs': {'m': '@business_unit_id'}},
                     'attr': {'k1': '@business_unit_id', 'k2': 'v2'}
                 },
                 {
@@ -149,3 +158,25 @@ class BusinessJsonView(View):
             response.status = False
             response.message = str(e)
         return HttpResponse(json.dumps(response.__dict__))
+
+
+class IDCView(View):
+    """ IDC 视图页面 """
+    def get(self, request, *agrs, **kwargs):
+        return render(request, 'idc.html')
+
+    def put(self, request, *agrs, **kwargs):
+        pass
+
+    def delete(self, request, *agrs, **kwargs):
+        pass
+
+
+class IDCJsonView(View):
+
+    def get(self, request, *args, **kwargs):
+        from app01.service.idc_service import IDCService
+        service = IDCService()
+        response = service.fetch_idc()  # 获取数据
+        return HttpResponse(json.dumps(response.__dict__))
+
