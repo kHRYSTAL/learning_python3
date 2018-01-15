@@ -64,6 +64,8 @@
                 func(x - 1)
                 print(x)  # 1 2 3 4 5
 
+        尾递归与尾递归优化
+
 2. 复杂度
 
         时间复杂度
@@ -100,3 +102,19 @@
 
                 二分查找
                     从有序列表的候选区data[0:n]开始, 通过对待查找的值与候选区的中间值比较, 可以使候选区减少一半
+
+
+                    def binary_search(data_list, val):
+                        low = 0
+                        high = len(data_list) - 1
+                        while low <= high:
+                            mid = (low + high) // 2  # 整除
+                            if data_list[mid] == val:
+                                return mid
+                            elif data_list[mid] < val:
+                                low = mid + 1
+                            else:
+                                high = mid - 1
+
+                        return "can not find index in list"
+
