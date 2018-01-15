@@ -25,3 +25,15 @@ class Server(models.Model):
     port = models.IntegerField()
     business_unit = models.ForeignKey('BusinessUnit')  # 所属业务线
     user = models.ForeignKey('UserInfo')  # 服务器管理员
+
+
+class IDC(models.Model):
+    """ 机房信息 """
+    name = models.CharField('机房', max_length=32)
+    floor = models.IntegerField('楼层', default=1)
+
+    class Meta:
+        verbose_name_plural = "机房表"
+
+    def __str__(self):
+        return self.name

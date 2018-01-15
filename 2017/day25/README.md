@@ -34,8 +34,9 @@
         前端插件开发流程:
             1. 开发表格配置文件, 基类
                    table_config 表格配置
-                   condition_config 条件配置
+                   condition_config 条件配置 用于页面显示过滤器
             2. 拷贝html页面
+            3. RESTful 接口操作数据库并返回
 
 
 * Django 静态资源浏览器缓存与服务器端不一致问题
@@ -51,3 +52,18 @@
 ### Base Algorithm
 
 > 算法(Algorithm) 一个计算过程 解决问题的方法
+
+1. 递归
+
+        调用自身
+        结束条件
+        def func(x)
+            if x > 0
+                # print(x)  # 5 4 3 2 1
+                func(x - 1)
+                print(x)  # 1 2 3 4 5
+
+2. 复杂度
+
+        时间复杂度
+        空间复杂度
