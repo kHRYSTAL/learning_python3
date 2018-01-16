@@ -15,11 +15,11 @@ import time
 
 def cost_time(func):
     def wrapper(*args, **kwargs):
-        before = time.time();
-        func(*args, **kwargs)
+        before = time.time()
+        x = func(*args, **kwargs)
         after = time.time()
-        print(after - before)
-
+        print(after - before, func.__name__)
+        return x
     return wrapper
 
 
@@ -39,3 +39,6 @@ def binary_search(data_list, val):
 
 if __name__ == '__main__':
     i = binary_search(list(range(10)), 2)
+    print(i)
+    i = binary_search(list(range(10)), 11)
+    print(i)
