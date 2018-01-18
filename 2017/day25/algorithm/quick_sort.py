@@ -20,10 +20,15 @@
 取一个元素p(如第一个元素), 使p元素归位
 列表被p分为两部分, 左边都比p小, 右边都比p大
 递归完成排序
-时间复杂度: O(log n)
+时间复杂度: O(n log n)
 """
 import random
 import time
+
+import sys
+
+# 设置递归最大层级
+sys.setrecursionlimit(10000)
 
 
 def quick_sort(data, left, right):
