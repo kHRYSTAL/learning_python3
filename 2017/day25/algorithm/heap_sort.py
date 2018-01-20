@@ -48,6 +48,7 @@ def sift(data, low, high):
             break
     data[i] = tmp  # 将tmp替换到空位
 
+
 @cost_time
 def heap_sort(data):
     length = len(data)
