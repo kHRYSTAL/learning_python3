@@ -20,6 +20,7 @@ def cost_time(func):
         after = time.time()
         print(after - before, func.__name__)
         return x
+
     return wrapper
 
 
@@ -36,6 +37,7 @@ def binary_search(data_list, val):
         else:
             high = mid - 1
     return "can not find index in list"
+
 
 if __name__ == '__main__':
     i = binary_search(list(range(10)), 2)
