@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # @version: ??
-# @usage: 一次归并排序
+# @usage: 归并排序 时间复杂度 O(n * log n)
 # @author: kHRYSTAL
 # @license: Apache Licence 
 # @contact: khrystal0918@gmail.com
@@ -33,6 +33,7 @@ def merge(li, low, mid, high):
             ltmp.append(li[j])
             j += 1
 
+    print(ltmp)
     while i <= mid:  # 左边数值有剩余
         ltmp.append(li[i])
         i += 1
@@ -40,7 +41,7 @@ def merge(li, low, mid, high):
         ltmp.append(li[j])
         j += 1
 
-    li[low: high+1] = ltmp
+    li[low: high + 1] = ltmp
 
 
 def merge_sort(li, low, high):
@@ -53,9 +54,8 @@ def merge_sort(li, low, high):
 
 
 import random
+
 data = list(range(0, 10))
 random.shuffle(data)
-print(data)
 merge_sort(data, 0, len(data) - 1)
 print(data)
-
