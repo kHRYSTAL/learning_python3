@@ -32,21 +32,20 @@ def shell_sort(li):
         distance //= 2
 
 
-def insert_sort(li):
-    for i in range(1, len(li)):
-        # 要插入的值
-        temp = li[i]
-        # 插入的初始位置
-        j = i - 1
-        while j >= 0 and li[j] > temp:
-            li[j + 1] = li[j]
-            li[j] = temp
-            j -= 1
+# def insert_sort(li):
+#     for i in range(1, len(li)):
+#         # 要插入的值
+#         temp = li[i]
+#         # 插入的初始位置
+#         j = i - 1
+#         while j >= 0 and li[j] > temp:
+#             li[j + 1] = li[j]
+#             li[j] = temp
+#             j -= 1
 
 
 data = list(range(10))
 random.shuffle(data)
 print(data)
-insert_sort(data)
-
+shell_sort(data)
 print(data)
