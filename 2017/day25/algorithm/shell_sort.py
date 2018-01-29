@@ -32,9 +32,6 @@ def shell_sort(li):
         distance //= 2
 
 
-
-
-
 def insert_sort(li):
     for i in range(1, len(li)):
         # 要插入的值
@@ -53,6 +50,3 @@ print(data)
 insert_sort(data)
 
 print(data)
-
-
-
