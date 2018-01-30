@@ -31,7 +31,7 @@ def cost_time(func):
 
 
 def sift(data, low, high):
-    """调整函数"""
+    """调整函数 生成大根堆"""
     i = low  # 父
     j = 2 * i + 1  # 父的左孩子
     tmp = data[i]

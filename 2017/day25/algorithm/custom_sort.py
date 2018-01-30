@@ -60,7 +60,7 @@ def insert_sort(li):
             j -= 1
 
 
-def top_sort(li, top_value):
+def top_sort_by_insert(li, top_value):
     # 最终返回结果
     res = li[0: top_value + 1]
     # 先排序一次
@@ -75,9 +75,54 @@ def top_sort(li, top_value):
 
     return res[0: -1]
 
-data = [i for i in range(1000)]
+
+# data = [i for i in range(1000)]
+# random.shuffle(data)
+# print(data)
+# result = top_sort_by_insert(data, 10)
+# print(result)
+
+
+def sift(data, low, high):
+    """调整函数 生成小根堆 即根的值在堆中最小"""
+    i = low  # 父
+    j = 2 * i + 1  # 父的左孩子
+    tmp = data[i]
+    while j <= high:  # high 为右边界
+        if j + 1 <= high and data[j] > data[j + 1]:  # 如果还有右孩子, 且左孩子大于右孩子
+            j += 1  # 找到两个孩子中的最小值的index
+
+        if tmp > data[j]:  # 如果父节点大于孩子中的最小值
+            data[i] = data[j]  # 孩子节点上到父节点
+            # 下移一层
+            i = j
+            j = 2 * i + 1
+        else:
+            break
+    data[i] = tmp  # 将tmp替换到空位
+
+
+def top_sort_by_heap(li, top_value):
+    heap = li[0:top_value]
+    for i in range(top_value // 2 - 1, -1, -1):
+        sift(heap, i, top_value - 1)  # 调整每个父节点,使heap成为小根堆
+
+    # 遍历除heap外的其他元素
+    for i in range(top_value, len(li)):
+        if li[i] > heap[0]:  # 如果当前元素比根节点大, 进行替换
+            heap[0] = li[i]
+            sift(heap, 0, top_value - 1)  # 调整
+
+    # print(heap)
+    for i in range(top_value - 1, -1, -1): # 每次把最小值(根)移动到列表最后,使其不参与调整 最终使heap有序
+        heap[0], heap[i] = heap[i], heap[0]
+        sift(heap, 0, i - 1)
+        # print(heap)
+    return heap
+
+
+data = [i for i in range(100)]
 random.shuffle(data)
 print(data)
-result = top_sort(data, 10)
+result = top_sort_by_heap(data, 10)
 print(result)
-
