@@ -56,7 +56,7 @@ def heap_sort(data):
     # 它即该无序序列完全二叉树的第一个非叶子节点
     # 它之前的元素均要进行调整
     first_exchange_element = length // 2 - 1
-    # 当前非叶子节点开始 到根节点 遍历所有节点, 每次都进行调整
+    # 当前非叶子节点开始 到根节点 遍历所有节点, 每次都进行调整, 目的是为了找到堆中的最大值, 并使其按照堆去排序
     for i in range(first_exchange_element, -1, -1):
         sift(data, i, length - 1)
 
