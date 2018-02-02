@@ -278,8 +278,16 @@
 
             python 内置模块-- heapq
 
+                heappush(heap, value): 向堆中添加一个值 并重新调整
+                heappop(heap, value): 从根的位置弹出一个值 并重新调整
+                nlargest(n, iterable, key=None): 按从大到小的顺序 输出长度为n的有序列表
+                nsmallest(n, iterable, key=None): 按从小到大的顺序 输出长度为n的有序列表
+
                 利用heapq模块实现堆排序
                 参考: heapq_sort.py
+
+                利用heapq模块实现排行榜 取前多少位
+
 
 
 
