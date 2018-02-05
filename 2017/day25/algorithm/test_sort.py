@@ -56,7 +56,21 @@ def func2():
         if b:  # 如果第二个数存在
             return li.index(temp_set[a]), li.index(temp_set[b])  # 返回两个数在原列表的索引
 
+
 print(func2())
+
+
+def func3():
+    # 设置一个长度为100的列表 用于存储li的下标
+    index_data = [None for i in range(100 + 1)]
+    for i in range(len(li)):
+        index_data[li[i]] = i  # 记录li中每一个值的下标 即把li中index作为value, value作为index
+        if index_data[target - li[i]] is not None:  # 如果和为target的另一个值在index-value反向列表中存在 则返回这两个值的value, 即li中的index
+            return i, index_data[target - li[i]]
+
+print(func3())
+
+
 """
 给定一个升序列表和一个整数, 返回该整数在列表中的下标范围
 例如 列表[1, 2, 3, 3, 3, 4, 4, 5] 若查找3 则返回(2, 4)
