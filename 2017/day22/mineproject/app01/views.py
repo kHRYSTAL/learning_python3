@@ -254,7 +254,7 @@ def file_manager(request):
     }
     """
     dic = {}
-    root_path = '/Users/kHRYSTAL/PycharmProjects/learning_python3/2017/day22/mineproject/static/' # 用户可以查看文件路径的根
+    root_path = '/Users/kHRYSTAL/PycharmProjects/learning_python3/2017/day22/mineproject/static/'  # 用户可以查看文件路径的根
     static_root_path = '/static/'
     request_path = request.GET.get('path')
     if request_path:
