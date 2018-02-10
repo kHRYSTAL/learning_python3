@@ -27,4 +27,4 @@ def handle_csv(del_row):
         new_csv.writerows(rows)
 
 
-handle_csv([0,])
+handle_csv([0, ])
