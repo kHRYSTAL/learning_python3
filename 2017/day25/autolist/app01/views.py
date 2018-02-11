@@ -162,6 +162,7 @@ class BusinessJsonView(View):
 
 class IDCView(View):
     """ IDC 视图页面 """
+
     def get(self, request, *agrs, **kwargs):
         return render(request, 'idc.html')
 
@@ -173,10 +174,8 @@ class IDCView(View):
 
 
 class IDCJsonView(View):
-
     def get(self, request, *args, **kwargs):
         from app01.service.idc_service import IDCService
         service = IDCService()
         response = service.fetch_idc()  # 获取数据
         return HttpResponse(json.dumps(response.__dict__))
-
