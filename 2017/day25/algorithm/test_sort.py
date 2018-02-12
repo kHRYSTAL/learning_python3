@@ -61,7 +61,7 @@ print(func2())
 
 
 def func3():
-    # 设置一个长度为100的列表 用于存储li的下标
+    # 设置一个长度为100的列表 用于存储li的下标 也可以使用字典
     index_data = [None for i in range(100 + 1)]
     for i in range(len(li)):
         index_data[li[i]] = i  # 记录li中每一个值的下标 即把li中index作为value, value作为index
