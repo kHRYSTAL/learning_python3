@@ -402,6 +402,139 @@
                     队空条件: rear == front
                     队满条件: (rear + 1) % maxSize == front
 
+    * 链表
+
+            链表中每一个元素都是一个对象, 每个对象称为一个节点 包含有数据域key和指向下一个
+            节点的指针next. 通过各个节点之间的相互连接, 最终串联成一个链表
+
+            优点
+                插入删除快 复杂度为O(1)
+            缺点
+                查询慢 不能按照下标查询 复杂度为O(n)
+
+            节点定义
+
+                class Node(object):
+
+                    def __init__(self, item):
+                        self.item = item
+                        self.next = None
+
+            头节点
+
+                head-->86-->19-->4-->12--...
+
+                单向链表
+
+            遍历链表:
+
+                def traversal(head):
+                    curNode = head  # 临时用指针
+                    while curNode is not None:
+                        print(curNode.data)
+                        curNode = curNode.next
+
+
+            链表节点的插入和删除
+
+                插入: 复杂度O(1)
+
+                    insert.next = curNode.next
+                    curNode.next = insert
+
+                删除:
+                    delete = curNode.next
+                    curNode.next = curNode.next.next
+                    del delete
+
+
+            建立链表
+
+                头插法(左插法): 每次插入的值都是head的下一个 这种插法 会导致列表是倒序的
+
+                    def createLinkListF(li):
+                        head = Node()
+                        for num in li:
+                            insert = Node(num)
+                            insert.next = head.next
+                            head.next = insert
+                        return head
+
+                尾插法(右插法): 每次插入的值都在链表的最后
+
+                    def createLinkListR(li):
+                        head = Node()
+                        right = head  # 指向尾节点
+                        for num in li:
+                            insert = Node(num)
+                            right.next = insert
+                            right = insert
+
+
+            双向链表:
+
+                双链表中每个节点有两个指针: 一个指向后面的节点 一个指向前面的节点
+
+                节点定义
+
+                    class Node(object):
+                        def __init__(self, item=None):
+                            self.item = item
+                            self.next = None
+                            self.prior = None
+
+                双向链表节点的插入和删除
+
+                    插入:
+
+                        insert.next = curNode.next
+                        curNode.next.prior = insert
+                        insert.prior = curNode
+                        curNode.next = insert
+
+                    删除:
+                        delete = curNode.next
+                        curNode.next = delete.next
+                        delete.next.prior = curNode
+                        del delete
+
+                建立双链表
+
+                    尾插法:
+
+                        def cureatLinkListR(li):
+                            head = Node()
+                            right = head
+                            for num in li:
+                                insert = Node(num)
+                                right.next = insert
+                                insert.prior = right
+                                right = insert
+                            return head, right # 返回头节点和尾节点
+
+                链表-分析
+
+                    列表与链表
+                        按元素值查找 相同 都需要遍历O(n)
+                        按下标查找 列表O(1) 链表O(n)
+                        在某元素后插入 列表O(n) 链表 O(1)
+                        删除某元素 列表O(n) 链表 O(1)
+
+    * Python中的集合与字典(了解)
+
+            哈希表查找
+
+            哈希表(Hash Table, 又称散列表) 是一种线性表存储结构
+            通过把每个对象的关键字k作为自变量 通过一个哈希函数h(k)
+            将k映射到下标h(k)处, 并将该对象存储在这个位置(字典的key为k, 对象为value)
+
+            例如: 数据集合{1, 6, 7, 9}, 假设存在哈希函数h(x)
+            使得h(1) = 0, h(6) = 2, h(7) = 4, h(9) = 5
+            那么这个哈希表被存储为[1, None, 6, None, 7, 9]
+
+            当我们查找元素6所在的位置时, 通过哈希函数h(x)获得该元素
+            所在的下标h(6) = 2, 因此在2位置即可找到该元素
+
 
 
 
