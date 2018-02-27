@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from app import models
 
@@ -47,5 +48,23 @@ def article(request, *args, **kwargs):
         'arg_dict': kwargs
     })
 
+
 def jsonp(request):
+    db = {
+        'chapter_id': 'long',
+        'hole_position': 'int',
+        'chapter_name': 'str'
+    }
+
     return render(request, 'jsonp.html')
+
+
+def chinese_comic(request):
+    if request.method == 'GET':
+        ret = {
+            'current_chapter': {'comic_id': '123', 'next_id': '124', 'url': ['url', 'url', 'url']},
+            'current_chapter_topic': [{'id': '1', 'desc': ''}],
+            'next_chapter': {'comic_id': '124', 'url': ['url', 'url', 'url']},
+        }
+        import json
+        return HttpResponse(json.dump(ret))
