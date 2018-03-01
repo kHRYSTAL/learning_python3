@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://woerwoxcx.wedochina.cn/survey20180228/mob/mobile.aspx -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <script src="https://hm.baidu.com/hm.js?1adbd44efee61cd522df08ce8a7bec49"></script><script src="/static/woerwoxcx_files/scaling.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=750, user-scalable=yes, target-densitydpi=device-dpi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title></title>
+    <link href="/static/woerwoxcx_files/base.css?" rel="stylesheet" type="text/css">
+    <script src="/static/woerwoxcx_files/jquery.min.js" type="text/javascript"></script>
+        <script>
+         var _hmt = _hmt || [];
+         (function() {
+         var hm = document.createElement("script");
+         hm.src = "https://hm.baidu.com/hm.js?1adbd44efee61cd522df08ce8a7bec49";
+         var s = document.getElementsByTagName("script")[0]; 
+         s.parentNode.insertBefore(hm, s);
+       })();
+    </script>
+    <script>
+        $(function () {
+            $("#tel").click(function () {
+                $.ajax({
+                    url: "../ashx/Statistics.ashx",
+                    data: { Name: "拨号" },
+                    type: "post",
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+
+                    }
+                    
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content">
+        <div class="logo"><img src="/static/woerwoxcx_files/logo.png" alt="" style="display:none;"></div>
+        <div class="btn ta-c"><a href="tel://1010-1200" id="tel"><img src="/static/woerwoxcx_files/btn.jpg" alt=""></a></div>
+        <div class="img-text1"><img src="/static/woerwoxcx_files/img1.jpg" alt=""></div>
+        <div class="img-text2"><img src="/static/woerwoxcx_files/img2.jpg" alt=""></div>
+        <div class="img-text3"><img src="/static/woerwoxcx_files/img3.jpg" alt=""></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+</body></html>

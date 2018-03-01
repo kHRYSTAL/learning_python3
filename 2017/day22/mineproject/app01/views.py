@@ -300,3 +300,7 @@ def file_manager(request):
         file_list.append(temp)
     dic['file_list'] = file_list
     return HttpResponse(json.dumps(dic))
+
+
+def volvo(request):
+    return render(request, 'woerwoxcx.html')

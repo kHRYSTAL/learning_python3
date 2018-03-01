@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'kind/$', views.kind),
     url(r'kind_upload_img/$', views.kind_upload_img),
     url(r'file_manager/$', views.file_manager),
+    url(r'volvo/$', views.volvo)
 
 ]
