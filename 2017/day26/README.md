@@ -29,3 +29,12 @@ customer relationship management
   - 在线交作业
 
 * 用户的使用场景分析
+
+    参考`crm/models.py`
+
+* 认证系统
+
+    django提供了默认的认证系统 我们可以直接使用它
+    参考`crm/models.py->UserProfile`
+
+
