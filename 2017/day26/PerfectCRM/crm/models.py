@@ -75,7 +75,7 @@ class FollowUpRecord(models.Model):
     status_choice = (
         (0, "绝无报名计划"),
         (1, "一个月内报名"),
-        (2, "2周内报名")
+        (2, "2周内报名"),
         (3, "已报名其他机构")
     )
     status = models.SmallIntegerField(choices=status_choice)
