@@ -178,9 +178,19 @@ class StudyRecord(models.Model):
         return "%s daynum:%s" % (self.student, self.course_record)
 
 
-class UserProfile(User):
+class UserProfile(models.Model):
+    """
+    用来定义一对一关系。笼统地讲，它与声明了 unique=True 的 ForeignKey 非常相似，不同的是使用反向关联的时候，
+    得到的不是一个对象列表，而是一个单独的对象。在某个 model 扩展自另一个 model 时，这个字段是非常有用的；
+    例如： 多表继承 (Multi-tableinheritance) 就是通过在子 model 中添加一个指向父 model 的一对一关联而实现的。
+    """
     """账户信息 继承django提供的用户认证model"""
+    user = models.OneToOneField(User)  # 相当于外键(一对多)并设置unique(一对一) 相当于使用django自带的user表维护userprofile
     name = models.CharField(max_length=32)
+    roles = models.ManyToManyField("Role")
+
+    def __str__(self):
+        return self.name
 
 
 class Role(models.Model):

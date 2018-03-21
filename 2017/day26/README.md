@@ -37,4 +37,23 @@ customer relationship management
     django提供了默认的认证系统 我们可以直接使用它
     参考`crm/models.py->UserProfile`
 
+* 角色管理
+
+    1. 销售
+        - 录入客户信息
+        - 跟进客户
+        - 各种条件过滤和查询客户信息
+        - 为客户报名
+    2. 讲师
+        - 创建课程记录
+        - 点名
+        - 为学员批作业
+    3. 学员
+        - 查成绩
+        - 交作业
+        - 转介绍
+
+* 开发注意事项
+    - template下要创建对应app的文件夹
+
 
