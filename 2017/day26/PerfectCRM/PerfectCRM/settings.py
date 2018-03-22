@@ -125,3 +125,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'statics'),
 )
+
+# 配置django login_required 装饰器的跳转
+LOGIN_URL = "/login/"

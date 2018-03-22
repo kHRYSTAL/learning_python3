@@ -185,7 +185,9 @@ class UserProfile(models.Model):
     例如： 多表继承 (Multi-tableinheritance) 就是通过在子 model 中添加一个指向父 model 的一对一关联而实现的。
     """
     """账户信息 继承django提供的用户认证model"""
-    user = models.OneToOneField(User)  # 相当于外键(一对多)并设置unique(一对一) 相当于使用django自带的user表维护userprofile
+    # 当使用django user获取对象时 内部的crm_user属性为userProfile
+    # 如果不写related_name 从django的user反查userProfile 为user.userprofile
+    user = models.OneToOneField(User, related_name="crm_user")  # 相当于外键(一对多)并设置unique(一对一) 相当于使用django自带的user表维护userprofile
     name = models.CharField(max_length=32)
     roles = models.ManyToManyField("Role")
 
