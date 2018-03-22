@@ -19,5 +19,6 @@ from crm import views
 
 urlpatterns = [
     # 销售主页面板
-    url(r'^$', views.dashboard),
+    url(r'^$', views.dashboard, name="sales_dashboard"),
+    url(r'^customers/$', views.customers, name="customers"),
 ]

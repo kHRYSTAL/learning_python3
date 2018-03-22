@@ -43,18 +43,25 @@
         {% block side-bar %}
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="https://v3.bootcss.com/examples/dashboard/#">Overview <span class="sr-only">(current)</span></a>
+                {% for role in request.user.crm_user.roles.all %}
+                <li>{{role}}</li>
+                {% for menu in role.menus.all%}
+                <li>
+                    <!--注意不要换行 否则会导致href中出现折行符导致选中失效-->
+                    <a href="{% if menu.url_type == 0 %}{%url menu.url_name%}{% else %}{{menu.url_name}}{% endif %}">
+                        {{menu}}
+                    </a>
                 </li>
-                <li><a href="https://v3.bootcss.com/examples/dashboard/#">Reports</a></li>
-                <li><a href="https://v3.bootcss.com/examples/dashboard/#">Analytics</a></li>
-                <li><a href="https://v3.bootcss.com/examples/dashboard/#">Export</a></li>
+                {% endfor %}
+                {% endfor %}
             </ul>
         </div>
         {% endblock %}
         <!--右侧容器-->
-        {% block right-container %}
+
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            {% block right-container %}
             <h1 class="page-header">Dashboard</h1>
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
@@ -84,8 +91,9 @@
             </div>
 
             <h2 class="sub-header">Section title</h2>
+            {% endblock %}
         </div>
-        {% endblock %}
+
     </div>
 </div>
 {% endblock %}

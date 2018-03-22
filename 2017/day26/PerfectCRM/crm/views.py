@@ -10,3 +10,9 @@ def dashboard(request):
         装饰器默认跳转到 account/login/ 如果url不同 需要修改settings.py 新增LOGIN_URL = "/login/" 指定path与urls.py对应
     """
     return render(request, "crm/dashboard.html")
+
+
+@login_required
+def customers(request):
+    """销售的客户列表页"""
+    return render(request, "crm/customers.html")
