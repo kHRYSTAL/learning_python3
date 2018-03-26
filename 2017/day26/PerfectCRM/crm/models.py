@@ -84,7 +84,7 @@ class FollowUpRecord(models.Model):
     consultant = models.ForeignKey("UserProfile", verbose_name="课程顾问")
 
     def __str__(self):
-        return self.customer
+        return "%s" % self.customer
 
 
 class Course(models.Model):
