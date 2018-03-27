@@ -14,13 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.contrib import admin
-from PerfectCRM import views
+from kingadmin import views
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^crm/', include("crm.urls")),
-    url(r'^kingadmin/', include("kingadmin.urls")),
-    url(r'^login/', views.acc_login),
-    url(r'^logout/', views.acc_logout),
+    # 后台管理首页
+    url(r'^$', views.app_index),
 
 ]
