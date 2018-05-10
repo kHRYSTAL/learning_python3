@@ -59,6 +59,10 @@ class UserInfoModelForm(forms.ModelForm):
         #     return "..."
 
 
+def redirect_wechat(request):
+    return render(request, 'test.html')
+
+
 def index(request):
     if request.method == 'GET':
         form = UserInfoModelForm()

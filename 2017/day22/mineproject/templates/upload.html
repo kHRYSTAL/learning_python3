@@ -81,7 +81,7 @@
         var formData = new FormData();
         formData.append('username', 'root'); // key-value;
         formData.append('file', fileObj);
-        xmlHttpRequest.open("POST", '/upload_file/', true);
+        xmlHttpRequest.open("POST", 'http://192.168.2.93:8060/bms-api-upload/', true);
         xmlHttpRequest.onreadystatechange = function () { // 接收事件回调
             if (xmlHttpRequest.readyState == 4) { // 4表示接收response完成 一般还需要判断状态码为200
                 console.log(xmlHttpRequest.responseText); // 输出字符串
@@ -101,15 +101,16 @@
         formData.append('file', fileObj);
 
         $.ajax({
-            url: '/upload_file/',
+            url: 'http://192.168.2.93:8060/bms-api-upload/',
             type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
-            success: function (arg, a1, a2) {
-                console.log(arg);
-                console.log(a1);
-                console.log(a2);
+            dataType: 'jsonp', // 让ajax以jsonp的形式发送请求
+            jsonp: 'callback', // 会拼接url,  http://www.jxntv.cn/data/jmd-jxtv2.html?_=1454376870403&callback=list
+            jsonpCallback: 'text', // 回调的jsonp函数为 list(json数据)
+            success: function (data) {
+                console.log('====>', data);
             }
         });
     }
