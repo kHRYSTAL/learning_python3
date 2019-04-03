@@ -25,7 +25,7 @@ SECRET_KEY = '$mgbzj5)-oa$dbhx=in9djvh+q$q0i19zzit#r$!myu(!e2z)h'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    # 'khrystal.tunnel.echomod.cn',
+    'khrystal.tunnel.echomod.cn',
 ]
 
 # Application definition
