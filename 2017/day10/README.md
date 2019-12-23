@@ -443,6 +443,19 @@
 
     Base = declarative_base()
 
+    Book{id, author_id}
+
+    Author{id, name}
+
+    Book
+    id      author_id
+    1       1
+    1       2
+    1       3
+
+    Book{id=1 authorid= [1, 2, 3]}
+    Book{id=1 List<Author> = [Author, Author, Author]}
+
     # 书与作者的关系表 这张表不应手动创建 因为我们不会去手动向这张表插入数据, 只需要在存储书的时候指明作者 或存储作者的时候指明书
     # orm自己去维护这张表 谁都不用去关心 实际上这个表只是指明了book和author的关联关系 用于book反查user和user反查book
     # 存储时会自动关联, 将id存储到这个表里

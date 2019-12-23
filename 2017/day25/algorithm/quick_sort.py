@@ -55,14 +55,16 @@ def partition(data, left, right):
         data[right] = data[left]
 
     data[left] = temp
+    # print(data)
+    # print(left)
     return left
 
 
-data = list(range(1000))
-random.shuffle(data)
-t1 = time.time()
+data = list([5,7,2,3,9,8])
+# random.shuffle(data)
+# t1 = time.time()
 quick_sort(data, 0, len(data) - 1)
-t2 = time.time()
-print(t2 - t1)
-
-print(data)
+# t2 = time.time()
+# print(t2 - t1)
+#
+# print(data)

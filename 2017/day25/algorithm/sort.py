@@ -93,7 +93,7 @@ data_1 = list(range(1000))
 random.shuffle(data_1)
 select_sort(data_1)
 
-data_2 = list(range(1000))
+data_2 = list(range(10))
 random.shuffle(data_2)
 insert_sort(data_2)
 
