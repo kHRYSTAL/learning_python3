@@ -79,7 +79,22 @@ class Poo(object):
 
 print('单例2')
 
-obj1 = Poo()
-print(id(obj1))
-obj2 = Poo()
-print(id(obj2))
+# obj1 = Poo()
+# print(id(obj1))
+# obj2 = Poo()
+# print(id(obj2))
+
+
+class Poo:
+    def __init__(self):
+        print('__init__')
+        pass
+
+    @classmethod
+    def init_once(cls):
+        print('111')
+        poo = object.__new__(cls)
+        return poo.check_file()
+
+    def check_file(self):
+        return 'xxx'
