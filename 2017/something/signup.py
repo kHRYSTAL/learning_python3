@@ -6,7 +6,7 @@ from time import sleep
 browser = webdriver.Chrome(executable_path="/Users/kHRYSTAL/Downloads/chromedriver")
 browser.get("https://jinshuju.net/f/EwZkQr")
 sleep(1)
-browser.set_window_size(1400, 800)  # 调窗口大小
+browser.set_window_size(1400, 800)
 name = browser.find_element_by_xpath(
     "/html/body/div[1]/div[1]/div/form/div[3]/div[1]/div[2]/div/div/div[2]/div[1]/div/span/span/input")
 name.send_keys("张三")  # 姓名
