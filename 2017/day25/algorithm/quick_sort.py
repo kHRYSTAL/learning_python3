@@ -60,11 +60,43 @@ def partition(data, left, right):
     return left
 
 
-data = list([5,7,2,3,9,8])
+data = list([5, 7, 2, 3, 9, 8])
 # random.shuffle(data)
 # t1 = time.time()
 quick_sort(data, 0, len(data) - 1)
+
+
 # t2 = time.time()
 # print(t2 - t1)
 #
 # print(data)
+
+def binary_search(data, key):
+    left = 0
+    right = data.length
+    while left < right:
+        mid = (left + right) / 2
+        if data[mid] == key:
+            return mid
+        elif data[mid] < key:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+
+def quick_sort(data, left, right):
+    mid = get_mid(data, left, right)
+    quick_sort(data, left, mid - 1)
+    quick_sort(data, mid + 1, right)
+
+
+def get_mid(data, left, right):
+    temp = data[left]
+    while left < right:
+        while left < right and data[right] >= temp:
+            right -= 1
+        while left < right and data[left] <= temp:
+            left += 1
+
+    data[left] = temp
+    return left
